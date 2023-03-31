@@ -150,6 +150,8 @@ export const calculatePositions = events => {
     sortedEvents[i].leftOvercome = leftOvercome;
 
     if (width === 0) {
+      console.log('there is no space to fill>', sortedEvents[i].title);
+      console.log('leftOvercome', leftOvercome);
       // console.log('there is no space to fill>', sortedEvents[i].title);
       // width = totalWidth / (leftOvercome.length + 1);
       if (leftOvercome.length === 0) {
@@ -158,6 +160,7 @@ export const calculatePositions = events => {
         width = totalWidth / (1 + totalWidth / leftOvercome[0].width);
       }
       left = totalWidth - width;
+
       strinkEvent(leftOvercome, 1 - width / totalWidth, {});
     }
 
@@ -165,7 +168,7 @@ export const calculatePositions = events => {
     sortedEvents[i].left = left;
     // console.log('width', width);
     // console.log('left', left);
-    // console.log('leftOvercome', leftOvercome);
+    console.log('leftOvercome', leftOvercome);
     // console.log('=======End=====');
   }
   return sortedEvents;
