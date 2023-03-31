@@ -78,163 +78,98 @@ export const parseDate = (dateStr, formatStr) => {
 
   return new Date(year, month, day, hours, minutes, seconds);
 };
+const strinkEvent = (leftOvercome, percentage, srinkedObject) => {
+  if (leftOvercome.length === 0) return;
 
-function isGapAvailable(events, left, width) {
-  // Check if any of the events in the row overlap with the new event
-  if (events.length == 3) {
-    console.log(events, left, width);
-  }
-  for (let i = 0; i < events.length; i++) {
-    const other = events[i];
-    if (left < other.left + other.width && left + width > other.left) {
-      return false;
-    }
-  }
-  return true;
-}
+  leftOvercome.forEach(event => {
+    if (srinkedObject[event.id]) return;
+    srinkedObject[event.id] = true;
+    event.width = event.width * percentage;
+    event.left = event.left * percentage;
+    strinkEvent(event.leftOvercome, percentage, srinkedObject);
+  });
+};
 
 export const calculatePositions = events => {
-  // Sort events by start time
+  const totalWidth = 100;
+  //sort events by start time
   const sortedEvents = events.sort((a, b) => a.startTime - b.startTime);
 
-  // Find number of overlapping events and overcome position for each event
   for (let i = 0; i < sortedEvents.length; i++) {
-    let noOfOvercome = 1;
-    let leftIndex = 0;
-    const overcome = [];
-    const leftOvercome = [];
-
-    for (let j = 0; j < sortedEvents.length; j++) {
-      if (
-        i !== j &&
-        sortedEvents[i].endTime > sortedEvents[j].startTime &&
-        sortedEvents[i].startTime < sortedEvents[j].endTime
-      ) {
-        noOfOvercome++;
-        overcome.push(sortedEvents[j]);
-        if (i > j) {
-          leftIndex++;
-          leftOvercome.push(sortedEvents[j]);
-        }
-      }
-    }
-    sortedEvents[i].noOfOvercome = noOfOvercome;
-    sortedEvents[i].leftIndex = leftIndex;
-    sortedEvents[i].overcome = overcome;
-    sortedEvents[i].leftOvercome = leftOvercome;
-  }
-  console.log('before remove parallel', sortedEvents);
-  // -----remove parallel overcome
-  for (let i = 0; i < sortedEvents.length; i++) {
-    sortedEvents[i].index = i;
-
-    const { overcome } = sortedEvents[i];
-
-    const { leftOvercome } = sortedEvents[i];
-    console.log(
-      'sortedEvents[i]=========================================',
-      sortedEvents[i],
-    );
-
-    const removedOvercome = [];
-
-    for (let k = 0; k < overcome.length - 1; k++) {
-      if (
-        overcome[k].startTime >= overcome[k + 1].endTime ||
-        overcome[k].endTime <= overcome[k + 1].startTime
-      ) {
-        removedOvercome.push(overcome[k].id);
-        overcome.splice(k, 1);
-        k--;
-      }
-    }
-
-    // for (let k = overcome.length - 1; k >= 0; k--) {
-    //   for (let l = overcome.length - 1; l >= 0; l--) {
-    //     console.log('k',k,'l',l,overcome,overcome[k],overcome[l])
-    //     if (
-    //       k !== l &&
-    //       (overcome[k].startTime >= overcome[l].endTime ||
-    //         overcome[k].endTime <= overcome[l].startTime)
-    //     ) {
-    //       console.log('removed==============================================');
-    //       removedOvercome.push(overcome[l].id);
-    //       overcome.splice(l, 1);
-    //       sortedEvents[i].noOfOvercome--;
-    //     }
-    //   }
-    // }
-
-    for (let j = leftOvercome.length - 1; j >= 0; j--) {
-      if (removedOvercome.includes(leftOvercome.id)) {
-        leftOvercome.splice(j, 1);
-        sortedEvents[i].leftIndex--;
-      }
-    }
-
-    sortedEvents[i].leftOvercome = leftOvercome;
-    sortedEvents[i].overcome = overcome;
-  }
-
-  // Calculate width and left position of each event based on its overcome position
-  const totalWidth = 100;
-  for (let i = 0; i < sortedEvents.length; i++) {
-    const { leftOvercome } = sortedEvents[i];
-    const { noOfOvercome } = sortedEvents[i];
-    const width = totalWidth / noOfOvercome;
+    let width = 0;
     let left = 0;
+    let leftOvercome = [];
+    console.log('\n\nEvent==================', sortedEvents[i].title);
+    console.log('i>>>>>>>>>>>', i);
+    for (let k = 0; k < i; k++) {
+      console.log('k', k, i, sortedEvents[k].title);
+      if (sortedEvents[k].endTime > sortedEvents[i].startTime) {
+        leftOvercome.push(sortedEvents[k]);
+      }
+    }
+
     if (leftOvercome.length) {
-      // ----check any gap available
-      let isFilled = false;
-
-      // sort leftOvercome by left
       leftOvercome.sort((a, b) => a.left - b.left);
-      console.log(
-        'leftOvercome===>',
-        leftOvercome,
-        isGapAvailable(leftOvercome, 0, width),
-        0,
-        width,
-      );
 
-      if (
-        leftOvercome[0].left >= width &&
-        isGapAvailable(leftOvercome, 0, width)
-      ) {
-        left = 0;
-        isFilled = true;
+      if (leftOvercome[0].left > 0) {
+        width = leftOvercome[0].left;
       } else {
-        for (let j = 0; j < leftOvercome.length - 2; j++) {
-          //  console.log('leftOvercome===>',leftOvercome,isGapAvailable(leftOvercome, 0, width),0,width)
-
+        for (let k = 0; k < leftOvercome.length - 1; k++) {
           if (
-            leftOvercome[j + 1].left -
-              leftOvercome[j].left +
-              leftOvercome[j].width >=
-              width &&
-            isGapAvailable(
-              leftOvercome,
-              leftOvercome[j].left + leftOvercome[j].width,
-              width,
-            )
+            leftOvercome[k + 1].left -
+              (leftOvercome[k].width + leftOvercome[k].left) >
+            1
           ) {
-            left = leftOvercome[j].left + leftOvercome[j].width;
-            isFilled = true;
+            width =
+              leftOvercome[k].left +
+              leftOvercome[k].width -
+              leftOvercome[k].left;
+            left = leftOvercome[k].left + leftOvercome[k].width;
+            break;
           }
         }
       }
-      if (!isFilled) {
+
+      if (
+        width === 0 &&
+        totalWidth -
+          leftOvercome[leftOvercome.length - 1].left -
+          leftOvercome[leftOvercome.length - 1].width >
+          1
+      ) {
+        width =
+          totalWidth -
+          leftOvercome[leftOvercome.length - 1].left -
+          leftOvercome[leftOvercome.length - 1].width;
         left =
           leftOvercome[leftOvercome.length - 1].left +
           leftOvercome[leftOvercome.length - 1].width;
       }
     }
+
+    sortedEvents[i].leftOvercome = leftOvercome;
+
+    if (width === 0) {
+      // console.log('there is no space to fill>', sortedEvents[i].title);
+      // width = totalWidth / (leftOvercome.length + 1);
+      if (leftOvercome.length === 0) {
+        width = totalWidth;
+      } else {
+        width = totalWidth / (1 + totalWidth / leftOvercome[0].width);
+      }
+      left = totalWidth - width;
+      strinkEvent(leftOvercome, 1 - width / totalWidth, {});
+    }
+
     sortedEvents[i].width = width;
     sortedEvents[i].left = left;
+    // console.log('width', width);
+    // console.log('left', left);
+    // console.log('leftOvercome', leftOvercome);
+    // console.log('=======End=====');
   }
-
-  // Return sorted events with widths and positions
   return sortedEvents;
+  //------------
 };
 
 export const parseEvents = (events, dateFormat) => {
@@ -288,9 +223,18 @@ export const parseEvents = (events, dateFormat) => {
       total_event_time,
     };
     tempEvents.push(eventObjNew);
-    console.log('parseEvents--', events);
+    //  console.log('parseEvents--', events);
   }
 
-  console.log('parseEvents--', tempEvents);
+  //  console.log('parseEvents--', tempEvents);
   return tempEvents;
+};
+
+export const isDateBetween = (dateString, startDateString, endDateString) => {
+  const date = new Date(dateString);
+  const startDate = new Date(startDateString);
+  const endDate = new Date(endDateString);
+  // console.log('date==========',date,'startDate',startDate,'endDate',endDate)
+
+  return date >= startDate && date <= endDate;
 };
