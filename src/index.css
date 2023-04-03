@@ -18,24 +18,32 @@ code {
 
 /* Ib table */
 
-.ib-table{
+.ib-table-week{
 
  border-spacing: 0;
+ margin-bottom: 100px;
 }
 
-.ib-table-td{
+.ib-table-td-week{
   /* border: 1px solid #000; */
   position: relative;
+  min-width: 150px;
   box-sizing: border-box;
   padding: 0;
   border: none;
 }
 
-.ib-table-th{
+.ib-table-hr-box-week {
+  background: #ffffff;
+  border-top: 1px dashed #dbdbdb;
+  margin-top: -1px;
+}
+
+.ib-table-th-week{
   border: 1px solid #000;
 }
 
-.ib-table-tr{
+.ib-table-tr-week{
   /* border: 1px solid #000; */
 }
 
@@ -79,4 +87,39 @@ code {
   text-align: center;
   box-sizing: border-box;
   border: 1px solid #CCB;
+}
+
+.dragging-handler-week.top{
+  cursor: n-resize;
+  position: absolute;
+  top: 0px;
+  left: 1px;
+  right: 1px;
+  height: 10px;
+  z-index: 100;
+  background: #565656;
+}
+
+.dragging-handler-week.bottom{
+  cursor: s-resize;
+  position: absolute;
+  bottom: 0px;
+  
+  left: 1px;
+  right: 1px;
+  height: 10px;
+  z-index: 100;
+  background: #565656;
+
+}
+
+.resize-event-bg{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: #000;
+  opacity: .2;
+  z-index: 100;
 }

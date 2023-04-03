@@ -82,8 +82,8 @@ const strinkEvent = (leftOvercome, percentage, srinkedObject) => {
   if (leftOvercome.length === 0) return;
 
   leftOvercome.forEach(event => {
-    if (srinkedObject[event.id]) return;
-    srinkedObject[event.id] = true;
+    if (srinkedObject[event.sc_app__id]) return;
+    srinkedObject[event.sc_app__id] = true;
     event.width = event.width * percentage;
     event.left = event.left * percentage;
     strinkEvent(event.leftOvercome, percentage, srinkedObject);
@@ -93,6 +93,7 @@ const strinkEvent = (leftOvercome, percentage, srinkedObject) => {
 export const calculatePositions = events => {
   const totalWidth = 100;
   //sort events by start time
+
   const sortedEvents = events.sort((a, b) => a.startTime - b.startTime);
 
   for (let i = 0; i < sortedEvents.length; i++) {
@@ -212,17 +213,14 @@ export const parseEvents = (events, dateFormat) => {
     );
 
     const total_event_time = (endTime - startTime) / 3600000;
-    const mid = new Date(startTime + (total_event_time * 3600000) / 2);
 
     const eventObjNew = {
-      id: eventObj.id,
+      sc_app__id: eventObj.sc_app__id,
       title: eventObj.title,
-      startDate,
-      endDate,
+
       startTime,
       endTime,
-      mid,
-      mid_day_string: formatDate(mid, 'dd/MM/yyyy'),
+
       total_event_time,
     };
     tempEvents.push(eventObjNew);
@@ -240,4 +238,11 @@ export const isDateBetween = (dateString, startDateString, endDateString) => {
   // console.log('date==========',date,'startDate',startDate,'endDate',endDate)
 
   return date >= startDate && date <= endDate;
+};
+
+export const setEventID = events => {
+  for (let i = 0; i < events.length; i++) {
+    events[i].sc_app__id = i;
+  }
+  return events;
 };
