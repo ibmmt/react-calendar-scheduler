@@ -232,9 +232,9 @@ export const parseEvents = (events, dateFormat) => {
 };
 
 export const isDateBetween = (dateString, startDateString, endDateString) => {
-  const date = new Date(dateString);
-  const startDate = new Date(startDateString);
-  const endDate = new Date(endDateString);
+  const date = new Date(dateString).getTime();
+  const startDate = new Date(startDateString).setHours(0, 0, 0, 0);
+  const endDate = new Date(endDateString).setHours(0, 0, 0, 0);
   // console.log('date==========',date,'startDate',startDate,'endDate',endDate)
 
   return date >= startDate && date <= endDate;

@@ -22,7 +22,7 @@ const EventBox = ({
     e.preventDefault();
 
     setIsResizing(true);
-    onStartResize(event, setMarginTop, setEventHeight, side);
+    onStartResize(event, side);
     //lastPostion.current = e.clientY;
   };
 
@@ -113,7 +113,7 @@ const EventBox = ({
         left: event.left + '%',
         top: marginTop + 'px',
         resize: 'both',
-        zIndex: 1000,
+
         height: eventHeight + 'px',
       }}
       onMouseUp={handleMouseUp}

@@ -11,12 +11,14 @@ const DayBoxWeek = ({
   boxHeight,
   boxTime,
   boxDay,
+  updateEvents,
   heightOfWeekColumn,
   calanderTableRef,
 }) => {
   if (events && events.length) {
     console.log('events', events);
   }
+  console.log('events', events);
   const [isResizing, setIsResizing] = useState(false);
   const [resizingEvent, setResizingEvent] = useState({});
   const [resizingSide, setResizingSide] = useState('');
@@ -33,6 +35,8 @@ const DayBoxWeek = ({
         events[i] = event;
       }
     }
+    setIsResizing(false);
+    updateEvents(events);
   };
 
   const BoxRef = useRef();
@@ -54,6 +58,18 @@ const DayBoxWeek = ({
               updateEvent={updateEvent}
             />
           ))}
+        {isResizing && (
+          <ResizeEvent
+            event={resizingEvent}
+            boxDay={boxDay}
+            side={resizingSide}
+            boxHeight={boxHeight}
+            calanderTableRef={calanderTableRef}
+            boxTime={boxTime}
+            heightOfWeekColumn={heightOfWeekColumn}
+            updateEvent={updateEvent}
+          />
+        )}
         {[...Array(24).keys()].map((hour, index) => (
           <div
             key={index}
@@ -61,19 +77,6 @@ const DayBoxWeek = ({
             className="ib-table-hr-box-week"
           ></div>
         ))}
-        {isResizing && (
-          <ResizeEvent
-            event={resizingEvent}
-            side={resizingSide}
-            boxHeight={boxHeight}
-            boxTime={boxTime}
-            resizeDone={() => {
-              setIsResizing(false);
-              setResizingEvent({});
-              setResizingSide('');
-            }}
-          />
-        )}
       </div>
     </div>
   );

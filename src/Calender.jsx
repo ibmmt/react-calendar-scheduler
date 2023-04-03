@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   calculatePositions,
   formatDate,
+  isDateBetween,
   parseEvents,
   setEventID,
 } from './_utils';
@@ -66,11 +67,18 @@ const Calendar = props => {
                     boxHeight={boxHeight}
                     boxTime={boxTime}
                     boxDay={boxday_string}
+                    updateEvents={events => {
+                      setEvents(calculatePositions(events));
+                    }}
                     heightOfWeekColumn={heightOfWeekColumn}
                     events={
                       events
-                        ? events.filter(
-                            event => event.mid_day_string === boxday_string,
+                        ? events.filter(event =>
+                            isDateBetween(
+                              boxDay,
+                              event.startTime,
+                              event.endTime,
+                            ),
                           )
                         : []
                     }

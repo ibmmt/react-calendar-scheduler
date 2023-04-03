@@ -1,32 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 
 const EventResizeBox = ({
-  title,
   event,
   side,
-  top,
+
   color,
   boxHeight,
   boxTime,
-  lastCleintY,
+
   heightOfWeekColumn,
   updateEvent,
 }) => {
-  const [marginTop, setMarginTop] = useState(top);
+  const [marginTop, setMarginTop] = useState(0);
   const [eventHeight, setEventHeight] = useState(0);
-  const lastCleintYRef = useRef(lastCleintY);
+  const lastCleintYRef = useRef(0);
   const [isResizing, setIsResizing] = useState(true);
 
-  const setHeightAndTop = (diff, side) => {
-    if (side === 'top') {
-      setMarginTop(marginTop + diff);
-      setEventHeight(eventHeight - diff);
-    }
-    if (side === 'bottom') {
-      setEventHeight(eventHeight + diff);
-      //eventHeight= eventHeight + (lastClientBottom - e.clientY);
-    }
-  };
   const eventStyleWrap = {
     height: eventHeight,
   };
@@ -53,7 +42,7 @@ const EventResizeBox = ({
   useEffect(() => {
     setPostionAndHeight();
   }, []);
-  const mouseUp = e => {
+  const handleMouseUp = e => {
     if (!isResizing) return;
     e.preventDefault();
     setIsResizing(false);
@@ -77,25 +66,43 @@ const EventResizeBox = ({
 
     newEvent.total_event_time = eventHeight / (boxHeight / boxTime);
 
-    // startTime,
-    //   endTime,
-    // startDate: '04/04/2023',
-    //   endDate: '04/04/2023',
-    //   startTime: '01:30:00',
-    //   endTime: '03:00:00',
     updateEvent(event);
+  };
+
+  const resizeEventFun = (diff, side) => {
+    console.log('setHeightAndTop', diff, side);
+    if (side === 'top') {
+      setMarginTop(marginTop + diff);
+      setEventHeight(eventHeight - diff);
+    }
+    if (side === 'bottom') {
+      setEventHeight(eventHeight + diff);
+    }
+  };
+
+  const handleMouseMove = e => {
+    console.log('handleMouseMove');
+    if (!isResizing) return;
+    console.log(
+      'moooooooooooooooooooooooooooooooove',
+      e.clientY,
+      lastCleintYRef.current,
+    );
+    if (lastCleintYRef.current !== 0) {
+      const diff = e.clientY - lastCleintYRef.current;
+      console.log('diff', diff, side);
+      resizeEventFun(diff, side);
+    }
+
+    lastCleintYRef.current = e.clientY;
   };
 
   return (
     <div
       className="resize-event-bg"
-      onMouseUp={mouseUp}
-      onMouseMove={e => {
-        if (!isResizing) return;
-        const diff = e.clientY - lastCleintYRef.current;
-        setHeightAndTop(diff, side);
-        lastCleintYRef.current = e.clientY;
-      }}
+      onMouseUp={handleMouseUp}
+      // onMouseLeave={handleMouseUp}
+      onMouseMove={handleMouseMove}
     >
       <div
         className="ib-event-wrapper ib-event-wrapper-week"
@@ -103,28 +110,24 @@ const EventResizeBox = ({
           width: 100 + '%',
           left: 0,
           top: marginTop + 'px',
-          resize: 'both',
+          // resize: 'both',
           backgroundColor: color,
           zIndex: 1000,
           height: eventHeight + 'px',
         }}
+        // onMouseMove={handleMouseMove}
       >
-        <div className="ib-event-box ib-event-box-week" style={eventStyleWrap}>
-          <div className="ib-event ib-event-week">{title}</div>
-          <div
-            className="dragging-handler-week top"
-            // onMouseDown={e => {
-            //   handleMouseDown(e, 'top');
-            //   setSide('top');
-            // }}
-          ></div>
-          <div
-            className="dragging-handler-week bottom"
-            // onMouseDown={e => {
-            //   handleMouseDown(e, 'bottom');
-            //   setSide('bottom');
-            // }}
-          ></div>
+        <div
+          className="ib-event-box ib-event-box-week"
+          style={eventStyleWrap}
+          onClick={() => {
+            alert('clicked');
+          }}
+          //onMouseMove={handleMouseMove}
+        >
+          <div className="ib-event ib-event-week">{event.title}</div>
+          <div className="dragging-handler-week top"></div>
+          <div className="dragging-handler-week bottom"></div>
         </div>
       </div>
     </div>

@@ -86,7 +86,7 @@ function App() {
     },
   ];
 
-  events = events.splice(0, 1);
+  events = events.splice(0, 6);
   return (
     <div className="App">
       <div className="container">
