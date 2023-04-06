@@ -1,18 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { EventHandlerContex } from './Calender';
 
 const EventBox = ({
   boxHeight,
   boxTime,
   heightOfWeekColumn,
-
   event,
   onStartResize,
 }) => {
   //const lastPostion = useRef(0);
   const [isResizing, setIsResizing] = useState(false);
-
+  const [isDraging, setIsDraging] = useState(false);
+  const eventRef = useRef();
   const [marginTop, setMarginTop] = useState(0);
   const [eventHeight, setEventHeight] = useState(0);
+  const [dragStart] = useContext(EventHandlerContex);
 
   const handleMouseDown = (e, side) => {
     console.log('handleMouseDown', e);
@@ -33,43 +35,58 @@ const EventBox = ({
     // setHeightAndTop(e.clientY - lastPostion.current, side);
     //  document.removeEventListener('mousemove', handleMouseMove);
   };
-  // const setHeightAndTop = (diff, side) => {
-  //   if (side === 'top') {
-  //     setMarginTop(marginTop + diff);
-  //     setEventHeight(eventHeight - diff);
-  //   }
-  //   if (side === 'bottom') {
-  //     setEventHeight(eventHeight + diff);
-  //     //eventHeight= eventHeight + (lastClientBottom - e.clientY);
-  //   }
+
+  const handleDragStart = e => {
+    console.log('handleDragStarstart start', e);
+    document.body.style.cursor = 'none';
+    // setIsDraging(true);
+    console.log(event);
+    // e.dataTransfer.setData('text/plain', event.sc_app__id);
+    dragStart(event);
+  };
+  const handleDragEnd = e => {
+    console.log('handleDrag end end ', e);
+    setIsDraging(false);
+    document.body.style.cursor = 'auto';
+    //dragStart(null);
+    e.dataTransfer.setData('text/plain', event.sc_app__id);
+  };
+
+  // const mouseDrag = e => {
+  //   console.log('mouseDrag', e.clientX, e.clientY);
   // };
 
-  // const handleMouseMove = e => {
-  //   if (!isResizing) return;
-
-  //   console.log('isResizing', isResizing);
-
-  //   console.log('handleMouseMove');
-  //   console.log('eventHeight', eventHeight);
-  //   console.log('e.clientY', e.clientY);
-  //   console.log(' lastPostion.current', lastPostion.current);
-  //   console.log('marginTop', marginTop);
-
-  //   console.log('e.clientY - lastClinetTop', e.clientY - lastPostion.current);
-  //   if (!eventRef) return;
-  //   lastPostion.current = e.clientY;
-  //   setHeightAndTop(e.clientY - lastPostion.current, side);
-  // };
   // useEffect(() => {
-  //   if (!isResizing) return;
-  //   console.log('eventHeight', eventHeight);
-  //   // document.addEventListener('mouseup', handleMouseUp);
-  //   //document.addEventListener('mousemove', handleMouseMove);
+  //   if (isDraging) {
+  //     console.log('11111111111111111111111');
+  //     document.addEventListener('mousemove', mouseDrag);
+  //   } else {
+  //     console.log('222222222222222222222222222');
+  //     document.removeEventListener('mousemove', mouseDrag);
+  //   }
   //   return () => {
-  //     document.removeEventListener('mouseup', () => {});
-  //     document.removeEventListener('mousemove', handleMouseMove);
+  //     document.removeEventListener('mousemove', mouseDrag);
   //   };
-  // }, [isResizing]);
+  // }, [isDraging]);
+  // const dragOverHandler = e => {
+  //   e.preventDefault();
+  //   e.dataTransfer.dropEffect = 'move';
+  //   console.log('dragOverHandler', e.clientX, e.clientY);
+  // };
+  // const dropHandler = e => {
+  //   e.preventDefault();
+  //   console.log('dropHandler', e.clientX, e.clientY);
+  // };
+
+  // useEffect(() => {
+  //   document.addEventListener('dragover', dragOverHandler);
+  //   document.addEventListener('drop', dropHandler);
+  //   return () => {
+  //     document.removeEventListener('dragover', dragOverHandler);
+  //     document.removeEventListener('drop', dropHandler);
+  //   };
+  // });
+
   const setPostionAndHeight = () => {
     const startTimeObj = new Date(event.startTime);
     const daystartTime = new Date(startTimeObj).setHours(0, 0, 0, 0);
@@ -107,13 +124,22 @@ const EventBox = ({
 
   return (
     <div
-      className="ib-event-wrapper ib-event-wrapper-week"
+      id={event.sc_app__id}
+      className={
+        'ib-event-wrapper ib-event-wrapper-week ' +
+        (isDraging ? 'dragging' : '')
+      }
+      ref={eventRef}
+      draggable="true"
+      onDragStart={e => handleDragStart(e, event)}
+      onDragEnd={handleDragEnd}
       style={{
         width: event.width + '%',
         left: event.left + '%',
         top: marginTop + 'px',
         resize: 'both',
-
+        cursor: 'move',
+        opacity: isDraging ? 0.5 : 1,
         height: eventHeight + 'px',
       }}
       onMouseUp={handleMouseUp}

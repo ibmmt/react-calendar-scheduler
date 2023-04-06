@@ -231,11 +231,10 @@ export const parseEvents = (events, dateFormat) => {
   return tempEvents;
 };
 
-export const isDateBetween = (dateString, startDateString, endDateString) => {
-  const date = new Date(dateString).getTime();
+export const isDateBetween = (dateObj, startDateString, endDateString) => {
+  const date = new Date(dateObj).getTime();
   const startDate = new Date(startDateString).setHours(0, 0, 0, 0);
   const endDate = new Date(endDateString).setHours(0, 0, 0, 0);
-  // console.log('date==========',date,'startDate',startDate,'endDate',endDate)
 
   return date >= startDate && date <= endDate;
 };
@@ -246,3 +245,8 @@ export const setEventID = events => {
   }
   return events;
 };
+
+export function findAncestor(el, cls) {
+  while ((el = el.parentElement) && !el.classList.contains(cls));
+  return el;
+}
