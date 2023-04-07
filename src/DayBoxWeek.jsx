@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import DragingEvent from './DragingEvent';
+import React, { useEffect, useRef, useState } from 'react';
 import EventBox from './EventBox';
 import ResizeEvent from './ResizeEvent';
 
@@ -10,11 +9,13 @@ const DayBoxWeek = ({
   events,
   draggingEvent,
   boxHeight,
+  isDraging,
   boxTime,
   boxDay,
   updateEvents,
   heightOfWeekColumn,
   calanderTableRef,
+  dragBoxMouseEnter,
 }) => {
   const [isResizing, setIsResizing] = useState(false);
   const [resizingEvent, setResizingEvent] = useState({});
@@ -36,6 +37,21 @@ const DayBoxWeek = ({
     updateEvents(events);
   };
 
+  const dragMouseEnter = e => {
+    console.log('dragMouseEnter', e, isDraging);
+    e.preventDefault();
+    dragBoxMouseEnter(boxDay);
+  };
+  useEffect(() => {
+    if (!BoxRef.current) return;
+    if (isDraging) {
+      BoxRef.current.addEventListener('mouseenter', dragMouseEnter, true);
+    }
+    return () => {
+      BoxRef.current.removeEventListener('mouseenter', dragMouseEnter, true);
+    };
+  }, [isDraging]);
+
   const BoxRef = useRef();
   return (
     <>
@@ -45,6 +61,7 @@ const DayBoxWeek = ({
       <div
         ref={BoxRef}
         className="ib-cell ib-cell-week"
+        data-boxDay={boxDay}
         // onDragOver={e => {
         //   console.log('onDragOver', e);
         //   console.log('onDragOver', e.target);
@@ -67,6 +84,16 @@ const DayBoxWeek = ({
                 updateEvent={updateEvent}
               />
             ))}
+          {draggingEvent && draggingEvent.sc_app__id && (
+            <EventBox
+              event={draggingEvent}
+              boxDay={boxDay}
+              boxHeight={boxHeight}
+              boxTime={boxTime}
+              heightOfWeekColumn={heightOfWeekColumn}
+            />
+          )}
+
           {isResizing && (
             <ResizeEvent
               event={resizingEvent}
@@ -79,21 +106,7 @@ const DayBoxWeek = ({
               updateEvent={updateEvent}
             />
           )}
-          {draggingEvent && draggingEvent.sc_app__id && (
-            <>
-              <DragingEvent
-                event={draggingEvent}
-                color="red"
-                boxHeight={boxHeight}
-                boxTime={boxTime}
-                heightOfWeekColumn={heightOfWeekColumn}
-                updateEvent={events => {
-                  //setEvents(calculatePositions(events));
-                  console.log('updateEvents', events);
-                }}
-              />
-            </>
-          )}
+
           {[...Array(24).keys()].map((hour, index) => (
             <div
               key={index}

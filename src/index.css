@@ -19,9 +19,13 @@ code {
 /* Ib table */
 
 .ib-table-week{
-
+margin-left: 120px;
  border-spacing: 0;
+ background: red;
  margin-bottom: 100px;
+}
+.ib-table-out-week{
+  display: flex;
 }
 
 .ib-table-td-week{
@@ -43,10 +47,9 @@ code {
   border: 1px solid #000;
 }
 
-.ib-table-tr-week{
-  /* border: 1px solid #000; */
+.ib-tb-wrapper-week{
+  display: flex;
 }
-
 .ib-cell{
   position: absolute;
   border: 1px solid #ccc;
@@ -128,6 +131,8 @@ code {
 
 .placeholder {
   /* display: none; */
+  cursor: move; 
+  cursor: grab;
   position: absolute;
   pointer-events: none;
   border: 1px dashed black;

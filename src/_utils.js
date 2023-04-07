@@ -182,15 +182,19 @@ export const parseEvents = (events, dateFormat) => {
 
   for (let i = 0; i < events.length; i++) {
     const eventObj = events[i];
+
     // ----todo vlaidate date
     // startDate:"26/03/2023", endDate:"26/03/2023", startT ime:"13:00:00",endTime:"14:00:00"
 
     const startDate = new Date(
       parseDate(eventObj.startDate, dateFormat),
     ).setHours(0, 0, 0, 0);
-    const endDate = new Date(
-      parseDate(eventObj.startDate, dateFormat),
-    ).setHours(0, 0, 0, 0);
+    const endDate = new Date(parseDate(eventObj.endDate, dateFormat)).setHours(
+      0,
+      0,
+      0,
+      0,
+    );
 
     const startTimeSplit = eventObj.startTime
       ? eventObj.startTime.split(':')
@@ -215,6 +219,7 @@ export const parseEvents = (events, dateFormat) => {
     const total_event_time = (endTime - startTime) / 3600000;
 
     const eventObjNew = {
+      ...eventObj,
       sc_app__id: eventObj.sc_app__id,
       title: eventObj.title,
 
@@ -249,4 +254,27 @@ export const setEventID = events => {
 export function findAncestor(el, cls) {
   while ((el = el.parentElement) && !el.classList.contains(cls));
   return el;
+}
+
+export function isSameDay(date1, date2) {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
+
+export function getDaysDifference(date1, date2) {
+  const diffMs = date1 - date2;
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  return days;
+}
+
+export function addDays(date, days) {
+  const dateMs = date.getTime();
+  const daysMs = days * 24 * 60 * 60 * 1000;
+  const newDateMs = dateMs + daysMs;
+  const newDate = new Date(newDateMs);
+  return newDate;
 }

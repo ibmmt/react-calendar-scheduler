@@ -4,6 +4,7 @@ import { createContext, useEffect, useRef, useState } from 'react';
 import {
   calculatePositions,
   formatDate,
+  getDaysDifference,
   isDateBetween,
   parseEvents,
   setEventID,
@@ -19,231 +20,191 @@ import DayBoxWeek from './DayBoxWeek';
 
 const Calendar = props => {
   const [events, setEvents] = useState(props.events);
-  const [placeHolderStyle, setPlaceHolderStyle] = useState({});
+  //const [placeHolderStyle, setPlaceHolderStyle] = useState({});
   const calanderTableRef = useRef();
   const calanderTBRef = useRef();
-  const dragplaceholderRef = useRef();
-  //const leftColRef = useRef();
-  const [draggingEvent, setDraggingEvent] = useState({});
+  const lastCleintYRef = useRef(0);
+  const [draggingEvent, setDraggingEvent] = useState(null);
+  // const [currentDragDate, setCurrentDragDate] = useState(null);
 
+  const currentDragDate = useRef(null);
   useEffect(() => {
     setEvents(
       calculatePositions(
         parseEvents(setEventID(props.events), 'dd/MM/yyyy', 'HH:mm:ss'),
       ),
     );
-
-    // document.addEventListener('drag', function (e) {
-    //   //console.log('drag', e);
-    //   // Get the table cell that the cursor is over
-
-    //   // placeholderElement.style.left = tableCell.offsetLeft + 'px';
-    //   // placeholderElement.style.top = tableCell.offsetTop + 'px';
-    //   // placeholderElement.style.width = tableCell.offsetWidth + 'px';
-    //   // placeholderElement.style.height = tableCell.offsetHeight + 'px';
-    //   //  }
-    // });
-
-    // document.addEventListener('dragend', function (event) {
-    //   // Show the original element
-    //   var originalElement = document.getElementById(
-    //     event.dataTransfer.getData('text'),
-    //   );
-    //   originalElement.style.display = 'block';
-    //   // Show the cursor
-    //   document.body.style.cursor = 'auto';
-    //   // Hide the placeholder element
-    //   var placeholderElement = document.querySelector('.placeholder');
-    //   placeholderElement.style.display = 'none';
-    // });
   }, [props.events]);
 
-  useEffect(() => {
-    //  const daystartTime = new Date(draggingEvent.startTime).setHours(0, 0, 0, 0);
-    // const initialTop =
-    const height = (boxHeight / boxTime) * draggingEvent.total_event_time;
+  const dragStart = (event, distaceFromTop, selectedDate) => {
+    console.log('dragStart', event);
+    console.log('dragStart', distaceFromTop);
+    console.log('dragStart', new Date(selectedDate));
+    // setCurrentDragDate(selectedDate);
+    currentDragDate.current = selectedDate;
+    setDraggingEvent({ ...event });
+  };
 
-    document.addEventListener('mousemove', function (e) {
-      let element = document.elementFromPoint(e.pageX, e.pageY);
+  const dragBoxMouseEnter = date => {
+    console.log('dragBoxMouseEnter', date);
+    const daysDiff = getDaysDifference(date, currentDragDate.current);
+    if (daysDiff != 0) {
+      console.log('daysDiff', daysDiff);
+      console.log(
+        'draggingEvent.startTime + daysDiff * 24 * 3600000',
+        new Date(draggingEvent.startTime + daysDiff * 24 * 3600000),
+      );
+      draggingEvent.startTime =
+        draggingEvent.startTime + daysDiff * 24 * 3600000;
+      draggingEvent.endTime = draggingEvent.endTime + daysDiff * 24 * 3600000;
+      currentDragDate.current = date;
+      setDraggingEvent(draggingEvent);
+    }
+    // check same day
+  };
 
-      if (element) {
-        // Get the closest td element
-        const tableCell = element.closest('.ib-table-hr-box-week');
-        const ibCellWeek = element.closest('.ib-cell-week');
+  const dragingHandler = e => {
+    e.preventDefault();
+    if (!draggingEvent) return;
+    if (lastCleintYRef.current === 0) {
+      lastCleintYRef.current = e.clientY;
+      return;
+    }
 
-        if (tableCell && ibCellWeek) {
-          const { top } = ibCellWeek.getBoundingClientRect();
-          const { left } = tableCell.getBoundingClientRect();
+    const diff = e.clientY - lastCleintYRef.current;
+    if (diff > 10 || diff < -10) {
+      2 * 100;
+      console.log('down', diff); //1diff= boxHeight/boxTime
+      draggingEvent.startTime =
+        draggingEvent.startTime + (diff / boxHeight) * boxTime * 3600000;
+      draggingEvent.endTime =
+        draggingEvent.endTime + (diff / boxHeight) * boxTime * 3600000;
+      setDraggingEvent({ ...draggingEvent });
+      lastCleintYRef.current = e.clientY;
+    }
 
-          var placeholderElement = document.querySelector('.placeholder');
-          placeholderElement.style.left = left + 'px';
+    // const height = (boxHeight / boxTime) * draggingEvent.total_event_time;
+    // let element = document.elementFromPoint(e.pageX, e.pageY);
 
-          if (e.pageY - top - height / 2 > 0) {
-            placeholderElement.style.top =
-              Math.floor(e.pageY - top + height / 2) + 'px';
-          }
+    // if (element) {
+    //   // Get the closest td element
+    //   // const tableCell = element.closest('.ib-table-hr-box-week');
+    //   // const ibCellWeek = element.closest('.ib-cell-week');
+    //   // const ibTbWrapper = element.closest('.ib-tb-wrapper');
 
-          placeholderElement.style.width = tableCell.offsetWidth + 'px';
+    //   // if (ibCellWeek && ibTbWrapper) {
+    //   //   const { top, left } = ibCellWeek.getBoundingClientRect();
+    //   //   const { left: leftLeftWreap } = ibTbWrapper.getBoundingClientRect();
 
-          placeholderElement.style.height = height + 'px';
-        }
-      }
-    });
-  }, [draggingEvent]);
+    //   //   const placeholderElement = dragplaceholderRef.current;
+    //   //   placeholderElement.style.left = left - leftLeftWreap + 'px';
+
+    //   //   if (e.pageY - top > 0) {
+    //   //     placeholderElement.style.top =
+    //   //       Math.floor(e.pageY - top - height / 2) + 'px';
+    //   //   }
+
+    //   //   placeholderElement.style.width = ibCellWeek.offsetWidth + 'px';
+
+    //   //   placeholderElement.style.height = height + 'px';
+    //   // }
+    // }
+  };
   const dropHandler = e => {
     e.preventDefault();
+    setDraggingEvent(null);
 
-    const data = e.dataTransfer.getData('text/plain');
-    const draggedElement = document.createElement('div');
-
-    draggedElement.innerHTML = data;
-    e.target.appendChild(draggedElement);
-    // console.log('draggedElement', draggedElement);
-    // console.log(e);
-
-    const topDistance = draggedElement.offsetTop;
-
-    console.log(`Distance from top: ${topDistance}px`);
-
-    const new_date = new Date(e.target.getAttribute('data-date'));
-    console.log('new_date', new_date);
-  };
-  const dragOverHandler = e => {
-    // console.log('dragOverHandler 444', e.clientX, e.clientY);
-
-    // var tableCell = document.elementFromPoint(e.pageX, e.pageY);
-    // console.log('tableCell', tableCell);
-
-    // console.log(tableCell.offsetLeft, tableCell.offsetTop);
-    // //if (tableCell && tableCell.tagName.toLowerCase() === 'td') {
-    // // Update the position of the placeholder element to be relative to the table cell
-    // //  let placeholderElement = dragplaceholderRef.current;
-    // placeHolderStyle.left = tableCell.offsetLeft + 'px';
-    // placeHolderStyle.top = tableCell.offsetTop + 'px';
-    // placeHolderStyle.width = tableCell.offsetWidth + 'px';
-    // placeHolderStyle.height = tableCell.offsetHeight + 'px';
-    setPlaceHolderStyle(placeHolderStyle);
-
-    // // var tableCell = document.elementFromPoint(event.pageX, event.pageY);
-    // // if (tableCell && tableCell.tagName.toLowerCase() === 'td') {
-    // //   // Update the position of the placeholder element to be relative to the table cell
-    // //   var placeholderElement = document.querySelector('.placeholder');
-    // //   placeholderElement.style.left = tableCell.offsetLeft + 'px';
-    // //   placeholderElement.style.top = tableCell.offsetTop + 'px';
-    // //   placeholderElement.style.width = tableCell.offsetWidth + 'px';
-    // //   placeholderElement.style.height = tableCell.offsetHeight + 'px';
-    // // }
-    e.preventDefault();
-  };
-
-  const dragStart = event => {
-    console.log('dragStart', event);
-    setDraggingEvent(event);
+    document.removeEventListener('mousemove', dragingHandler);
+    document.removeEventListener('mouseup', dropHandler);
   };
 
   useEffect(() => {
-    calanderTBRef.current.addEventListener('dragover', dragOverHandler);
-    calanderTBRef.current.addEventListener('drop', dropHandler, true);
+    if (draggingEvent) {
+      document.addEventListener('mousemove', dragingHandler);
+      document.addEventListener('mouseup', dropHandler);
+    }
     return () => {
-      // calanderTBRef.current.removeEventListener('drop', dropHandler, true);
-      // calanderTBRef.current.removeEventListener('dragover', dragOverHandler);
+      document.removeEventListener('mousemove', dragingHandler);
+      document.removeEventListener('mouseup', dropHandler);
     };
-  }, []);
+  }, [draggingEvent]);
 
-  console.log('calendar events', events);
-
+  console.log('events', events);
   return (
     <div>
       <h2>7-Day Calendar</h2>
       <div ref={calanderTableRef} className="ib-table ib-table-week">
-        {/* <div style={{ position: 'relative', display: 'flex' }}>
-          <div className="left-col" ref={leftColRef}>
-            #
-          </div>
-          {[0, 1, 2, 3, 4, 5, 6].map(dayIndex => (
-            <div key={dayIndex} className="ib-table-th">
-              {formatDate(
-                new Date(Date.now() + dayIndex * 24 * 60 * 60 * 1000),
-                'dd/MMM/yyyy',
-              )}
-            </div>
-          ))}
-        </div> */}
-
         <div
           ref={calanderTBRef}
           style={{ position: 'relative', display: 'flex' }}
         >
-          <div
-            className="ib-table-tr ib-table-tr-week"
-            style={{ position: 'relative', display: 'flex' }}
-          >
-            <div className="ib-table-td ib-table-td-week"> 00</div>
-            {[...Array(7).keys()].map(dayIndex => {
-              const now = new Date();
-              let boxDay = new Date(
-                now.setDate(now.getDate() + dayIndex),
-              ).setHours(0, 0, 0, 0);
-              //var boxday_string = formatDate(new Date(boxDay), 'dd/MM/yyyy');
+          <EventHandlerContex.Provider value={[dragStart]}>
+            <div className="ib-table-out ib-table-out-week">
+              <div className="ib-table-td ib-table-td-week"> 00</div>
+              <div className="ib-tb-wrapper ib-tb-wrapper-week">
+                {[...Array(7).keys()].map(dayIndex => {
+                  const now = new Date();
+                  let boxDay = new Date(
+                    now.setDate(now.getDate() + dayIndex),
+                  ).setHours(0, 0, 0, 0);
 
-              return (
-                <div
-                  key={dayIndex}
-                  className="ib-table-td ib-table-td-week"
-                  style={{ height: heightOfWeekColumn + 'px' }}
-                >
-                  <div key={dayIndex} className="ib-table-th">
-                    {formatDate(new Date(boxDay), 'dd/MMM/yyyy')}
-                  </div>
+                  return (
+                    <div
+                      key={dayIndex}
+                      className="ib-table-td ib-table-td-week"
+                      style={{ height: heightOfWeekColumn + 'px' }}
+                    >
+                      <div key={dayIndex} className="ib-table-th">
+                        {formatDate(new Date(boxDay), 'dd/MMM/yyyy')}
+                      </div>
 
-                  <EventHandlerContex.Provider value={[dragStart]}>
-                    <DayBoxWeek
-                      dayIndex={dayIndex}
-                      day={boxDay}
-                      calanderTableRef={calanderTableRef}
-                      boxHeight={boxHeight}
-                      draggingEvent2={
-                        draggingEvent &&
-                        isDateBetween(
-                          boxDay,
-                          draggingEvent.startTime,
-                          draggingEvent.endTime,
-                        )
-                          ? draggingEvent
-                          : null
-                      }
-                      boxTime={boxTime}
-                      boxDay={new Date(boxDay)}
-                      updateEvents={events => {
-                        setEvents(calculatePositions(events));
-                      }}
-                      heightOfWeekColumn={heightOfWeekColumn}
-                      events={
-                        events
-                          ? events.filter(event =>
-                              isDateBetween(
-                                boxDay,
-                                event.startTime,
-                                event.endTime,
-                              ),
-                            )
-                          : []
-                      }
-                    />
-                  </EventHandlerContex.Provider>
-                </div>
-              );
-            })}
-          </div>
+                      <DayBoxWeek
+                        dayIndex={dayIndex}
+                        day={boxDay}
+                        calanderTableRef={calanderTableRef}
+                        boxHeight={boxHeight}
+                        draggingEvent={
+                          draggingEvent &&
+                          isDateBetween(
+                            boxDay,
+                            draggingEvent.startTime,
+                            draggingEvent.endTime,
+                          )
+                            ? draggingEvent
+                            : null
+                        }
+                        isDraging={draggingEvent ? true : false}
+                        boxTime={boxTime}
+                        boxDay={new Date(boxDay)}
+                        dragBoxMouseEnter={dragBoxMouseEnter}
+                        updateEvents={events => {
+                          setEvents(calculatePositions(events));
+                        }}
+                        heightOfWeekColumn={heightOfWeekColumn}
+                        events={
+                          events
+                            ? events.filter(event =>
+                                isDateBetween(
+                                  boxDay,
+                                  event.startTime,
+                                  event.endTime,
+                                ),
+                              )
+                            : []
+                        }
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              {/* <DragingEvent
+                draggingEvent={draggingEvent}
+                boxTime={boxTime}
+                boxHeight={boxHeight}
+              /> */}
+            </div>
+          </EventHandlerContex.Provider>
         </div>
-      </div>
-
-      <div
-        className="placeholder"
-        ref={dragplaceholderRef}
-        style={{ ...placeHolderStyle }}
-      >
-        55555 + {placeHolderStyle.top}
       </div>
     </div>
   );

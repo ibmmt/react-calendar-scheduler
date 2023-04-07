@@ -1,111 +1,67 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-const DragingEvent = ({
-  event,
+const DragingEvent = ({ draggingEvent, boxHeight, boxTime }) => {
+  const dragplaceholderRef = useRef(null);
 
-  color,
-  boxHeight,
-  boxTime,
+  const dragingHandler = e => {
+    e.preventDefault();
+    if (!draggingEvent) return;
+    const height = (boxHeight / boxTime) * draggingEvent.total_event_time;
+    let element = document.elementFromPoint(e.pageX, e.pageY);
 
-  heightOfWeekColumn,
-  updateEvent,
-}) => {
-  const [marginTop, setMarginTop] = useState(0);
-  const [eventHeight, setEventHeight] = useState(0);
-  const lastCleintYRef = useRef(0);
-  const [isDraging, setIsDraging] = useState(true);
+    if (element) {
+      // Get the closest td element
+      // const tableCell = element.closest('.ib-table-hr-box-week');
+      const ibCellWeek = element.closest('.ib-cell-week');
+      const ibTbWrapper = element.closest('.ib-tb-wrapper');
 
-  const eventStyleWrap = {
-    height: eventHeight,
-  };
-  const setPostionAndHeight = () => {
-    const startTimeObj = new Date(event.startTime);
-    const daystartTime = new Date(startTimeObj).setHours(0, 0, 0, 0);
+      if (ibCellWeek && ibTbWrapper) {
+        const { top, left } = ibCellWeek.getBoundingClientRect();
+        const { left: leftLeftWreap } = ibTbWrapper.getBoundingClientRect();
 
-    const height = (boxHeight / boxTime) * event.total_event_time;
+        const placeholderElement = dragplaceholderRef.current;
+        placeholderElement.style.left = left - leftLeftWreap + 'px';
 
-    setEventHeight(height);
-    const hours_difference_from_start =
-      (Date.parse(startTimeObj) - Date.parse(new Date(daystartTime))) / 3600000;
-    let event_top = hours_difference_from_start * (boxHeight / boxTime);
+        if (e.pageY - top > 0) {
+          placeholderElement.style.top =
+            Math.floor(e.pageY - top - height / 2) + 'px';
+        }
 
-    console.log('margin', event_top);
-    if (event_top < 0) {
-      setEventHeight(height + event_top);
-      event_top = 0;
+        placeholderElement.style.width = ibCellWeek.offsetWidth + 'px';
+
+        placeholderElement.style.height = height + 'px';
+      }
     }
-
-    if (heightOfWeekColumn < height + event_top) {
-      setEventHeight(heightOfWeekColumn - event_top);
-    }
-    setMarginTop(event_top);
   };
 
   useEffect(() => {
-    setPostionAndHeight();
-  }, []);
-  const handleMouseUp = e => {
-    if (!isDraging) return;
-    e.preventDefault();
-    setIsDraging(false);
-    let newEvent = event;
-
-    newEvent.total_event_time = eventHeight / (boxHeight / boxTime);
-
-    updateEvent(event);
-  };
-
-  const resizeEventFun = diff => {
-    setMarginTop(marginTop + diff);
-  };
-
-  const handleMouseMove = e => {
-    console.log('handleMouseMove');
-    if (!isDraging) return;
-
-    if (lastCleintYRef.current !== 0) {
-      const diff = e.clientY - lastCleintYRef.current;
-      resizeEventFun(diff);
+    if (draggingEvent) {
+      document.addEventListener('mousemove', dragingHandler);
+      document.addEventListener('mouseup', dropHandler);
+      return () => {
+        document.removeEventListener('mousemove', dragingHandler);
+        document.removeEventListener('mouseup', dropHandler);
+      };
+    } else {
+      document.removeEventListener('mousemove', dragingHandler);
+      document.removeEventListener('mouseup', dropHandler);
     }
+  }, [draggingEvent]);
 
-    lastCleintYRef.current = e.clientY;
+  const dropHandler = e => {
+    e.preventDefault();
+
+    document.removeEventListener('mousemove', dragingHandler);
+    document.removeEventListener('mouseup', dropHandler);
   };
 
   return (
     <div
-      className="resize-event-bg"
-      onMouseUp={handleMouseUp}
-      // onMouseLeave={handleMouseUp}
-      onMouseMove={handleMouseMove}
+      className="placeholder"
+      ref={dragplaceholderRef}
+      // style={{ ...placeHolderStyle }}
     >
-      <div
-        className="ib-event-wrapper ib-event-wrapper-week"
-        style={{
-          // width: 100 + '%',
-          width: '100px',
-          left: 0,
-          top: marginTop + 'px',
-          // resize: 'both',
-          backgroundColor: color,
-          zIndex: 1000,
-
-          height: eventHeight + 'px',
-        }}
-        // onMouseMove={handleMouseMove}
-      >
-        <div
-          className="ib-event-box ib-event-box-week"
-          style={eventStyleWrap}
-          onClick={() => {
-            alert('clicked');
-          }}
-          //onMouseMove={handleMouseMove}
-        >
-          <div className="ib-event ib-event-week">{event.title}</div>
-          <div className="dragging-handler-week top"></div>
-          <div className="dragging-handler-week bottom"></div>
-        </div>
-      </div>
+      555554444444444
     </div>
   );
 };
