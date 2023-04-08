@@ -71,10 +71,10 @@ const DayBoxWeek = ({
         <div className="ib-cell-wrapper ib-cell-wrapper-week">
           {!!events &&
             !!events.length &&
-            events.map(event => (
+            events.map(eventObj => (
               <EventBox
-                key={event.sc_app__id}
-                event={event}
+                key={eventObj.sc_app__id}
+                eventObj={eventObj}
                 boxDay={boxDay}
                 onStartResize={onStartResize}
                 calanderTableRef={calanderTableRef}

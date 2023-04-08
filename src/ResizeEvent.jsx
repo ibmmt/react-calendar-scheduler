@@ -42,6 +42,7 @@ const EventResizeBox = ({
   useEffect(() => {
     setPostionAndHeight();
   }, []);
+
   const handleMouseUp = e => {
     if (!isResizing) return;
     e.preventDefault();

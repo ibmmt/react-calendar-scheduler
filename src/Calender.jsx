@@ -73,7 +73,7 @@ const Calendar = props => {
 
     const diff = e.clientY - lastCleintYRef.current;
     if (diff > 10 || diff < -10) {
-      2 * 100;
+      // 2 * 100;
       console.log('down', diff); //1diff= boxHeight/boxTime
       draggingEvent.startTime =
         draggingEvent.startTime + (diff / boxHeight) * boxTime * 3600000;
@@ -110,12 +110,22 @@ const Calendar = props => {
     //   // }
     // }
   };
+  const updateEvent = newEvent => {
+    for (let i = 0; i < events.length; i++) {
+      if (events[i].sc_app__id === event.sc_app__id) {
+        events[i] = newEvent;
+        break;
+      }
+    }
+    setEvents(calculatePositions(events));
+  };
+
   const dropHandler = e => {
     e.preventDefault();
     setDraggingEvent(null);
 
+    updateEvent(draggingEvent);
     document.removeEventListener('mousemove', dragingHandler);
-    document.removeEventListener('mouseup', dropHandler);
   };
 
   useEffect(() => {
@@ -138,7 +148,7 @@ const Calendar = props => {
           ref={calanderTBRef}
           style={{ position: 'relative', display: 'flex' }}
         >
-          <EventHandlerContex.Provider value={[dragStart]}>
+          <EventHandlerContex.Provider value={[dragStart, updateEvent]}>
             <div className="ib-table-out ib-table-out-week">
               <div className="ib-table-td ib-table-td-week"> 00</div>
               <div className="ib-tb-wrapper ib-tb-wrapper-week">
@@ -177,9 +187,9 @@ const Calendar = props => {
                         boxTime={boxTime}
                         boxDay={new Date(boxDay)}
                         dragBoxMouseEnter={dragBoxMouseEnter}
-                        updateEvents={events => {
-                          setEvents(calculatePositions(events));
-                        }}
+                        // updateEvents={events => {
+                        //   setEvents(calculatePositions(events));
+                        // }}
                         heightOfWeekColumn={heightOfWeekColumn}
                         events={
                           events
