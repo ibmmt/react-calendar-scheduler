@@ -11,9 +11,9 @@ const DragingEvent = ({ draggingEvent, boxHeight, boxTime }) => {
 
     if (element) {
       // Get the closest td element
-      // const tableCell = element.closest('.ib-table-hr-box-week');
-      const ibCellWeek = element.closest('.ib-cell-week');
-      const ibTbWrapper = element.closest('.ib-tb-wrapper');
+      // const tableCell = element.closest('.ib__sc__table-hr-box-week');
+      const ibCellWeek = element.closest('.ib__sc__cell-week');
+      const ibTbWrapper = element.closest('.ib__sc__tb-wrapper');
 
       if (ibCellWeek && ibTbWrapper) {
         const { top, left } = ibCellWeek.getBoundingClientRect();
@@ -35,17 +35,15 @@ const DragingEvent = ({ draggingEvent, boxHeight, boxTime }) => {
   };
 
   useEffect(() => {
-    if (draggingEvent) {
-      document.addEventListener('mousemove', dragingHandler);
-      document.addEventListener('mouseup', dropHandler);
-      return () => {
-        document.removeEventListener('mousemove', dragingHandler);
-        document.removeEventListener('mouseup', dropHandler);
-      };
-    } else {
+    if (!draggingEvent) {
+      return;
+    }
+    document.addEventListener('mousemove', dragingHandler);
+    document.addEventListener('mouseup', dropHandler);
+    return () => {
       document.removeEventListener('mousemove', dragingHandler);
       document.removeEventListener('mouseup', dropHandler);
-    }
+    };
   }, [draggingEvent]);
 
   const dropHandler = e => {

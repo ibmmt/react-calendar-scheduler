@@ -106,7 +106,7 @@ const EventResizeBox = ({
       onMouseMove={handleMouseMove}
     >
       <div
-        className="ib-event-wrapper ib-event-wrapper-week"
+        className="ib__sc__event-wrapper ib__sc__event-wrapper-week"
         style={{
           width: 100 + '%',
           left: 0,
@@ -119,14 +119,14 @@ const EventResizeBox = ({
         // onMouseMove={handleMouseMove}
       >
         <div
-          className="ib-event-box ib-event-box-week"
+          className="ib__sc__event-box ib__sc__event-box-week"
           style={eventStyleWrap}
           onClick={() => {
             alert('clicked');
           }}
           //onMouseMove={handleMouseMove}
         >
-          <div className="ib-event ib-event-week">{event.title}</div>
+          <div className="ib__sc__event ib__sc__event-week">{event.title}</div>
           <div className="dragging-handler-week top"></div>
           <div className="dragging-handler-week bottom"></div>
         </div>

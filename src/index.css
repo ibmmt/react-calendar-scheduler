@@ -18,48 +18,108 @@ code {
 
 /* Ib table */
 
-.ib-table-week{
-margin-left: 120px;
- border-spacing: 0;
- background: red;
- margin-bottom: 100px;
-}
-.ib-table-out-week{
+.ib__sc__table-out-week{
   display: flex;
+  width: 100%;
+  overflow-y: scroll;
+}
+.ib__sc__table-out-week::-webkit-scrollbar {
+  width: .4em;
+  border-radius: 1em;
+}
+ 
+.ib__sc__table-out-week::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(154, 154, 154, 0.3);
+  border-radius: .3em;
+}
+ 
+.ib__sc__table-out-week::-webkit-scrollbar-thumb {
+  background-color: rgb(211, 211, 211);
+  outline: 1px solid rgb(173, 181, 190);
+}
+.ib__sc__week-date{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5em;
+
+}
+.ib__sc__week-date-btn-group{
+  display: flex;
+  justify-content: center;
+  border: 1px solid #e8e8e8;
+  padding: 5px;
+  border-radius: 4px;
+}
+.ib__sc__week-date__bt-prev{
+  width: 20px;
+
+}
+.ib__sc__week-date__bt-text{
+  list-style: 1em;
+
+}
+.ib__sc__week-date__bt-next{
+  width: 20px;
+
 }
 
-.ib-table-td-week{
-  /* border: 1px solid #000; */
+.ib__sc__table-week{
+margin-left: 120px;
+ border-spacing: 0;
+ z-index: 1003;
+ margin-bottom: 100px;
+}
+
+
+.ib__sc__table-td-week{
   position: relative;
-  min-width: 150px;
+  flex: 1 1;
   box-sizing: border-box;
   padding: 0;
   border: none;
+  margin-left: -1px;
 }
 
-.ib-table-hr-box-week {
+.ib__sc__table-hr-box-week {
   background: #ffffff;
   border-top: 1px dashed #dbdbdb;
   margin-top: -1px;
 }
-
-.ib-table-th-week{
+.ib__sc__tb_week_time .ib__sc__table-hr-box-week{
+  border-top: 1px solid #fff;
+}
+.ib__sc__tb_week_time .ib__sc__table-hr-box-week small{
+  margin-top:-1em;
+}
+.ib__sc__table-th{
+  text-align: center;
+text-align: center;
+display: block;
+position: sticky;
+top: 0;
+z-index: 1001;
+padding: 10px;
+background: #f6f6f6;
+border: 1px solid #ccc;
+margin-left: -1px;
+}
+.ib__sc__table-th-week{
   border: 1px solid #000;
+  text-align: center;
 }
 
-.ib-tb-wrapper-week{
+.ib__sc__tb-wrapper-week{
   display: flex;
+ width: 100%;
 }
-.ib-cell{
-  position: absolute;
-  border: 1px solid #ccc;
-  top: 50px;
-  left: -1px;
-  right: 0px;
-  bottom: 0px;
+.ib__sc__cell{
+  
+  border: 1px dashed #ccc;
+ 
+ 
 
 }
-.ib-cell-wrapper{
+.ib__sc__cell-wrapper{
  
   position: relative;
   margin: 0px;
@@ -67,54 +127,60 @@ margin-left: 120px;
   height:100%;
 
 }
-.ib-event-wrapper{
-  width: 100%;
-  height: 100%; 
-
+.ib__sc__event-wrapper{
   position: absolute;
+  overflow: hidden;
+
+ 
  
 }
-.ib-event{
-  background: orange;
-  opacity: .5;
+.ib__sc__event{
+ 
+ 
   padding: 1px;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
 }
-.ib-event-box{
-  background: orange;
-  opacity: .5;
+.ib__sc__event-box{
   padding: 0px;
   width: 100%;
   height: 100%;
+  border-radius: 0.3em;
   text-align: center;
   box-sizing: border-box;
-  border: 1px solid #CCB;
+  border: 0.001em solid #d5d5d5;
+  overflow: hidden;
+}
+.dragging-handler-week{
+  display: none;
+}
+
+.ib__sc__event-box:hover .dragging-handler-week{
+  display: block;
+
+}
+.dragging-handler-week{
+
+  position: absolute;
+  cursor:re-resize;
+  left: 1px;
+  right: 1px;
+  height: 12px;
+  z-index: 100;
+  background: #ededed;
+  line-height: 10px;
+  color: #777;
+  opacity: .8;
 }
 
 .dragging-handler-week.top{
-  cursor: n-resize;
-  position: absolute;
+  cursor: s-resize;
   top: 0px;
-  left: 1px;
-  right: 1px;
-  height: 10px;
-  z-index: 100;
-  background: #565656;
 }
-
 .dragging-handler-week.bottom{
   cursor: s-resize;
-  position: absolute;
   bottom: 0px;
-  
-  left: 1px;
-  right: 1px;
-  height: 10px;
-  z-index: 100;
-  background: #565656;
-
 }
 
 .resize-event-bg{
@@ -138,3 +204,95 @@ margin-left: 120px;
   border: 1px dashed black;
   background: red;
 }
+
+.ib__sc__daybar-week{
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  background: #03A9F4;
+  z-index: 1004;
+  box-shadow: 0px 0px 4px 0px #98e7ff;
+}
+
+.ib__sc__table-hr-box-week.ib__sc__week-time {
+  font-size: 1em;
+  text-align: right;
+  line-height: 1em;
+  color: #ccc;
+}
+ 
+ 
+
+
+/* Add Event popup */
+
+.ib__sc-modal {
+  position: fixed;
+  z-index: 1100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  /* display: none; */
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ib__sc__form-group{
+  margin-bottom: 10px;
+}
+.ib__sc-modal-content {
+background-color: white;
+    padding: 20px;
+    width: 90%;
+    border-radius: 5px;
+    max-width: 400px;
+    position: relative;
+}
+.ib__sc__close-modal-btn{
+  position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 20px;
+    height: 20px;
+    width: 20px;
+    font-weight: 700;
+    font-size: 24px;
+    background: white;
+    text-align: center;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.ib__sc-form-control {
+  border: 1px solid #c4bfbf;
+  border-radius: 4px;
+  padding: 5px;
+  height: 40px;
+  box-shadow: none;
+  max-width: 100%;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+
+.ib__sc__form-time-row{
+  display: flex;
+  justify-content: space-between;
+}
+
+.ib__sc__form-time-row> * + * {
+  margin-left: 10px;
+}
+
+.ib__sc-label {
+  font-size: 13px;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+ 
+}
+

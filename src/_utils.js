@@ -6,32 +6,43 @@ export const formatDate = (dateObj, formatStr) => {
   const minutes = dateObj.getMinutes().toString().padStart(2, '0');
   const seconds = dateObj.getSeconds().toString().padStart(2, '0');
   const monthsArr = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
+    'January',
+    'February',
+    'March',
+    'April',
     'May',
-    'Jun',
-    'Jul',
-
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
-  const shortMonthName = monthsArr[dateObj.getMonth()];
-  const longMonthName = monthsArr[dateObj.getMonth() + 12];
+  const shortMonthName = monthsArr[dateObj.getMonth()].slice(0, 3);
+  const longMonthName = monthsArr[dateObj.getMonth()];
   const weekdaysArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const fullWeekdayNames = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
   const shortWeekdayName = weekdaysArr[dateObj.getDay()];
-  const longWeekdayName = weekdaysArr[dateObj.getDay() + 7];
+  const longWeekdayName = fullWeekdayNames[dateObj.getDay()];
 
   // Replace format placeholders with date values
   let formattedStr = formatStr.replace('yyyy', year);
   formattedStr = formattedStr.replace('yy', year.slice(-2));
-  formattedStr = formattedStr.replace('MM', month);
-  formattedStr = formattedStr.replace('MMM', shortMonthName);
+
   formattedStr = formattedStr.replace('MMMM', longMonthName);
+  formattedStr = formattedStr.replace('MMM', shortMonthName);
+  formattedStr = formattedStr.replace('MM', month);
+  formattedStr = formattedStr.replace('dddd', longWeekdayName);
+  formattedStr = formattedStr.replace('ddd', shortWeekdayName);
   formattedStr = formattedStr.replace('dd', day);
   formattedStr = formattedStr.replace('HH', hours);
   formattedStr = formattedStr.replace(
@@ -41,8 +52,6 @@ export const formatDate = (dateObj, formatStr) => {
   formattedStr = formattedStr.replace('mm', minutes);
   formattedStr = formattedStr.replace('ss', seconds);
   formattedStr = formattedStr.replace('H', hours);
-  formattedStr = formattedStr.replace('ddd', shortWeekdayName);
-  formattedStr = formattedStr.replace('dddd', longWeekdayName);
 
   return formattedStr;
 };
@@ -100,10 +109,10 @@ export const calculatePositions = events => {
     let width = 0;
     let left = 0;
     let leftOvercome = [];
-    console.log('\n\nEvent==================', sortedEvents[i].title);
-    console.log('i>>>>>>>>>>>', i);
+    //  console.log('\n\nEvent==================', sortedEvents[i].title);
+    //console.log('i>>>>>>>>>>>', i);
     for (let k = 0; k < i; k++) {
-      console.log('k', k, i, sortedEvents[k].title);
+      //console.log('k', k, i, sortedEvents[k].title);
       if (sortedEvents[k].endTime > sortedEvents[i].startTime) {
         leftOvercome.push(sortedEvents[k]);
       }
@@ -151,10 +160,6 @@ export const calculatePositions = events => {
     sortedEvents[i].leftOvercome = leftOvercome;
 
     if (width === 0) {
-      console.log('there is no space to fill>', sortedEvents[i].title);
-      console.log('leftOvercome', leftOvercome);
-      // console.log('there is no space to fill>', sortedEvents[i].title);
-      // width = totalWidth / (leftOvercome.length + 1);
       if (leftOvercome.length === 0) {
         width = totalWidth;
       } else {
@@ -167,10 +172,6 @@ export const calculatePositions = events => {
 
     sortedEvents[i].width = width;
     sortedEvents[i].left = left;
-    // console.log('width', width);
-    // console.log('left', left);
-    console.log('leftOvercome', leftOvercome);
-    // console.log('=======End=====');
   }
   return sortedEvents;
   //------------
@@ -178,13 +179,9 @@ export const calculatePositions = events => {
 
 export const parseEvents = (events, dateFormat) => {
   const tempEvents = [];
-  console.log('parseEvents--', events);
 
   for (let i = 0; i < events.length; i++) {
     const eventObj = events[i];
-
-    // ----todo vlaidate date
-    // startDate:"26/03/2023", endDate:"26/03/2023", startT ime:"13:00:00",endTime:"14:00:00"
 
     const startDate = new Date(
       parseDate(eventObj.startDate, dateFormat),
@@ -229,10 +226,8 @@ export const parseEvents = (events, dateFormat) => {
       total_event_time,
     };
     tempEvents.push(eventObjNew);
-    //  console.log('parseEvents--', events);
   }
 
-  //  console.log('parseEvents--', tempEvents);
   return tempEvents;
 };
 
@@ -277,4 +272,44 @@ export function addDays(date, days) {
   const newDateMs = dateMs + daysMs;
   const newDate = new Date(newDateMs);
   return newDate;
+}
+
+export function addTimeStringTodate(date, time) {
+  let [hours, minutes] = time.split(':');
+  hours = Number(hours);
+  minutes = minutes.replace(/[^0-9]/g, '');
+
+  if (time.includes('PM') && hours < 12) {
+    hours += 12;
+  }
+
+  date.setHours(hours);
+  date.setMinutes(Number(minutes));
+
+  return date;
+}
+
+// export function eventListToSCList(events) {
+//   let eventObjects = [];
+//   for (let i = 0; i < events.length; i++) {
+//     eventObjects.push({
+//       ...events[i],
+//       originalEvent: events[i],
+//     });
+//   }
+//   return eventObjects;
+// }
+
+export function eventObjectToEvent(eventObj) {
+  const event = {
+    id: eventObj.sc_app__id,
+    title: eventObj.title,
+    startDate: formatDate(eventObj.startTime, 'dd/MM/yyyy'),
+    endDate: formatDate(eventObj.endTime, 'dd/MM/yyyy'),
+    startTime: formatDate(eventObj.startTime, 'H:mm:ss'),
+    endTime: formatDate(eventObj.endTime, 'H:mm:ss'),
+    bg_color: eventObj.bg_color,
+  };
+
+  return event;
 }
