@@ -99,21 +99,24 @@ const strinkEvent = (leftOvercome, percentage, srinkedObject) => {
   });
 };
 
-export const calculatePositions = events => {
+export const calculatePositions = (events, isFullCalander) => {
   const totalWidth = 100;
   //sort events by start time
+  const startKey = isFullCalander ? 'startDate' : 'startTime';
+  const endKey = isFullCalander ? 'endDate' : 'endTime';
 
-  const sortedEvents = events.sort((a, b) => a.startTime - b.startTime);
+  let sortedEvents = events.sort((a, b) => a[startKey] - b[startKey]);
 
   for (let i = 0; i < sortedEvents.length; i++) {
     let width = 0;
     let left = 0;
     let leftOvercome = [];
+
     //  console.log('\n\nEvent==================', sortedEvents[i].title);
     //console.log('i>>>>>>>>>>>', i);
     for (let k = 0; k < i; k++) {
       //console.log('k', k, i, sortedEvents[k].title);
-      if (sortedEvents[k].endTime > sortedEvents[i].startTime) {
+      if (sortedEvents[k][endKey] > sortedEvents[i][startKey]) {
         leftOvercome.push(sortedEvents[k]);
       }
     }
@@ -219,7 +222,8 @@ export const parseEvents = (events, dateFormat) => {
       ...eventObj,
       sc_app__id: eventObj.sc_app__id,
       title: eventObj.title,
-
+      startDate,
+      endDate,
       startTime,
       endTime,
 
@@ -261,7 +265,7 @@ export function isSameDay(date1, date2) {
 
 export function getDaysDifference(date1, date2) {
   const diffMs = date1 - date2;
-  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
 
   return days;
 }
@@ -313,3 +317,24 @@ export function eventObjectToEvent(eventObj) {
 
   return event;
 }
+
+export function getPreviousDay(dayNo) {
+  dayNo = dayNo ? dayNo : 1;
+  const today = new Date();
+  if (today.getDay() === dayNo) {
+    return today;
+  }
+  const daysToPreviousDay = (today.getDay() + 7 - dayNo) % 7;
+  const previousDay = new Date(today.getTime() - daysToPreviousDay * 86400000);
+  console.log(previousDay);
+  return previousDay;
+}
+
+export const nextMonth = date => {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 1);
+};
+
+// Helper function to go back to the previous month
+export const prevMonth = date => {
+  return new Date(date.getFullYear(), date.getMonth() - 1, 1);
+};

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { AddEventModel } from './AddEventModel';
+import CalendarMonth from './CalanderMonth';
 import CalendarWeek from './CalendarWeek';
-import { formatDate, parseDate, setEventID } from './_utils';
+import { formatDate, setEventID } from './_utils';
 
 function ReactCalnaderScedular({ events }) {
   const [isShowAddEvent, setIsShowAddEvent] = useState(false);
   const [eventEdit, setEventEdit] = useState({});
-
+  const [calanderType, setCalanderType] = useState('calander');
   const [eventsState, setEventsState] = useState(events);
 
   useEffect(() => {
@@ -21,6 +22,17 @@ function ReactCalnaderScedular({ events }) {
     const index = eventsState.findIndex(
       event => event.sc_app__id === eventObj.sc_app__id,
     );
+    console.log('index', index);
+    console.log(
+      'eventObj',
+      new Date(eventObj.startTime),
+      new Date(eventObj.endTime),
+    );
+    console.log(
+      eventsState[index].startTime,
+      formatDate(new Date(eventObj.startTime), 'H:mm:ss'),
+    );
+
     eventsState[index] = {
       ...eventsState[index],
       startDate: formatDate(new Date(eventObj.startTime), 'dd/MM/yyyy'),
@@ -60,25 +72,52 @@ function ReactCalnaderScedular({ events }) {
   };
 
   return (
-    <div className="App">
+    <div className="App react-calander-scedule">
       <div className="container">
-        <button onClick={() => setIsShowAddEvent(true)}>Add Event</button>
-
         {/* Add Week Calander */}
-        <CalendarWeek
-          events={eventsState} // array of events
-          hourBoxHeight={50} // validation 50-100
-          NoOfDayColumn={7} // validation 1-7
-          dayStartingFrom={7} // valdiaion 0-23
-          dayColumnTitleFormate={'ddd, dd MMM'}
-          noOFHoursToShow={14} // validation 1-24
-          dateStartFrom={parseDate('11/04/2023', 'dd/MM/yyyy')} // validation date
-          updateEvent={updateEventDrag}
-          calanderToAddOrUpdateEvent={eventObj => {
-            calanderToAddOrUpdateEvent(eventObj);
-            setIsShowAddEvent(true);
-          }}
-        />
+        <div className="btn-group">
+          <button onClick={() => setCalanderType('week')}>Week </button>
+          <button onClick={() => setCalanderType('calander')}> Calander</button>
+          <button onClick={() => setCalanderType('day')}>Day</button>
+        </div>
+
+        {(calanderType === 'week' || calanderType === 'day') && (
+          <CalendarWeek
+            events={eventsState} // array of events
+            hourBoxHeight={50} // validation 50-100
+            NoOfDayColumn={calanderType == 'week' ? 7 : 1} // validation 1-7
+            dayStartingFrom={7} // valdiaion 0-23
+            dayColumnTitleFormate={'ddd, dd MMM'}
+            noOFHoursToShow={14} // validation 1-24
+            dateStartFrom={{}} //{parseDate('11/04/2023', 'dd/MM/yyyy')} // validation date
+            dayStartFrom={0} // validation 0-6
+            calanderType={calanderType}
+            updateEvent={updateEventDrag}
+            calanderToAddOrUpdateEvent={eventObj => {
+              calanderToAddOrUpdateEvent(eventObj);
+              setIsShowAddEvent(true);
+            }}
+          />
+        )}
+        {calanderType === 'calander' && (
+          <CalendarMonth
+            eventsData={eventsState} // array of events
+            hourBoxHeight={50} // validation 50-100
+            NoOfDayColumn={calanderType == 'week' ? 7 : 1} // validation 1-7
+            dayStartingFrom={7} // valdiaion 0-23
+            dayColumnTitleFormate={'ddd, dd MMM'}
+            currentDate={new Date()}
+            noOFHoursToShow={14} // validation 1-24
+            dateStartFrom={{}} //{parseDate('11/04/2023', 'dd/MM/yyyy')} // validation date
+            dayStartFrom={0} // validation 0-6
+            calanderType={calanderType}
+            updateEvent={updateEventDrag}
+            calanderToAddOrUpdateEvent={eventObj => {
+              calanderToAddOrUpdateEvent(eventObj);
+              setIsShowAddEvent(true);
+            }}
+          />
+        )}
 
         {/* Add event modal */}
         {isShowAddEvent && (

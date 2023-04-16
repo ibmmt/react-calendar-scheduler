@@ -5,13 +5,13 @@ const DayColumnWeek = ({
   events,
   // draggingEvent,
   boxHeight,
-  isDraging,
   boxTime,
   boxDay,
   updateEvent,
   calanderTableRef,
   dragBoxMouseEnter,
   calanderToAddOrUpdateEvent,
+  dragingEventId,
 }) => {
   const BoxRef = useRef();
   /**
@@ -19,6 +19,7 @@ const DayColumnWeek = ({
    * @param {Event} e
    */
   const dragMouseEnter = e => {
+    console.log('dragMouseEnter');
     e.preventDefault();
     dragBoxMouseEnter(boxDay);
   };
@@ -38,12 +39,12 @@ const DayColumnWeek = ({
    */
   useEffect(() => {
     if (!BoxRef.current) return;
-    if (!isDraging) return;
+    if (!dragingEventId) return;
     BoxRef.current.addEventListener('mouseenter', dragMouseEnter, true);
     return () => {
       BoxRef.current.removeEventListener('mouseenter', dragMouseEnter, true);
     };
-  }, [isDraging]);
+  }, [dragingEventId]);
 
   return (
     <>
@@ -59,6 +60,7 @@ const DayColumnWeek = ({
                 calanderTableRef={calanderTableRef}
                 boxHeight={boxHeight}
                 boxTime={boxTime}
+                dragingEventId={dragingEventId}
                 updateEvent={updateEvent}
                 calanderToAddOrUpdateEvent={calanderToAddOrUpdateEvent}
               />

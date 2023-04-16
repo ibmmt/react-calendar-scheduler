@@ -18,6 +18,8 @@ code {
 
 /* Ib table */
 
+
+
 .ib__sc__table-out-week{
   display: flex;
   width: 100%;
@@ -94,9 +96,7 @@ margin-left: 120px;
 .ib__sc__table-th{
   text-align: center;
 text-align: center;
-display: block;
 position: sticky;
-top: 0;
 z-index: 1001;
 padding: 10px;
 background: #f6f6f6;
@@ -295,4 +295,134 @@ background-color: white;
   text-transform: capitalize;
  
 }
+
+
+/* Month Calander */
+.ib__sc__table-out-week{
+  -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+  
+}
+
+
+.ib__sc__table-month-wrap{
+  padding: 3em;
+}
+.ib__sc__table-month{
+   border-spacing: 0;
+   z-index: 1003;
+   width: 100%;
+  }
+  .ib__sc__table-td-month{
+  
+    
+    text-align: center;
+    position: relative;
+  }
+  .ib__sc__table-td__day_cell{
+ 
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  table.ib__sc__table-month { border: none; border-collapse: collapse; }
+table.ib__sc__table-month td { border-right: 1px solid #dfdfdf; }
+table.ib__sc__table-month td:first-child { border-left:  1px solid #dfdfdf; }
+table.ib__sc__table-month tr{ border-bottom: 1px solid #dfdfdf;}
+
+.ib__sc__month-date{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5em;
+
+}
+.ib__sc__month-date-btn-group{
+  display: flex;
+  justify-content: center;
+  border: 1px solid #e8e8e8;
+  padding: 5px;
+  border-radius: 4px;
+}
+.ib__sc__month-date__bt-prev{
+  width: 20px;
+
+}
+.ib__sc__month-date__bt-text{
+  list-style: 1em;
+
+}
+.ib__sc__month-date__bt-next{
+  width: 20px;
+}
+
+.dragging-handler-month{
+
+  position: absolute;
+
+  top: 1px;
+  bottom: 1px;
+  width: 12px;
+  z-index: 100;
+  background: #ededed;
+  line-height: 10px;
+  color: #777;
+  font-size: .5em;
+  align-items: center;
+  opacity: .8;
+  display: none;
+  justify-content: center;
+}
+
+.dragging-handler-month.left{
+  cursor: w-resize;
+  left: 0px;
+}
+.dragging-handler-month.right{
+  cursor: w-resize;
+  right: 0px;
+}
+
+
+
+.ib__sc__event-box:hover .dragging-handler-month{
+  display: flex;
+}
+.dragging .dragging-handler-month{
+  display: flex;
+}
+.dragging-handler-month:hover{
+  display: flex;
+}
+.ib__sc__event-wrapper.dragging{
+
+  z-index: 3003;
+}
+.ib__sc__event-wrapper-month.overlap-start {
+ left: -1px !important;
+
+}
+.ib__sc__event-wrapper-month.overlap-end{
+  width: calc(100% + 2px) !important;
+
+
+}
+
+.ib__sc__event-wrapper-month.overlap-start .ib__sc__event-box {
+  border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+}
+  
+.ib__sc__event-wrapper-month.overlap-end .ib__sc__event-box{
+  border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+}
+
 

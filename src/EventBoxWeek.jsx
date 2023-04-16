@@ -1,18 +1,20 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { EventHandlerContex } from './CalendarWeek';
+
 import { HOUR_MILLISECONDS } from './Constant';
+import { EventHandlerContex } from './Contex';
+import { EventBoxView } from './EventView';
 //let timeout = undefined;
 const EventBoxWeek = ({
   boxHeight,
   boxTime,
   eventObj,
-  isPlaceholder,
   boxDay,
   calanderToAddOrUpdateEvent,
+  dragingEventId,
 }) => {
   const [isDraging, setIsDraging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
-  const [marginTop, setMarginTop] = useState(0);
+  const [Offset, setOffset] = useState(0);
   const [eventHeight, setEventHeight] = useState(0);
   const [overLap, setOverLap] = useState({ top: false, bottom: false });
   const newEventTime = useRef({ start: 0, end: 0 });
@@ -28,31 +30,17 @@ const EventBoxWeek = ({
    */
 
   const handleDragStart = () => {
-    if (isResizing) {
-      dragEnd();
-      setIsDraging(false);
-    } else {
-      setIsDraging(true);
-      dragStart(eventObj, boxDay);
-    }
+    setIsDraging(true);
+    dragStart(eventObj, boxDay);
   };
 
-  // useEffect(() => {
-  //   if (!clickCount) return;
-  //   if (timeout) clearTimeout(timeout);
-  //   console.log('clickCount', clickCount);
-  //   timeout = setTimeout(() => {
-  //     if (clickCount === 1) {
-  //       handleDragStart();
-  //     }
-  //     if (clickCount === 2) {
-  //       calanderToAddOrUpdateEvent(eventObj);
-  //     }
-
-  //     setClickCount(0);
-  //   }, 500);
-  //   return () => clearTimeout(timeout);
-  // }, [clickCount]);
+  useEffect(() => {
+    if (dragingEventId === eventObj.sc_app__id) {
+      setIsDraging(true);
+    } else {
+      setIsDraging(false);
+    }
+  }, [dragingEventId]);
 
   /**
    * handle mouse Down on Resize bar
@@ -60,6 +48,7 @@ const EventBoxWeek = ({
    * @param {String} side
    */
   const handleMouseDownResize = (e, side) => {
+    console.log('handleMouseDownResize');
     e.stopPropagation();
     e.preventDefault();
     newEventTime.current.start = eventObj.startTime;
@@ -101,7 +90,7 @@ const EventBoxWeek = ({
     let hours_difference_from_start =
       (startTime - boxDayTimeStart) / HOUR_MILLISECONDS;
     let event_top = hours_difference_from_start * (boxHeight / boxTime);
-    setMarginTop(event_top);
+    setOffset(event_top);
   };
 
   /*
@@ -126,8 +115,10 @@ const EventBoxWeek = ({
    * handle mouse move on the event box, to drag
    * @param {Event} e
    * */
-  const handleMouseMove = e => {
+  const handleMouseMoveResize = e => {
+    console.log('handleMouseMoveResize');
     if (!isResizing) return;
+    console.log('handleMouseMoveResize');
     if (lastCleintYRef.current == 0) {
       lastCleintYRef.current = e.clientY;
       return;
@@ -155,11 +146,6 @@ const EventBoxWeek = ({
       endTime: newEventTime.current.end,
     });
   };
-  const handleMouseUpDrag = e => {
-    e.preventDefault();
-    setIsDraging(false);
-    dragEnd();
-  };
 
   /*
    * use effect to add mouse move and mouse up event listener
@@ -167,22 +153,13 @@ const EventBoxWeek = ({
 
   useEffect(() => {
     if (!isResizing) return;
-    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mousemove', handleMouseMoveResize);
     document.addEventListener('mouseup', handleMouseUpResize);
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mousemove', handleMouseMoveResize);
       document.removeEventListener('mouseup', handleMouseUpResize);
     };
   }, [isResizing]);
-
-  useEffect(() => {
-    if (!isDraging) return;
-    console.log('mouser up reidrag');
-    document.addEventListener('mouseup', handleMouseUpDrag);
-    return () => {
-      document.removeEventListener('mouseup', handleMouseUpDrag);
-    };
-  }, [isDraging]);
 
   /*
    * use effect to set the event position and height
@@ -191,6 +168,18 @@ const EventBoxWeek = ({
     if (!eventObj) return;
     setPostionAndHeight(eventObj.startTime, eventObj.endTime);
   }, [eventObj]);
+
+  const eventStyle = {
+    width: (isDraging ? 100 : eventObj.width) + '%',
+    left: (isDraging ? 0 : eventObj.left) + '%',
+    top: Offset + 'px',
+    // resize: 'both',
+    cursor: 'move',
+    opacity: isDraging ? 0.8 : 1,
+    boxShadow: isDraging ? '0 0 10px 0 rgba(0,0,0,0.5)' : 'none',
+    zIndex: isDraging || isResizing ? 10000 : 1,
+    height: eventHeight + 'px',
+  };
 
   return (
     <>
@@ -210,23 +199,7 @@ const EventBoxWeek = ({
             // handleAddEvent(eventObj);
             calanderToAddOrUpdateEvent(eventObj);
           }}
-          onMouseUp={handleMouseUpDrag}
-          // onClick={e => {
-          //   e.stopPropagation();
-          //   e.preventDefault();
-          //   alert('double click');
-          //   handleAddEvent(eventObj);
-          // }}
-          style={{
-            width: eventObj.width + '%',
-            left: eventObj.left + '%',
-            top: marginTop + 'px',
-            resize: 'both',
-            cursor: 'move',
-            opacity: isDraging ? 0.4 : 1,
-            zIndex: isPlaceholder || isResizing ? 10000 : 1,
-            height: eventHeight + 'px',
-          }}
+          style={eventStyle}
         >
           <div
             className="ib__sc__event-box ib__sc__event-box-week"
@@ -262,17 +235,6 @@ const EventBoxWeek = ({
         </div>
       )}
     </>
-  );
-};
-
-export const EventBoxView = ({ eventObj, eventHeight }) => {
-  return (
-    <div
-      className="ib__sc__event-box ib__sc__event-box-week"
-      style={{ height: eventHeight + 'px' }}
-    >
-      <div className="ib__sc__event ib__sc__event-week">{eventObj.title}</div>
-    </div>
   );
 };
 
