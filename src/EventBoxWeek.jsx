@@ -9,7 +9,7 @@ const EventBoxWeek = ({
   boxTime,
   eventObj,
   boxDay,
-  calanderToAddOrUpdateEvent,
+
   dragingEventId,
 }) => {
   const [isDraging, setIsDraging] = useState(false);
@@ -18,7 +18,8 @@ const EventBoxWeek = ({
   const [eventHeight, setEventHeight] = useState(0);
   const [overLap, setOverLap] = useState({ top: false, bottom: false });
   const newEventTime = useRef({ start: 0, end: 0 });
-  const { updateEvent, dragStart, dragEnd } = useContext(EventHandlerContex);
+  const { updateEvent, dragStart, dragEnd, calanderToAddOrUpdateEvent } =
+    useContext(EventHandlerContex);
   const eventRef = useRef();
   const lastCleintYRef = useRef(0);
   const sideRef = useRef('');
@@ -199,6 +200,10 @@ const EventBoxWeek = ({
             // handleAddEvent(eventObj);
             calanderToAddOrUpdateEvent(eventObj);
           }}
+          onClick={e => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}
           style={eventStyle}
         >
           <div
@@ -219,7 +224,11 @@ const EventBoxWeek = ({
                 =
               </div>
             )}
-            <EventBoxView eventObj={eventObj} eventHeight={eventHeight} />
+            <EventBoxView
+              eventObj={eventObj}
+              eventHeight={eventHeight}
+              isShowTitle={true}
+            />
             {overLap && !overLap.bottom && (
               <div
                 style={isResizing ? { display: 'block' } : {}}

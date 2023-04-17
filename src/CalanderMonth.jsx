@@ -9,33 +9,27 @@ import {
   isDateBetween,
   parseEvents,
   setEventID,
+  weekdaysArr,
 } from './_utils';
 //let maxEventCountInDay = 0;
 
 const boxHeight = 60;
 const minimumThinkness = 25;
-const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const monthsOfYear = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
-function CalanderMonth({ currentDay, eventsData, updateEvent }) {
+function CalanderMonth({
+  currentDay,
+  eventsData,
+  updateEvent,
+  calanderToAddOrUpdateEvent,
+  fromDate = new Date(),
+}) {
   console.log('currentDay', currentDay);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(fromDate);
+
   console.log('selectedDate', selectedDate);
   const month = selectedDate.getMonth();
   const year = selectedDate.getFullYear();
+  const yearMonth = `${year}-${(month + 1).toString().padStart(2, '0')}`;
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const [events, setEvents] = useState(eventsData);
@@ -69,13 +63,9 @@ function CalanderMonth({ currentDay, eventsData, updateEvent }) {
   }, [isDraging]);
 
   const dragStart = (event, selectedDate) => {
-    console.debug('dragStart2222222222222222222222222222', selectedDate);
     currentDragDate.current = selectedDate;
-
     editingEventRef.current = { ...event, left: 0, width: '100' };
-    // setDragingEventId(event.sc_app__id);
     setIsDraging(true);
-    //setDraggingEvent({ ...event, left: 0, width: '100%' });
   };
 
   const resizeStart = (event, date, side) => {
@@ -112,18 +102,8 @@ function CalanderMonth({ currentDay, eventsData, updateEvent }) {
     const newEvent = editingEventRef.current;
 
     let daysDiff = getDaysDifference(date.getTime(), currentDragDate.current);
-    console.log(
-      'daysDiff9999999999999999999999',
-      newEvent,
-      daysDiff,
-      date.getTime(),
 
-      currentDragDate.current,
-      new Date(newEvent.endTime),
-    );
     if (daysDiff === 0) return;
-    console.log('daysDiff', daysDiff);
-    console.log(' sideUseRef.current', sideUseRef.current);
 
     if (sideUseRef.current === 'left') {
       newEvent.startTime += daysDiff * 24 * HOUR_MILLISECONDS;
@@ -150,7 +130,7 @@ function CalanderMonth({ currentDay, eventsData, updateEvent }) {
   const renderDaysOfWeek = () => {
     return (
       <tr>
-        {daysOfWeek.map(day => (
+        {weekdaysArr.map(day => (
           <th className="ib__sc__table-th" key={day}>
             {day}
           </th>
@@ -209,6 +189,7 @@ function CalanderMonth({ currentDay, eventsData, updateEvent }) {
           currentBoxHeight={currentBoxHeight}
           eventsInDay={eventsInDay}
           dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
+          calanderToAddOrUpdateEvent={calanderToAddOrUpdateEvent}
           dragingEventId={
             editingEventRef.current
               ? editingEventRef.current.sc_app__id
@@ -245,12 +226,19 @@ function CalanderMonth({ currentDay, eventsData, updateEvent }) {
 
     return rows;
   };
-  const onmonthChange = value => {
+  const onmonthChangeNextPrev = value => {
     const newDate = new Date(selectedDate);
     newDate.setMonth(newDate.getMonth() + value);
     setSelectedDate(newDate);
   };
 
+  const selectMonth = e => {
+    const newDate = new Date(e.target.value);
+    console.log('newDate', newDate);
+    setSelectedDate(newDate);
+  };
+
+  console.log('events', events);
   return (
     <div>
       <EventHandlerContex.Provider
@@ -258,7 +246,7 @@ function CalanderMonth({ currentDay, eventsData, updateEvent }) {
           dragStart,
           resizeStart: resizeStart,
           updateEvent: updateEvent,
-
+          calanderToAddOrUpdateEvent,
           dragEnd: dropHandler,
           resizeEnd: dropHandler,
         }}
@@ -269,18 +257,24 @@ function CalanderMonth({ currentDay, eventsData, updateEvent }) {
               <div className="ib__sc__month-date-btn-group">
                 <button
                   className="ib__sc__month-date__bt-prev"
-                  onClick={() => onmonthChange(-1)}
+                  onClick={() => onmonthChangeNextPrev(-1)}
                 >
                   <LeftIcon />
                 </button>
 
                 <span className="ib__sc__month-date__bt-text">
-                  {monthsOfYear[month]} {year}
+                  <input
+                    type="month"
+                    className="ib__sc-form-control"
+                    placeholder="yyyy-mm"
+                    onChange={selectMonth}
+                    value={yearMonth}
+                  />
                 </span>
 
                 <button
                   className="ib__sc__month-date__bt-next"
-                  onClick={() => onmonthChange(1)}
+                  onClick={() => onmonthChangeNextPrev(1)}
                 >
                   <RightIcon />
                 </button>
@@ -289,9 +283,6 @@ function CalanderMonth({ currentDay, eventsData, updateEvent }) {
           </div>
           <div style={{ position: 'relative', display: 'flex' }}></div>
           <div className="calendar">
-            <h2>
-              {monthsOfYear[month]} {year}
-            </h2>
             <table
               className="ib__sc__table-month"
               border="0"

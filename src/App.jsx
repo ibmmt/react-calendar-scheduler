@@ -3,18 +3,18 @@ import ReactCalnaderScedular from './ReactCalanderScedule';
 function App() {
   const events = [
     {
-      title: '1',
-      startDate: '21/04/2023',
-      endDate: '21/04/2023',
+      title: '144',
+      startDate: '20/04/2023',
+      endDate: '20/04/2023',
       startTime: '08:30:00',
       endTime: '09:00:00',
-      id: 1,
+      id: 133,
       bg_color: '#FFAB91',
     },
     {
       title: '2',
-      startDate: '15/04/2023',
-      endDate: '15/04/2023',
+      startDate: '22/04/2023',
+      endDate: '22/04/2023',
       startTime: '08:30:00',
       endTime: '12:00:00',
       id: 2,
@@ -23,8 +23,8 @@ function App() {
 
     {
       title: '4',
-      startDate: '15/04/2023',
-      endDate: '15/04/2023',
+      startDate: '22/04/2023',
+      endDate: '22/04/2023',
       startTime: '10:30:00',
       endTime: '14:00:00',
       id: 23,
@@ -32,8 +32,8 @@ function App() {
     },
     {
       title: '5',
-      startDate: '15/04/2023',
-      endDate: '15/04/2023',
+      startDate: '22/04/2023',
+      endDate: '22/04/2023',
       startTime: '14:30:00',
       endTime: '18:00:00',
       id: 3,
@@ -41,16 +41,16 @@ function App() {
     },
     // {
     //   title: '5.5',
-    //   startDate: '15/04/2023',
-    //   endDate: '15/04/2023',
+    //   startDate: '22/04/2023',
+    //   endDate: '22/04/2023',
     //   startTime: '06:30:00',
     //   endTime: '07:00:00',
     //   id: 22,
     // },
     {
       title: '6',
-      startDate: '15/04/2023',
-      endDate: '15/04/2023',
+      startDate: '22/04/2023',
+      endDate: '22/04/2023',
       startTime: '11:30:00',
       endTime: '12:00:00',
       id: 4,
@@ -58,8 +58,8 @@ function App() {
     },
     {
       title: '7',
-      startDate: '15/04/2023',
-      endDate: '15/04/2023',
+      startDate: '22/04/2023',
+      endDate: '22/04/2023',
       startTime: '11:00:00',
       endTime: '15:00:00',
       id: 55,
@@ -68,8 +68,8 @@ function App() {
 
     {
       title: '8',
-      startDate: '15/04/2023',
-      endDate: '15/04/2023',
+      startDate: '22/04/2023',
+      endDate: '22/04/2023',
       startTime: '13:30:00',
       endTime: '16:00:00',
       id: 8,
@@ -77,8 +77,8 @@ function App() {
     },
     {
       title: '9',
-      startDate: '15/04/2023',
-      endDate: '15/04/2023',
+      startDate: '22/04/2023',
+      endDate: '22/04/2023',
       startTime: '12:30:00',
       endTime: '16:00:00',
       id: 11,
@@ -96,8 +96,48 @@ function App() {
   ];
 
   return (
-    <div className="App">
-      <ReactCalnaderScedular events={events} />
+    <div className="App" style={{ padding: '4em' }}>
+      <ReactCalnaderScedular
+        events={events}
+        currentDay={new Date()}
+        fromDate={new Date()}
+        weekHourBoxHeight={50}
+        dayStartingFrom={7} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
+        handleUpdateEvent={event => {
+          console.log(event);
+        }}
+        handleAddNewEvent={event => {
+          console.log(event);
+        }}
+        handleDeleteEvent={event => {
+          console.log(event);
+        }}
+        hendleEventClick={event => {
+          console.log(event);
+        }}
+        handleColumnClick={event => {
+          console.log(event);
+        }}
+        handleNextClick={type => {
+          console.log(type);
+        }}
+        handlePrevClick={type => {
+          console.log(type);
+        }}
+        handleClanderTypeChange={type => {
+          console.log(type);
+        }}
+        monthCalanderTitleFormate="dddd" //month title formate
+        calanderType="week" // week or day
+        scrollableHour={7} //scrollable hours
+        dayStartFromHour={7} //day start from hour,
+        dayColumnWeekTitleFormate="ddd, MMM DD" //day column title formate
+        dayColumnDayTitleFormate="ddd" //day column title formate
+        dayColumnTimeTitleFormate="hh:mm A" //day column title formate
+        isShowAddNewEventButton={true} //show add new event button
+        isShowDeleteEventButton={true} //show delete event button
+        isShowAddOrUpadateEventButton={true} //show add or update event button
+      />
     </div>
   );
 }

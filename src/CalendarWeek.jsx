@@ -18,53 +18,54 @@ import {
 let boxHeightInit = 25;
 let boxTime = 1; //1 hr
 
-const CalendarWeek = props => {
-  const [events, setEvents] = useState(props.events);
+const CalendarWeek = ({
+  eventsData,
+  hourBoxHeight,
+  dayStartingFrom = 7,
+  updateEvent,
+  NoOfDayColumn,
+  calanderType,
+  noOFHoursToShow,
+  dayStartFrom,
+  calanderToAddOrUpdateEvent,
+  dayColumnTitleFormate,
+}) => {
+  const [events, setEvents] = useState(eventsData);
   const calanderTableRef = useRef();
-  const calanderTBRef = useRef();
   const lastCleintYRef = useRef(0);
-  //const [draggingEvent, setDraggingEvent] = useState(null);
   const dragEventRef = useRef(null);
   const currentDragDate = useRef(null);
-  const boxHeight = props.hourBoxHeight ? props.hourBoxHeight : boxHeightInit;
-  const dayStartingFrom = props.dayStartingFrom ? props.dayStartingFrom : 7;
+  const boxHeight = hourBoxHeight ? hourBoxHeight : boxHeightInit;
+  //const dayStartingFrom = dayStartingFrom ? dayStartingFrom : 7;
   const heightOfWeekColumn = boxHeight * boxTime * 24;
-  //const NoOfDayColumn = props.NoOfDayColumn ? props.NoOfDayColumn : 7;
+
   const [isDraging, setIsDraging] = useState(false);
 
   // initial date to start from
   const [dateStartFrom, setDateStartFrom] = useState(() => {
-    if (props.calanderType == 'week') {
-      return getPreviousDay(props.dayStartFrom);
-    } else if (props.dateStartFrom && Object.keys(props.dateStartFrom).length) {
-      return props.dayStartFrom;
+    if (calanderType == 'week') {
+      return getPreviousDay(dayStartFrom);
+    } else if (dateStartFrom && Object.keys(dateStartFrom).length) {
+      return dayStartFrom;
     } else {
       return new Date();
     }
   });
 
   const heightOfWeekColumnToShow =
-    (boxHeight / boxTime) *
-    (props.noOFHoursToShow ? props.noOFHoursToShow : 12);
+    (boxHeight / boxTime) * (noOFHoursToShow ? noOFHoursToShow : 12);
   useEffect(() => {
     setEvents(
       calculatePositions(
-        parseEvents(setEventID(props.events), 'dd/MM/yyyy', 'HH:mm:ss'),
+        parseEvents(setEventID(eventsData), 'dd/MM/yyyy', 'HH:mm:ss'),
       ),
     );
-  }, [props.events]);
+  }, [eventsData]);
 
   useEffect(() => {
-    if (!props.dateStartFrom || Object.keys(props.dateStartFrom).length === 0)
-      return;
-    setDateStartFrom(props.dateStartFrom);
-  }, [props.dateStartFrom]);
-
-  // useEffect(() => {
-  //   if (!props.dateStartFrom) return;
-  //   setDateStartFrom(props.dateStartFrom);
-  //   //setDateStartFrom(new Date());
-  // }, [props.dayStartFrom]);
+    if (!dateStartFrom || Object.keys(dateStartFrom).length === 0) return;
+    setDateStartFrom(dateStartFrom);
+  }, [dateStartFrom]);
 
   useEffect(() => {
     if (calanderTableRef.current) {
@@ -78,7 +79,6 @@ const CalendarWeek = props => {
     currentDragDate.current = selectedDate;
     dragEventRef.current = { ...event, left: 0, width: '100' };
     setIsDraging(true);
-    //setDraggingEvent({ ...event, left: 0, width: '100%' });
   };
 
   /**  Mouse enter to new column  while dragging, update dragging event
@@ -86,17 +86,13 @@ const CalendarWeek = props => {
    * @param {Date} currentDragDate
    * @return {undefined}
    */
-  const dragBoxMouseEnter = date => {
-    console.debug('dragBoxMouseEnter');
-
+  const dragBoxMouseEnterToCell = date => {
     const daysDiff = getDaysDifference(date, currentDragDate.current);
     if (daysDiff != 0) {
       dragEventRef.current.startTime += daysDiff * 24 * HOUR_MILLISECONDS;
       dragEventRef.current.endTime += daysDiff * 24 * HOUR_MILLISECONDS;
       currentDragDate.current = date;
-
-      props.updateEvent(dragEventRef.current);
-      //setDraggingEvent({ ...draggingEvent });
+      updateEvent(dragEventRef.current);
     }
   };
 
@@ -119,8 +115,7 @@ const CalendarWeek = props => {
         dragEventRef.current.startTime + (diff / boxHeight) * boxTime * 3600000;
       dragEventRef.current.endTime =
         dragEventRef.current.endTime + (diff / boxHeight) * boxTime * 3600000;
-      props.updateEvent({ ...dragEventRef.current });
-      //  setDraggingEvent({ ...dragEve, startTime, endTime });
+      updateEvent({ ...dragEventRef.current });
       lastCleintYRef.current = e.clientY;
     }
   };
@@ -134,7 +129,7 @@ const CalendarWeek = props => {
       e.preventDefault();
     }
     if (dragEventRef.current) {
-      props.updateEvent(dragEventRef.current);
+      updateEvent(dragEventRef.current);
       lastCleintYRef.current = 0;
       dragEventRef.current = null;
     }
@@ -162,6 +157,8 @@ const CalendarWeek = props => {
     setDateStartFrom(addDays(dateStartFrom, diff));
   };
 
+  console.log('events', events);
+
   return (
     <div>
       <div className="ib__sc__table ib__sc__table-week">
@@ -170,43 +167,38 @@ const CalendarWeek = props => {
             <div className="ib__sc__week-date-btn-group">
               <button
                 className="ib__sc__week-date__bt-prev"
-                onClick={() => onWeekChange(-props.NoOfDayColumn)}
+                onClick={() => onWeekChange(-NoOfDayColumn)}
               >
                 <LeftIcon />
               </button>
 
-              <span className="ib__sc__week-date__bt-text">
-                {formatDate(new Date(dateStartFrom), 'dd/MMM/yyyy')}
-
-                {props.calanderType == 'week' && (
-                  <>
-                    -
-                    {formatDate(
-                      addDays(dateStartFrom, props.NoOfDayColumn),
-                      'dd/MMM/yyyy',
-                    )}
-                  </>
-                )}
-              </span>
+              <div className="ib__sc__week-date__bt-text">
+                <input
+                  type="date"
+                  className="ib__sc-form-control"
+                  onChange={e => {
+                    setDateStartFrom(new Date(e.target.value));
+                  }}
+                  value={formatDate(new Date(dateStartFrom), 'yyyy-MM-dd')}
+                />
+              </div>
 
               <button
                 className="ib__sc__week-date__bt-next"
-                onClick={() => onWeekChange(props.NoOfDayColumn)}
+                onClick={() => onWeekChange(NoOfDayColumn)}
               >
                 <RightIcon />
               </button>
             </div>
           </div>
         </div>
-        <div
-          ref={calanderTBRef}
-          style={{ position: 'relative', display: 'flex' }}
-        >
+        <div style={{ position: 'relative', display: 'flex' }}>
           <EventHandlerContex.Provider
             value={{
               dragStart,
-              updateEvent: props.updateEvent,
+              updateEvent: updateEvent,
               dragEnd: dropHandler,
+              calanderToAddOrUpdateEvent: calanderToAddOrUpdateEvent,
             }}
           >
             <div
@@ -229,7 +221,7 @@ const CalendarWeek = props => {
                     ))}
                   </div>
                 </div>
-                {[...Array(props.NoOfDayColumn).keys()].map(dayIndex => {
+                {[...Array(NoOfDayColumn).keys()].map(dayIndex => {
                   const now = new Date(dateStartFrom);
                   let boxDay = new Date(
                     now.setDate(now.getDate() + dayIndex),
@@ -243,8 +235,8 @@ const CalendarWeek = props => {
                       <div key={dayIndex} className="ib__sc__table-th">
                         {formatDate(
                           new Date(boxDay),
-                          props.dayColumnTitleFormate
-                            ? props.dayColumnTitleFormate
+                          dayColumnTitleFormate
+                            ? dayColumnTitleFormate
                             : 'dd/MMM/yyyy',
                         )}
                       </div>
@@ -254,7 +246,7 @@ const CalendarWeek = props => {
                         day={boxDay}
                         calanderTableRef={calanderTableRef}
                         boxHeight={boxHeight}
-                        updateEvent={props.updateEvent}
+                        updateEvent={updateEvent}
                         dragingEventId={
                           dragEventRef.current
                             ? dragEventRef.current.sc_app__id
@@ -262,10 +254,8 @@ const CalendarWeek = props => {
                         }
                         boxTime={boxTime}
                         boxDay={new Date(boxDay)}
-                        dragBoxMouseEnter={dragBoxMouseEnter}
-                        calanderToAddOrUpdateEvent={
-                          props.calanderToAddOrUpdateEvent
-                        }
+                        dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
+                        calanderToAddOrUpdateEvent={calanderToAddOrUpdateEvent}
                         // heightOfWeekColumn={heightOfWeekColumn}
                         events={
                           events

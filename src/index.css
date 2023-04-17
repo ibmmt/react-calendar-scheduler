@@ -9,10 +9,86 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+ 
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+
+.ib__sc-form-control {
+  display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.ib__sc__btn{
+  color: #5b5b5b;
+  background-color: #E0E0E0;
+  border-color: #9E9E9E;
+  display: inline-block;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.ib__sc__btn.active {
+ 
+  background-color: #b6b6b6;
+  border-color: #adadad;
+
+}
+.ib__sc__btn:hover {
+ 
+  background-color: #b6b6b6;
+  border-color: #adadad;
+
+}
+.ib__sc__btn-group{
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  display: table-cell;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ib__sc__btn-group .ib__sc__btn{
+  border-radius: 0;
+
+  
+}
+.ib__sc__btn-group .ib__sc__btn{
+  border-left: 1px solid #ccc;
+}
+.ib__sc__btn-group .ib__sc__btn:first-child {
+  border-top-left-radius:  0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  border-left: none
+}
+
+.ib__sc__btn-group .ib__sc__btn:last-child {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius:  0.25rem;
 }
 
 
@@ -52,21 +128,20 @@ code {
   padding: 5px;
   border-radius: 4px;
 }
-.ib__sc__week-date__bt-prev{
-  width: 20px;
+.ib__sc__week-date__bt-prev,.ib__sc__week-date__bt-next {
+  width: 1.8em;
+  line-height: 1em;
+}
+.ib__sc__week-date__bt-text .ib__sc-form-control{
+  width:auto;
+  border: none;
+ 
 
 }
-.ib__sc__week-date__bt-text{
-  list-style: 1em;
-
-}
-.ib__sc__week-date__bt-next{
-  width: 20px;
-
-}
+ 
 
 .ib__sc__table-week{
-margin-left: 120px;
+
  border-spacing: 0;
  z-index: 1003;
  margin-bottom: 100px;
@@ -95,13 +170,13 @@ margin-left: 120px;
 }
 .ib__sc__table-th{
   text-align: center;
-text-align: center;
+top:0;
 position: sticky;
 z-index: 1001;
 padding: 10px;
 background: #f6f6f6;
 border: 1px solid #ccc;
-margin-left: -1px;
+
 }
 .ib__sc__table-th-week{
   border: 1px solid #000;
@@ -146,10 +221,10 @@ margin-left: -1px;
   padding: 0px;
   width: 100%;
   height: 100%;
-  border-radius: 0.3em;
+  border-radius: 0.5em;
   text-align: center;
   box-sizing: border-box;
-  border: 0.001em solid #d5d5d5;
+  border: 0.001em solid #ffffff;
   overflow: hidden;
 }
 .dragging-handler-week{
@@ -242,9 +317,7 @@ margin-left: -1px;
   justify-content: center;
   align-items: center;
 }
-.ib__sc__form-group{
-  margin-bottom: 10px;
-}
+
 .ib__sc-modal-content {
 background-color: white;
     padding: 20px;
@@ -268,15 +341,12 @@ background-color: white;
     cursor: pointer;
 }
 
-.ib__sc-form-control {
-  border: 1px solid #c4bfbf;
-  border-radius: 4px;
-  padding: 5px;
-  height: 40px;
-  box-shadow: none;
-  max-width: 100%;
-  box-sizing: border-box;
-  width: 100%;
+.ib__sc-form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #adadad;
+  outline: 0;
+ 
 }
 
 
@@ -309,9 +379,6 @@ user-select: none;
 }
 
 
-.ib__sc__table-month-wrap{
-  padding: 3em;
-}
 .ib__sc__table-month{
    border-spacing: 0;
    z-index: 1003;
@@ -330,6 +397,16 @@ user-select: none;
     height: 100%;
   }
 
+  .ib__sc_month_day {
+ 
+    color: #bcbcbc;
+    font-weight: 600;
+    position: absolute;
+    font-size: 1em;
+    line-height: 1em;
+    right: 5px;
+    bottom: 5px;
+}
 
   table.ib__sc__table-month { border: none; border-collapse: collapse; }
 table.ib__sc__table-month td { border-right: 1px solid #dfdfdf; }
@@ -349,17 +426,20 @@ table.ib__sc__table-month tr{ border-bottom: 1px solid #dfdfdf;}
   padding: 5px;
   border-radius: 4px;
 }
-.ib__sc__month-date__bt-prev{
-  width: 20px;
+
+.ib__sc__month-date__bt-text .ib__sc-form-control{
+  width:auto;
+  border: none;
+}
+
+.ib__sc__month-date__bt-prev,.ib__sc__month-date__bt-next{
+  width: 1.8em;
+  line-height: 1em;
 
 }
-.ib__sc__month-date__bt-text{
-  list-style: 1em;
 
-}
-.ib__sc__month-date__bt-next{
-  width: 20px;
-}
+ 
+ 
 
 .dragging-handler-month{
 
@@ -369,7 +449,7 @@ table.ib__sc__table-month tr{ border-bottom: 1px solid #dfdfdf;}
   bottom: 1px;
   width: 12px;
   z-index: 100;
-  background: #ededed;
+
   line-height: 10px;
   color: #777;
   font-size: .5em;
@@ -378,6 +458,7 @@ table.ib__sc__table-month tr{ border-bottom: 1px solid #dfdfdf;}
   display: none;
   justify-content: center;
 }
+
 
 .dragging-handler-month.left{
   cursor: w-resize;

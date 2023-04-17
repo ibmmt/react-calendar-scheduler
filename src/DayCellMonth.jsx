@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { HOUR_MILLISECONDS } from './Constant';
 import EventBoxMonth from './EventBoxMonth';
 
 export default function DayCellMonth({
@@ -9,6 +10,7 @@ export default function DayCellMonth({
   day,
   dragingEventId,
   resizingEventId,
+  calanderToAddOrUpdateEvent,
   dragBoxMouseEnterToCell,
 }) {
   const BoxRef = useRef();
@@ -21,6 +23,16 @@ export default function DayCellMonth({
     e.preventDefault();
 
     dragBoxMouseEnterToCell(boxDay);
+  };
+
+  const handleClickBox = e => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    calanderToAddOrUpdateEvent({
+      startTime: new Date(boxDay).setHours(0, 0, 0, 0),
+      endTime: new Date(boxDay + 24 * HOUR_MILLISECONDS).setHours(0, 0, 0, 0),
+    });
   };
 
   /**
@@ -39,12 +51,12 @@ export default function DayCellMonth({
     <td
       ref={BoxRef}
       className=" ib__sc__table-td ib__sc__table-td-month"
-      //onClick={() => setSelectedDate(date)}
+      onClick={handleClickBox}
       style={{ height: `${currentBoxHeight}px` }}
     >
       <div
         className="ib__sc__table-td__day_cell"
-        style={{ height: `${currentBoxHeight}px` }}
+        style={{ minHeight: `${currentBoxHeight}px` }}
       >
         {eventsInDay.map((event, key) => (
           <EventBoxMonth
@@ -55,12 +67,11 @@ export default function DayCellMonth({
             boxDay={boxDay}
             isDraging={dragingEventId == event.sc_app__id}
             isResizing={resizingEventId == event.sc_app__id}
-            calanderToAddOrUpdateEvent={() => {}}
             isCalander={true}
           />
         ))}
       </div>
-      <span>{day}</span>
+      <span className="ib__sc_month_day">{day}</span>
     </td>
   );
 }

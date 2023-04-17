@@ -119,6 +119,7 @@ export const AddEventModel = ({
                 </label>
                 <input
                   type="date"
+                  placeholder="yyyy-mm-dd"
                   className="ib__sc-form-control"
                   value={startDate}
                   onChange={e => setStartDate(e.target.value)}
@@ -140,6 +141,7 @@ export const AddEventModel = ({
                 </label>
                 <input
                   type="date"
+                  placeholder="yyyy-mm-dd"
                   className="ib__sc-form-control"
                   value={endDate}
                   onChange={e => setEndDate(e.target.value)}

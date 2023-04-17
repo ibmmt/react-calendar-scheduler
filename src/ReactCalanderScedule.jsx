@@ -7,7 +7,7 @@ import { formatDate, setEventID } from './_utils';
 function ReactCalnaderScedular({ events }) {
   const [isShowAddEvent, setIsShowAddEvent] = useState(false);
   const [eventEdit, setEventEdit] = useState({});
-  const [calanderType, setCalanderType] = useState('calander');
+  const [calanderType, setCalanderType] = useState('week');
   const [eventsState, setEventsState] = useState(events);
 
   useEffect(() => {
@@ -73,17 +73,38 @@ function ReactCalnaderScedular({ events }) {
 
   return (
     <div className="App react-calander-scedule">
-      <div className="container">
+      <div className="ib__sc_rcs-container">
         {/* Add Week Calander */}
-        <div className="btn-group">
-          <button onClick={() => setCalanderType('week')}>Week </button>
-          <button onClick={() => setCalanderType('calander')}> Calander</button>
-          <button onClick={() => setCalanderType('day')}>Day</button>
+        <div className="ib__sc__btn-group">
+          <button
+            className={
+              'ib__sc__btn ' + (calanderType === 'calander' ? 'active' : '')
+            }
+            onClick={() => setCalanderType('calander')}
+          >
+            Month
+          </button>
+          <button
+            className={
+              'ib__sc__btn ' + (calanderType === 'week' ? 'active' : '')
+            }
+            onClick={() => setCalanderType('week')}
+          >
+            Week{' '}
+          </button>
+          <button
+            className={
+              'ib__sc__btn ' + (calanderType === 'day' ? 'active' : '')
+            }
+            onClick={() => setCalanderType('day')}
+          >
+            Day
+          </button>
         </div>
 
         {(calanderType === 'week' || calanderType === 'day') && (
           <CalendarWeek
-            events={eventsState} // array of events
+            eventsData={eventsState} // array of events
             hourBoxHeight={50} // validation 50-100
             NoOfDayColumn={calanderType == 'week' ? 7 : 1} // validation 1-7
             dayStartingFrom={7} // valdiaion 0-23

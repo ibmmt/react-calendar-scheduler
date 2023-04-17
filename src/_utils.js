@@ -1,3 +1,28 @@
+export const weekdaysArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+export const fullWeekdayNames = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+export const monthsArr = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 export const formatDate = (dateObj, formatStr) => {
   const year = dateObj.getFullYear().toString();
   const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
@@ -5,32 +30,10 @@ export const formatDate = (dateObj, formatStr) => {
   const hours = dateObj.getHours().toString().padStart(2, '0');
   const minutes = dateObj.getMinutes().toString().padStart(2, '0');
   const seconds = dateObj.getSeconds().toString().padStart(2, '0');
-  const monthsArr = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+
   const shortMonthName = monthsArr[dateObj.getMonth()].slice(0, 3);
   const longMonthName = monthsArr[dateObj.getMonth()];
-  const weekdaysArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const fullWeekdayNames = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
+
   const shortWeekdayName = weekdaysArr[dateObj.getDay()];
   const longWeekdayName = fullWeekdayNames[dateObj.getDay()];
 
@@ -102,10 +105,10 @@ const strinkEvent = (leftOvercome, percentage, srinkedObject) => {
 export const calculatePositions = (events, isFullCalander) => {
   const totalWidth = 100;
   //sort events by start time
+  let sortedEvents = events.sort((a, b) => a['startTime'] - b['startTime']);
+
   const startKey = isFullCalander ? 'startDate' : 'startTime';
   const endKey = isFullCalander ? 'endDate' : 'endTime';
-
-  let sortedEvents = events.sort((a, b) => a[startKey] - b[startKey]);
 
   for (let i = 0; i < sortedEvents.length; i++) {
     let width = 0;
@@ -120,6 +123,7 @@ export const calculatePositions = (events, isFullCalander) => {
         leftOvercome.push(sortedEvents[k]);
       }
     }
+    // console.log('leftOvercome', leftOvercome);
 
     if (leftOvercome.length) {
       leftOvercome.sort((a, b) => a.left - b.left);
@@ -245,7 +249,7 @@ export const isDateBetween = (dateObj, startDateString, endDateString) => {
 
 export const setEventID = events => {
   for (let i = 0; i < events.length; i++) {
-    events[i].sc_app__id = i;
+    events[i].sc_app__id = i + 1;
   }
   return events;
 };

@@ -9,7 +9,7 @@ const DayColumnWeek = ({
   boxDay,
   updateEvent,
   calanderTableRef,
-  dragBoxMouseEnter,
+  dragBoxMouseEnterToCell,
   calanderToAddOrUpdateEvent,
   dragingEventId,
 }) => {
@@ -21,7 +21,7 @@ const DayColumnWeek = ({
   const dragMouseEnter = e => {
     console.log('dragMouseEnter');
     e.preventDefault();
-    dragBoxMouseEnter(boxDay);
+    dragBoxMouseEnterToCell(boxDay);
   };
 
   const handleClickHourBox = (e, hour) => {

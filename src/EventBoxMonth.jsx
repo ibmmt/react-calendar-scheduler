@@ -8,9 +8,8 @@ const EventBoxMonth = ({
   boxHeight,
   boxTime,
   eventObj,
-  isPlaceholder,
   boxDay,
-  calanderToAddOrUpdateEvent,
+
   isCalander,
   isDraging,
   isResizing,
@@ -21,8 +20,13 @@ const EventBoxMonth = ({
   const [eventHeight, setEventHeight] = useState(0);
   const [overLap, setOverLap] = useState({ start: false, end: false });
   const newEventTime = useRef({ start: 0, end: 0 });
-  const { dragStart, dragEnd, resizeStart, resizeEnd } =
-    useContext(EventHandlerContex);
+  const {
+    dragStart,
+    dragEnd,
+    resizeStart,
+    resizeEnd,
+    calanderToAddOrUpdateEvent,
+  } = useContext(EventHandlerContex);
   const eventRef = useRef();
 
   //const [clickCount, setClickCount] = useState(0);
@@ -165,15 +169,6 @@ const EventBoxMonth = ({
     };
   }, [isResizing]);
 
-  // useEffect(() => {
-  //   if (!isDraging) return;
-  //   console.log('mouser up reidrag');
-  //   document.addEventListener('mouseup', handleMouseUpDrag);
-  //   return () => {
-  //     document.removeEventListener('mouseup', handleMouseUpDrag);
-  //   };
-  // }, [isDraging]);
-
   /*
    * use effect to set the event position and height
    * */
@@ -188,8 +183,8 @@ const EventBoxMonth = ({
     top: offset + 'px',
     // resize: 'both',
     cursor: 'move',
-    //opacity: isDraging ? 0.4 : 1,
-    zIndex: isPlaceholder || isResizing ? 10000 : 1,
+    opacity: isDraging || isResizing ? 0.9 : 1,
+    zIndex: isDraging || isResizing ? 10000 : 1,
     height: eventHeight + 'px',
   };
   const eventBoxStyle = {
@@ -200,28 +195,11 @@ const EventBoxMonth = ({
     eventStyle.left = '0%';
     eventStyle.top = eventObj.left + '%';
     eventStyle.height = eventObj.width + '%';
-    // if (overLap && overLap.start) {
-    //   eventBoxStyle.borderTopLeftRadius = '0px';
-    //   eventBoxStyle.borderBottomLeftRadius = '0px';
-    // }
-    // if (isCalander && overLap && overLap.end) {
-    //   eventBoxStyle.borderTopRightRadius = '0px';
-    //   eventBoxStyle.borderBottomRightRadius = '0px';
-    // }
   } else {
     eventStyle.width = eventObj.width + '%';
     eventStyle.left = eventObj.left + '%';
     eventStyle.top = offset + 'px';
     eventStyle.height = eventHeight + 'px';
-
-    // if (overLap && overLap.start) {
-    //   eventBoxStyle.borderTopLeftRadius = '0px';
-    //   eventBoxStyle.borderTopRightRadius = '0px';
-    // }
-    // if (overLap && overLap.end) {
-    //   eventBoxStyle.borderBottomLeftRadius = '0px';
-    //   eventBoxStyle.borderBottomRightRadius = '0px';
-    // }
   }
 
   return (
@@ -246,13 +224,11 @@ const EventBoxMonth = ({
             // handleAddEvent(eventObj);
             calanderToAddOrUpdateEvent(eventObj);
           }}
+          onClick={e => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}
           onMouseUp={handleMouseUpDrag}
-          // onClick={e => {
-          //   e.stopPropagation();
-          //   e.preventDefault();
-          //   alert('double click');
-          //   handleAddEvent(eventObj);
-          // }}
           style={eventStyle}
         >
           <div
