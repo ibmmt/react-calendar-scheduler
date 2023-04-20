@@ -13,13 +13,10 @@ function TimeInput({ onChange, value }) {
       return timeString.toUpperCase();
     }
 
-    console.log('timeString', timeString);
     // Split the input string into hour and minute components
     let hour = parseInt(timeString.substring(0, 2));
     let minute = parseInt(timeString.substring(2, 4) || '0');
     let meridiem = timeString.includes('PM') ? 'PM' : 'AM';
-    console.log('hour', hour);
-    console.log('minute', minute);
 
     // Determine the appropriate meridiem based on the hour value
     if (hour >= 12) {
@@ -60,8 +57,6 @@ function TimeInput({ onChange, value }) {
 
   function handleBlur() {
     const formattedValue = convertTime(inputValue);
-    console.log('formattedValue', formattedValue);
-    // Update the input value with the formatted value
     setIsValid(formattedValue.length === 8);
     setInputValue(formattedValue);
   }

@@ -1,0 +1,6 @@
+1. Delete conformation
+2. Multiple shift
+3. Title style
+4. Total Day count
+5.typescript
+6.documentation

@@ -11,7 +11,9 @@ body {
 
  
 
-
+.ib__sc__form-group{
+  margin-bottom: 1em;
+}
 
 .ib__sc-form-control {
   display: block;
@@ -89,6 +91,13 @@ body {
 .ib__sc__btn-group .ib__sc__btn:last-child {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius:  0.25rem;
+}
+
+.ib__sc__truncate {
+ 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 
@@ -211,11 +220,11 @@ border: 1px solid #ccc;
 }
 .ib__sc__event{
  
- 
-  padding: 1px;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  text-align: left;
+  padding: 5px 10px;
 }
 .ib__sc__event-box{
   padding: 0px;
@@ -290,10 +299,12 @@ border: 1px solid #ccc;
 }
 
 .ib__sc__table-hr-box-week.ib__sc__week-time {
-  font-size: 1em;
+  font-size: .7em;
   text-align: right;
   line-height: 1em;
-  color: #ccc;
+  color: #9e9e9e;
+  width: 72px;
+  padding-right: 3px;
 }
  
  
@@ -339,6 +350,12 @@ background-color: white;
     text-align: center;
     color: #ccc;
     cursor: pointer;
+}
+.ib__sc__modal_footer{
+display: flex;
+justify-content: space-between;
+
+
 }
 
 .ib__sc-form-control:focus {

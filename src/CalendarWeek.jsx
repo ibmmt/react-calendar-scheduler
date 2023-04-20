@@ -12,70 +12,88 @@ import {
   isDateBetween,
   parseEvents,
   setEventID,
+  timeFormateFromHour,
 } from './_utils';
-//Create context for event handler
 
 let boxHeightInit = 25;
 let boxTime = 1; //1 hr
 
 const CalendarWeek = ({
   eventsData,
-  hourBoxHeight,
-  dayStartingFrom = 7,
   updateEvent,
-  NoOfDayColumn,
+  selectedDate,
   calanderType,
-  noOFHoursToShow,
-  dayStartFrom,
+  weekHourBoxHeight = boxHeightInit,
+  weekStartingFrom, // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
+  weekCalanderDayStartFromHour, //day start from hour,
+  weekCalanderVisibleHour = 12, //day visible hour
+  weekCalanderTitleFormate, //day column title formate
+  weekCalanderTimeFormate = 24, //day column title formate
+  noOfDayColumn,
+  handleNextClick: _handleNextClick,
+  handlePrevClick: _handlePrevClick,
+  handleChangeCurrentDate: _handleChangeCurrentDate,
   calanderToAddOrUpdateEvent,
-  dayColumnTitleFormate,
 }) => {
   const [events, setEvents] = useState(eventsData);
   const calanderTableRef = useRef();
   const lastCleintYRef = useRef(0);
   const dragEventRef = useRef(null);
   const currentDragDate = useRef(null);
-  const boxHeight = hourBoxHeight ? hourBoxHeight : boxHeightInit;
-  //const dayStartingFrom = dayStartingFrom ? dayStartingFrom : 7;
+  const boxHeight = weekHourBoxHeight;
   const heightOfWeekColumn = boxHeight * boxTime * 24;
-
   const [isDraging, setIsDraging] = useState(false);
 
   // initial date to start from
+
   const [dateStartFrom, setDateStartFrom] = useState(() => {
-    if (calanderType == 'week') {
-      return getPreviousDay(dayStartFrom);
-    } else if (dateStartFrom && Object.keys(dateStartFrom).length) {
-      return dayStartFrom;
+    if (selectedDate && Object.keys(selectedDate).length) {
+      /**If calander type week calander start from */
+      if (calanderType == 'week') {
+        return getPreviousDay(weekStartingFrom, selectedDate);
+      } else {
+        return selectedDate;
+      }
     } else {
       return new Date();
     }
   });
 
+  /**
+   * Height of week calander column to show
+   */
   const heightOfWeekColumnToShow =
-    (boxHeight / boxTime) * (noOFHoursToShow ? noOFHoursToShow : 12);
+    (boxHeight / boxTime) * weekCalanderVisibleHour;
   useEffect(() => {
     setEvents(
       calculatePositions(
         parseEvents(setEventID(eventsData), 'dd/MM/yyyy', 'HH:mm:ss'),
+        false,
       ),
     );
   }, [eventsData]);
 
+  /**  Update event if dateStartFrom change  */
   useEffect(() => {
     if (!dateStartFrom || Object.keys(dateStartFrom).length === 0) return;
     setDateStartFrom(dateStartFrom);
+    _handleChangeCurrentDate(dateStartFrom, calanderType);
   }, [dateStartFrom]);
 
+  /**  Initilize calander  */
   useEffect(() => {
     if (calanderTableRef.current) {
       calanderTableRef.current.scrollTop =
-        (dayStartingFrom * boxHeight) / boxTime;
+        (weekCalanderDayStartFromHour * boxHeight) / boxTime;
     }
   }, []);
 
+  /**
+   * Dragin event mouse move handler
+   * @param {Event} event
+   * @param {Number} selectedDate
+   */
   const dragStart = (event, selectedDate) => {
-    console.debug('dragStart');
     currentDragDate.current = selectedDate;
     dragEventRef.current = { ...event, left: 0, width: '100' };
     setIsDraging(true);
@@ -92,7 +110,7 @@ const CalendarWeek = ({
       dragEventRef.current.startTime += daysDiff * 24 * HOUR_MILLISECONDS;
       dragEventRef.current.endTime += daysDiff * 24 * HOUR_MILLISECONDS;
       currentDragDate.current = date;
-      updateEvent(dragEventRef.current);
+      updateEvent({ ...dragEventRef.current });
     }
   };
 
@@ -101,7 +119,6 @@ const CalendarWeek = ({
    * @return {undefined}
    */
   const dragingMouseMoveHandler = e => {
-    console.debug('dragingMouseMoveHandler');
     e.preventDefault();
     if (!dragEventRef.current) return;
     if (lastCleintYRef.current === 0) {
@@ -109,7 +126,7 @@ const CalendarWeek = ({
       return;
     }
     const diff = e.clientY - lastCleintYRef.current;
-    console.debug('diff', diff);
+
     if (diff > 10 || diff < -10) {
       dragEventRef.current.startTime =
         dragEventRef.current.startTime + (diff / boxHeight) * boxTime * 3600000;
@@ -129,7 +146,7 @@ const CalendarWeek = ({
       e.preventDefault();
     }
     if (dragEventRef.current) {
-      updateEvent(dragEventRef.current);
+      updateEvent({ ...dragEventRef.current });
       lastCleintYRef.current = 0;
       dragEventRef.current = null;
     }
@@ -153,11 +170,19 @@ const CalendarWeek = ({
     };
   }, [isDraging]);
 
+  /**
+   * on week change
+   * @param {number} diff
+   */
   const onWeekChange = diff => {
-    setDateStartFrom(addDays(dateStartFrom, diff));
+    const newDateString = addDays(dateStartFrom, diff);
+    setDateStartFrom(newDateString);
+    if (diff > 0) {
+      _handleNextClick(newDateString, calanderType);
+    } else {
+      _handlePrevClick(newDateString, calanderType);
+    }
   };
-
-  console.log('events', events);
 
   return (
     <div>
@@ -167,7 +192,7 @@ const CalendarWeek = ({
             <div className="ib__sc__week-date-btn-group">
               <button
                 className="ib__sc__week-date__bt-prev"
-                onClick={() => onWeekChange(-NoOfDayColumn)}
+                onClick={() => onWeekChange(-noOfDayColumn)}
               >
                 <LeftIcon />
               </button>
@@ -185,7 +210,7 @@ const CalendarWeek = ({
 
               <button
                 className="ib__sc__week-date__bt-next"
-                onClick={() => onWeekChange(NoOfDayColumn)}
+                onClick={() => onWeekChange(noOfDayColumn)}
               >
                 <RightIcon />
               </button>
@@ -207,7 +232,7 @@ const CalendarWeek = ({
               ref={calanderTableRef}
             >
               <div className="ib__sc__tb-wrapper ib__sc__tb-wrapper-week">
-                <div className="ib__sc__tb_week_time" style={{ width: '45px' }}>
+                <div className="ib__sc__tb_week_time">
                   <div className="ib__sc__table-th">-</div>
                   <div className="ib__sc__cell ib__sc__cell-week">
                     {[...Array(24).keys()].map((hour, index) => (
@@ -216,12 +241,16 @@ const CalendarWeek = ({
                         style={{ height: boxHeight + 'px', draggable: 'true' }}
                         className="ib__sc__table-hr-box-week ib__sc__week-time"
                       >
-                        {index !== 0 && <small>{hour}:00</small>}
+                        {index !== 0 && (
+                          <>
+                            {timeFormateFromHour(hour, weekCalanderTimeFormate)}
+                          </>
+                        )}
                       </div>
                     ))}
                   </div>
                 </div>
-                {[...Array(NoOfDayColumn).keys()].map(dayIndex => {
+                {[...Array(noOfDayColumn).keys()].map(dayIndex => {
                   const now = new Date(dateStartFrom);
                   let boxDay = new Date(
                     now.setDate(now.getDate() + dayIndex),
@@ -232,13 +261,11 @@ const CalendarWeek = ({
                       className="ib__sc__table-td ib__sc__table-td-week"
                       style={{ minHeight: heightOfWeekColumn + 'px' }}
                     >
-                      <div key={dayIndex} className="ib__sc__table-th">
-                        {formatDate(
-                          new Date(boxDay),
-                          dayColumnTitleFormate
-                            ? dayColumnTitleFormate
-                            : 'dd/MMM/yyyy',
-                        )}
+                      <div
+                        key={dayIndex}
+                        className="ib__sc__table-th ib__sc__truncate"
+                      >
+                        {formatDate(new Date(boxDay), weekCalanderTitleFormate)}
                       </div>
                       {/* Day column */}
                       <DayColumnWeek
@@ -273,11 +300,6 @@ const CalendarWeek = ({
                   );
                 })}
               </div>
-              {/* <DragingEvent
-                draggingEvent={draggingEvent}
-                boxTime={boxTime}
-                boxHeight={boxHeight}
-              /> */}
             </div>
           </EventHandlerContex.Provider>
         </div>

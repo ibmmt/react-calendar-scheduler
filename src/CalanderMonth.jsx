@@ -11,49 +11,56 @@ import {
   setEventID,
   weekdaysArr,
 } from './_utils';
-//let maxEventCountInDay = 0;
 
-const boxHeight = 60;
-const minimumThinkness = 25;
-
+//const boxHeight = 60;
 function CalanderMonth({
   currentDay,
   eventsData,
   updateEvent,
+  calanderType,
+  minimumEventThickness,
   calanderToAddOrUpdateEvent,
+  monthCalanderMinCellHeight: boxHeight = 60,
+  handleNextClick: _handleNextClick,
+  handlePrevClick: _handlePrevClick,
+  handleChangeCurrentDate: _handleChangeCurrentDate,
   fromDate = new Date(),
 }) {
-  console.log('currentDay', currentDay);
   const [selectedDate, setSelectedDate] = useState(fromDate);
-
-  console.log('selectedDate', selectedDate);
   const month = selectedDate.getMonth();
   const year = selectedDate.getFullYear();
   const yearMonth = `${year}-${(month + 1).toString().padStart(2, '0')}`;
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const [events, setEvents] = useState(eventsData);
-
   const currentDragDate = useRef();
   const editingEventRef = useRef();
-  //const lastCleintYRef = useRef(0);
   const [isDraging, setIsDraging] = useState(false);
   const sideUseRef = useRef('');
-  //const [dragingEventId, setDragingEventId] = useState(null);
 
+  /**
+   * set current day
+   */
   useEffect(() => {
     if (!currentDay) return;
     setSelectedDate(currentDay);
   }, [currentDay]);
 
+  /**
+   * set event id for events
+   */
   useEffect(() => {
     setEvents(
       calculatePositions(
         parseEvents(setEventID(eventsData), 'dd/MM/yyyy', 'HH:mm:ss'),
+        true,
       ),
     );
   }, [eventsData]);
 
+  /**
+   *   remove text selection while mouse  dragining
+   */
   useEffect(() => {
     if (!isDraging) return;
     document.body.style.userSelect = 'none';
@@ -62,20 +69,28 @@ function CalanderMonth({
     };
   }, [isDraging]);
 
+  /**
+   *
+   * @param {Event} event
+   * @param {Number} selectedDate
+   */
   const dragStart = (event, selectedDate) => {
     currentDragDate.current = selectedDate;
     editingEventRef.current = { ...event, left: 0, width: '100' };
     setIsDraging(true);
   };
 
+  /**
+   *
+   * @param {Event} event
+   * @param {Number} date
+   * @param {string} side
+   */
   const resizeStart = (event, date, side) => {
-    console.debug('resizeStart000000000000000000000000000000000000000000');
     currentDragDate.current = date;
     editingEventRef.current = { ...event, left: 0, width: '100' };
-    // setDragingEventId(event.sc_app__id);
     sideUseRef.current = side;
     setIsDraging(true);
-    //setDraggingEvent({ ...event, left: 0, width: '100%' });
   };
 
   /** Update dragging event on mouse enter
@@ -114,7 +129,6 @@ function CalanderMonth({
       newEvent.startTime += daysDiff * 24 * HOUR_MILLISECONDS;
     }
     editingEventRef.current = newEvent;
-    console.log('newEvent.endTime ', new Date(newEvent.endTime));
     currentDragDate.current = date.getTime();
 
     for (let i = 0; i < events.length; i++) {
@@ -124,8 +138,6 @@ function CalanderMonth({
       }
     }
     setEvents([...events]);
-
-    // updateEvent(newEvent);
   };
   const renderDaysOfWeek = () => {
     return (
@@ -138,6 +150,10 @@ function CalanderMonth({
       </tr>
     );
   };
+
+  /**
+   * Render calendar days
+   */
 
   const renderCalendarDays = () => {
     const rows = [];
@@ -167,21 +183,10 @@ function CalanderMonth({
       });
 
       let currentBoxHeight = boxHeight;
-      if ((minPercentage * boxHeight) / 100 < minimumThinkness) {
-        currentBoxHeight = (minimumThinkness * 100) / minPercentage;
+      if ((minPercentage * boxHeight) / 100 < minimumEventThickness) {
+        currentBoxHeight = (minimumEventThickness * 100) / minPercentage;
       }
 
-      //   maxEventCountInDay = Math.max(maxEventCountInDay, eventsInDay.length);
-      // eventsInDay = eventsInDay.map(event => {
-      //   return {
-      //     ...event,
-      //   };
-      //   // return isDateBetween(date.getTime(), event.startTime, event.endTime);
-      // });
-      // const currentBoxHeight =
-      //   minimumThinkness * events.leftOvercome < boxHeight
-      //     ? boxHeight
-      //     : minimumThinkness * eventsInDay.length;
       cells.push(
         <DayCellMonth
           key={i}
@@ -226,19 +231,33 @@ function CalanderMonth({
 
     return rows;
   };
+
+  /**
+   * Next and prev month
+   * @param {number} value
+   */
   const onmonthChangeNextPrev = value => {
     const newDate = new Date(selectedDate);
     newDate.setMonth(newDate.getMonth() + value);
     setSelectedDate(newDate);
+    if (value > 0) {
+      _handleNextClick(newDate, calanderType);
+    } else {
+      _handlePrevClick(newDate, calanderType);
+    }
   };
+
+  /**
+   * Select month
+   * @param {} e
+   */
 
   const selectMonth = e => {
     const newDate = new Date(e.target.value);
-    console.log('newDate', newDate);
     setSelectedDate(newDate);
+    _handleChangeCurrentDate(newDate, calanderType);
   };
 
-  console.log('events', events);
   return (
     <div>
       <EventHandlerContex.Provider

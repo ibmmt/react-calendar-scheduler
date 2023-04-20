@@ -102,13 +102,13 @@ const strinkEvent = (leftOvercome, percentage, srinkedObject) => {
   });
 };
 
-export const calculatePositions = (events, isFullCalander) => {
+export const calculatePositions = (events, isMonth) => {
   const totalWidth = 100;
   //sort events by start time
   let sortedEvents = events.sort((a, b) => a['startTime'] - b['startTime']);
 
-  const startKey = isFullCalander ? 'startDate' : 'startTime';
-  const endKey = isFullCalander ? 'endDate' : 'endTime';
+  const startKey = isMonth ? 'startDate' : 'startTime';
+  const endKey = isMonth ? 'endDate' : 'endTime';
 
   for (let i = 0; i < sortedEvents.length; i++) {
     let width = 0;
@@ -118,8 +118,9 @@ export const calculatePositions = (events, isFullCalander) => {
     //  console.log('\n\nEvent==================', sortedEvents[i].title);
     //console.log('i>>>>>>>>>>>', i);
     for (let k = 0; k < i; k++) {
-      //console.log('k', k, i, sortedEvents[k].title);
-      if (sortedEvents[k][endKey] > sortedEvents[i][startKey]) {
+      console.log('k', k, i, sortedEvents[k].title);
+      console.log(sortedEvents[k][endKey], sortedEvents[i][startKey]);
+      if (sortedEvents[k][endKey] >= sortedEvents[i][startKey]) {
         leftOvercome.push(sortedEvents[k]);
       }
     }
@@ -322,9 +323,9 @@ export function eventObjectToEvent(eventObj) {
   return event;
 }
 
-export function getPreviousDay(dayNo) {
+export function getPreviousDay(dayNo, date) {
   dayNo = dayNo ? dayNo : 1;
-  const today = new Date();
+  const today = date ? date : new Date();
   if (today.getDay() === dayNo) {
     return today;
   }
@@ -341,4 +342,37 @@ export const nextMonth = date => {
 // Helper function to go back to the previous month
 export const prevMonth = date => {
   return new Date(date.getFullYear(), date.getMonth() - 1, 1);
+};
+
+export const timeFormateFromHour = (hours, timeFormat) => {
+  if (timeFormat == '12') {
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const timeString = ('0' + hours).slice(-2) + ':' + '00' + ' ' + ampm;
+    return timeString;
+  } else {
+    const timeString = ('0' + hours).slice(-2) + ':' + '00';
+    return timeString;
+  }
+};
+
+export const formateEventDateAndTimeForOUtput = eventObj => {
+  console.log(eventObj);
+  const event = {
+    ...eventObj,
+    startDate: eventObj.startTime
+      ? formatDate(new Date(eventObj.startTime), 'dd/MM/yyyy')
+      : '',
+    endDate: eventObj.endTime
+      ? formatDate(new Date(eventObj.endTime), 'dd/MM/yyyy')
+      : '',
+    startTime: eventObj.startTime
+      ? formatDate(new Date(eventObj.startTime), 'H:mm:ss')
+      : '',
+    endTime: eventObj.endTime
+      ? formatDate(new Date(eventObj.endTime), 'H:mm:ss')
+      : '',
+  };
+  return event;
 };

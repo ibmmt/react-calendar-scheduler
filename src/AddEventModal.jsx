@@ -2,10 +2,11 @@ import { useState } from 'react';
 import TimeInput from './TimeInput';
 import { addTimeStringTodate, formatDate } from './_utils';
 
-export const AddEventModel = ({
+export const AddEventModal = ({
   show,
   handleClose,
   handleAddEvent,
+  handleDeleteEvent: _handleDeleteEvent,
   eventObj: {
     title: titleInit = '',
     startDate: startDateInit = '',
@@ -14,6 +15,7 @@ export const AddEventModel = ({
     endTime: endTimeInit = '',
     bg_color: bg_colorInit = '#5c6bc0',
     description: descriptionInit = '',
+    sc_app__id,
     ...otherEventData
   },
 }) => {
@@ -31,6 +33,11 @@ export const AddEventModel = ({
   const [bg_color, setBg_color] = useState(bg_colorInit);
   const [description, setDescription] = useState(descriptionInit);
 
+  /**
+   * handle submit event
+   * @param {*} e
+   * @returns
+   */
   const handleSubmit = e => {
     e.preventDefault();
     if (!validateTimeAndDate()) {
@@ -38,25 +45,39 @@ export const AddEventModel = ({
     }
     const startDateObj = addTimeStringTodate(new Date(startDate), startTime);
     const endDateObj = addTimeStringTodate(new Date(endDate), endTime);
-    console.log('startDateObj', startDateObj);
-    console.log('endDateObj', endDateObj);
+
     const eventObj = {
       ...otherEventData,
       title,
+      sc_app__id,
+      description,
+
       startDate: formatDate(new Date(startDateObj), 'dd/MM/yyyy'),
       endDate: formatDate(new Date(endDateObj), 'dd/MM/yyyy'),
       startTime: formatDate(new Date(startDateObj), 'H:mm:ss'),
       endTime: formatDate(new Date(endDateObj), 'H:mm:ss'),
       bg_color: bg_color,
     };
-    console.log('eventObj', eventObj);
 
     handleAddEvent(eventObj);
     handleClose();
   };
 
+  /**
+   * handle delete event
+   * @param {*} e
+   */
+  const handleDeleteEvent = e => {
+    e.preventDefault();
+    _handleDeleteEvent && _handleDeleteEvent(sc_app__id);
+    handleClose();
+  };
+
+  /**
+   * Validate date and time
+   * @returns {Boolean} true if valid date and time
+   */
   const validateTimeAndDate = () => {
-    console.log(startDate, endDate, startTime, endTime);
     if (!startDate || !endDate || !startTime || !endTime) {
       alert('Please fill all the fields');
       return false;
@@ -91,13 +112,13 @@ export const AddEventModel = ({
     >
       <div className="ib__sc-modal-content ">
         <div className="modal-header">
-          <p>Add Event</p>
+          {!sc_app__id ? <p>Add Event</p> : <p>Edit Event</p>}
           <span className="ib__sc__close-modal-btn" onClick={handleClose}>
             ×
           </span>
         </div>
         <div className="ib__sc-modal-body">
-          <form>
+          <form noValidate>
             <div className="ib__sc__form-group">
               <label className="ib__sc-label" htmlFor="title">
                 Title
@@ -180,9 +201,23 @@ export const AddEventModel = ({
                 required
               />
             </div>
-            <button type="submit" onClick={handleSubmit}>
-              Add Event
-            </button>
+            <div className="ib__sc__modal_footer">
+              <button className="ib__sc__btn" onClick={handleSubmit}>
+                {!sc_app__id ? <>Save</> : <>Update </>}
+              </button>
+
+              {sc_app__id && (
+                <button
+                  className="ib__sc__btn"
+                  onClick={e => {
+                    e.preventDefault();
+                  }}
+                  onDoubleClick={handleDeleteEvent}
+                >
+                  Delete
+                </button>
+              )}
+            </div>
           </form>
         </div>
       </div>

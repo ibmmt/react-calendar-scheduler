@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
 import { EventBoxView } from './EventView';
-//let timeout = undefined;
+
 const EventBoxMonth = ({
   boxHeight,
   boxTime,
@@ -14,8 +14,6 @@ const EventBoxMonth = ({
   isDraging,
   isResizing,
 }) => {
-  // const [isDraging, setIsDraging] = useState(false);
-  // const [isResizing, setIsResizing] = useState(false);
   const [offset, setOffset] = useState(0);
   const [eventHeight, setEventHeight] = useState(0);
   const [overLap, setOverLap] = useState({ start: false, end: false });
@@ -29,20 +27,15 @@ const EventBoxMonth = ({
   } = useContext(EventHandlerContex);
   const eventRef = useRef();
 
-  //const [clickCount, setClickCount] = useState(0);
-
   /**
    * Handle mouse Down on the event box, to start drag
    * @param {}
    */
 
   const handleDragStart = () => {
-    console.log('handleDragStart');
     if (isResizing) {
       dragEnd();
-      //setIsDraging(false);
     } else {
-      //  setIsDraging(true);
       dragStart(eventObj, boxDay);
     }
   };
@@ -53,15 +46,9 @@ const EventBoxMonth = ({
    * @param {String} side
    */
   const handleMouseDownResize = (e, side) => {
-    console.log('handleMouseDownResize');
     e.stopPropagation();
     e.preventDefault();
-    // newEventTime.current.start = eventObj.startTime;
-    // newEventTime.current.end = eventObj.endTime;
-    // lastCleintYRef.current = 0;
-    // sideRef.current = side;
     resizeStart(eventObj, boxDay, side);
-    // setIsResizing(true);
   };
 
   /**
@@ -101,58 +88,17 @@ const EventBoxMonth = ({
     setOffset(event_top);
   };
 
-  // /*
-  //  * resize event boc on mouse move
-  //  * @param {number} diff
-  //  * @param {String} side
-  //  */
-  // const resizeEventFun = (diff, side) => {
-  //   if (side === 'top') {
-  //     eventObj.startTime =
-  //       eventObj.startTime + (diff / boxHeight) * boxTime * HOUR_MILLISECONDS;
-  //     setPostionAndHeight(eventObj.startTime, eventObj.endTime);
-  //   }
-  //   if (side === 'bottom') {
-  //     eventObj.endTime =
-  //       eventObj.endTime + (diff / boxHeight) * boxTime * HOUR_MILLISECONDS;
-  //     setPostionAndHeight(eventObj.startTime, eventObj.endTime);
-  //   }
-  // };
-
-  // /*
-  //  * handle mouse move on the event box, to drag
-  //  * @param {Event} e
-  //  * */
-  // const handleMouseMove = e => {
-  //   console.log('handleMouseMove');
-  //   if (!isResizing) return;
-  //   console.log('handleMouseMove');
-  //   if (lastCleintYRef.current == 0) {
-  //     lastCleintYRef.current = e.clientY;
-  //     return;
-  //   }
-  //   const diff = e.clientY - lastCleintYRef.current;
-  //   if (diff > 10 || diff < -10) {
-  //     resizeEventFun(diff, sideRef.current);
-  //     lastCleintYRef.current = e.clientY;
-  //   }
-  // };
-
   /*
    * handle mouse up on the event box, to stop drag
    * @param {Event} e
    * */
   const handleMouseUpResize = e => {
-    //  setIsResizing(false);
-    console.log('mouser up reisze', eventObj);
     if (!isResizing) return;
     e.preventDefault();
     resizeEnd();
   };
   const handleMouseUpDrag = e => {
-    console.log('mouser up drag');
     e.preventDefault();
-    //setIsDraging(false);
     dragEnd();
   };
 
@@ -221,7 +167,6 @@ const EventBoxMonth = ({
             e.stopPropagation();
             e.preventDefault();
             dragEnd();
-            // handleAddEvent(eventObj);
             calanderToAddOrUpdateEvent(eventObj);
           }}
           onClick={e => {

@@ -99,44 +99,69 @@ function App() {
     <div className="App" style={{ padding: '4em' }}>
       <ReactCalnaderScedular
         events={events}
-        currentDay={new Date()}
-        fromDate={new Date()}
+        selectedDate={new Date()}
+        calanderType="week" // week or day
+        monthCalanderTitleFormate="dddd" //month title formate
+        monthCalanderTitle="ddd" //day column title formate
+        monthCalanderMinCellHeight={50} //day column title formate
         weekHourBoxHeight={50}
-        dayStartingFrom={7} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
+        weekStartingFrom={7} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
+        weekCalanderDayStartFromHour={7} //day start from hour,
+        weekCalanderVisibleHour={12} //day visible hour
+        weekCalanderTitleFormate="ddd, MMM dd" //day column title formate
+        weekCalanderTimeFormate={12} //day column title formate
+        isShowAddNewEventButton={true} //show add new event button
+        isShowDeleteEventButton={true} //show delete event button
+        isShowAddOrUpadateEventButton={true} //show add or update event button
+        disabaleEventPopup={false} //disable event popup
         handleUpdateEvent={event => {
           console.log(event);
+          console.log(
+            '============================================handleUpdateEvent',
+          );
         }}
         handleAddNewEvent={event => {
           console.log(event);
+          console.log(
+            '============================================handleAddNewEvent',
+          );
         }}
         handleDeleteEvent={event => {
           console.log(event);
+          console.log(
+            '============================================handleDeleteEvent',
+          );
         }}
-        hendleEventClick={event => {
+        handleEventClick={event => {
           console.log(event);
+          console.log(
+            '============================================handleEventClick',
+          );
         }}
         handleColumnClick={event => {
           console.log(event);
+          console.log(
+            '============================================handleColumnClick',
+          );
         }}
         handleNextClick={type => {
+          console.log(
+            '============================================handleNextClick',
+          );
           console.log(type);
         }}
         handlePrevClick={type => {
           console.log(type);
+          console.log(
+            '============================================handlePrevClick',
+          );
         }}
         handleClanderTypeChange={type => {
           console.log(type);
+          console.log(
+            '============================================handleClanderTypeChange',
+          );
         }}
-        monthCalanderTitleFormate="dddd" //month title formate
-        calanderType="week" // week or day
-        scrollableHour={7} //scrollable hours
-        dayStartFromHour={7} //day start from hour,
-        dayColumnWeekTitleFormate="ddd, MMM DD" //day column title formate
-        dayColumnDayTitleFormate="ddd" //day column title formate
-        dayColumnTimeTitleFormate="hh:mm A" //day column title formate
-        isShowAddNewEventButton={true} //show add new event button
-        isShowDeleteEventButton={true} //show delete event button
-        isShowAddOrUpadateEventButton={true} //show add or update event button
       />
     </div>
   );

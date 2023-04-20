@@ -3,7 +3,6 @@ import EventBoxWeek from './EventBoxWeek';
 import { isSameDay } from './_utils';
 const DayColumnWeek = ({
   events,
-  // draggingEvent,
   boxHeight,
   boxTime,
   boxDay,
@@ -19,11 +18,15 @@ const DayColumnWeek = ({
    * @param {Event} e
    */
   const dragMouseEnter = e => {
-    console.log('dragMouseEnter');
     e.preventDefault();
     dragBoxMouseEnterToCell(boxDay);
   };
 
+  /**
+   * Handle click on hour box
+   * @param {*} e
+   * @param {Number} hour
+   */
   const handleClickHourBox = (e, hour) => {
     e.preventDefault();
     e.stopPropagation();
@@ -65,19 +68,7 @@ const DayColumnWeek = ({
                 calanderToAddOrUpdateEvent={calanderToAddOrUpdateEvent}
               />
             ))}
-          {/* This is the placeholder for the event being dragged */}
-          {/* {!!draggingEvent && draggingEvent.sc_app__id != undefined && (
-            <>
-              <EventBoxWeek
-                eventObj={draggingEvent}
-                boxDay={boxDay}
-                boxHeight={boxHeight}
-                boxTime={boxTime}
-                isPlaceholder={true}
-                calanderToAddOrUpdateEvent={calanderToAddOrUpdateEvent}
-              />
-            </>
-          )} */}
+
           {isSameDay(boxDay, new Date()) && (
             <CurrentTimeBar boxHeight={boxHeight} />
           )}
@@ -97,8 +88,16 @@ const DayColumnWeek = ({
   );
 };
 
+/**
+ * Render current time bar
+ */
 const CurrentTimeBar = ({ boxHeight }) => {
   const [top, setTop] = useState(0);
+
+  /**
+   * Calculate top position of current time bar
+   * @returns {Number}
+   */
   const calculateTopCurrentTime = () => {
     const currentTime = new Date();
     const currentHour = currentTime.getHours();
@@ -107,6 +106,9 @@ const CurrentTimeBar = ({ boxHeight }) => {
     const top = toalHours * boxHeight;
     setTop(top);
   };
+  /**
+   * Calculate top position of current time bar
+   */
   useEffect(() => {
     calculateTopCurrentTime();
     const interval = setInterval(() => {

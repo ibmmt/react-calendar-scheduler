@@ -19,16 +19,13 @@ export default function DayCellMonth({
    * @param {Event} e
    */
   const dragMouseEnter = e => {
-    console.log('dragMouseEnter');
     e.preventDefault();
-
     dragBoxMouseEnterToCell(boxDay);
   };
 
   const handleClickBox = e => {
     e.preventDefault();
     e.stopPropagation();
-
     calanderToAddOrUpdateEvent({
       startTime: new Date(boxDay).setHours(0, 0, 0, 0),
       endTime: new Date(boxDay + 24 * HOUR_MILLISECONDS).setHours(0, 0, 0, 0),

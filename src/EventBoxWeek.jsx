@@ -49,7 +49,6 @@ const EventBoxWeek = ({
    * @param {String} side
    */
   const handleMouseDownResize = (e, side) => {
-    console.log('handleMouseDownResize');
     e.stopPropagation();
     e.preventDefault();
     newEventTime.current.start = eventObj.startTime;
@@ -117,9 +116,7 @@ const EventBoxWeek = ({
    * @param {Event} e
    * */
   const handleMouseMoveResize = e => {
-    console.log('handleMouseMoveResize');
     if (!isResizing) return;
-    console.log('handleMouseMoveResize');
     if (lastCleintYRef.current == 0) {
       lastCleintYRef.current = e.clientY;
       return;
