@@ -24,7 +24,7 @@ const CalendarWeek = ({
   selectedDate,
   calanderType,
   weekHourBoxHeight = boxHeightInit,
-  weekStartingFrom, // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
+  startingWeekday, // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
   weekCalanderDayStartFromHour, //day start from hour,
   weekCalanderVisibleHour = 12, //day visible hour
   weekCalanderTitleFormate, //day column title formate
@@ -44,20 +44,23 @@ const CalendarWeek = ({
   const heightOfWeekColumn = boxHeight * boxTime * 24;
   const [isDraging, setIsDraging] = useState(false);
 
-  // initial date to start from
+  const initSelectedDate = () => {
+    let initDay = new Date();
 
-  const [dateStartFrom, setDateStartFrom] = useState(() => {
     if (selectedDate && Object.keys(selectedDate).length) {
-      /**If calander type week calander start from */
-      if (calanderType == 'week') {
-        return getPreviousDay(weekStartingFrom, selectedDate);
-      } else {
-        return selectedDate;
-      }
-    } else {
-      return new Date();
+      initDay = selectedDate;
     }
-  });
+
+    /**If calander type week calander start from */
+    if (calanderType == 'week') {
+      return getPreviousDay(startingWeekday, initDay);
+    } else {
+      return initDay;
+    }
+  };
+
+  // initial date to start from
+  const [dateStartFrom, setDateStartFrom] = useState(initSelectedDate);
 
   /**
    * Height of week calander column to show
@@ -72,6 +75,10 @@ const CalendarWeek = ({
       ),
     );
   }, [eventsData]);
+
+  useEffect(() => {
+    setDateStartFrom(initSelectedDate());
+  }, [calanderType]);
 
   /**  Update event if dateStartFrom change  */
   useEffect(() => {
@@ -178,9 +185,11 @@ const CalendarWeek = ({
     const newDateString = addDays(dateStartFrom, diff);
     setDateStartFrom(newDateString);
     if (diff > 0) {
-      _handleNextClick(newDateString, calanderType);
+      typeof _handleNextClick == 'function' &&
+        _handleNextClick(newDateString, calanderType);
     } else {
-      _handlePrevClick(newDateString, calanderType);
+      typeof _handlePrevClick == 'function' &&
+        _handlePrevClick(newDateString, calanderType);
     }
   };
 
@@ -239,7 +248,7 @@ const CalendarWeek = ({
                       <div
                         key={index}
                         style={{ height: boxHeight + 'px', draggable: 'true' }}
-                        className="ib__sc__table-hr-box-week ib__sc__week-time"
+                        className=" ib__sc__week-time"
                       >
                         {index !== 0 && (
                           <>

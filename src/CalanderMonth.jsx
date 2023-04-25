@@ -18,6 +18,7 @@ function CalanderMonth({
   eventsData,
   updateEvent,
   calanderType,
+  startingWeekday,
   minimumEventThickness,
   calanderToAddOrUpdateEvent,
   monthCalanderMinCellHeight: boxHeight = 60,
@@ -142,9 +143,9 @@ function CalanderMonth({
   const renderDaysOfWeek = () => {
     return (
       <tr>
-        {weekdaysArr.map(day => (
+        {weekdaysArr.map((day, index) => (
           <th className="ib__sc__table-th" key={day}>
-            {day}
+            {weekdaysArr[(index + startingWeekday) % 7]}
           </th>
         ))}
       </tr>
@@ -159,7 +160,11 @@ function CalanderMonth({
     const rows = [];
     let cells = [];
 
-    for (let i = 0; i < firstDayOfMonth; i++) {
+    for (
+      let i = 0;
+      i < Math.abs(firstDayOfMonth + 7 - startingWeekday) % 7;
+      i++
+    ) {
       cells.push(
         <td
           className="ib__sc__table-td ib__sc__table-td-month "
@@ -241,9 +246,11 @@ function CalanderMonth({
     newDate.setMonth(newDate.getMonth() + value);
     setSelectedDate(newDate);
     if (value > 0) {
-      _handleNextClick(newDate, calanderType);
+      typeof _handleNextClick === 'function' &&
+        _handleNextClick(newDate, calanderType);
     } else {
-      _handlePrevClick(newDate, calanderType);
+      typeof _handlePrevClick === 'function' &&
+        _handlePrevClick(newDate, calanderType);
     }
   };
 
@@ -255,7 +262,8 @@ function CalanderMonth({
   const selectMonth = e => {
     const newDate = new Date(e.target.value);
     setSelectedDate(newDate);
-    _handleChangeCurrentDate(newDate, calanderType);
+    typeof _handleChangeCurrentDate === 'function' &&
+      _handleChangeCurrentDate(newDate, calanderType);
   };
 
   return (

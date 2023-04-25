@@ -6,7 +6,7 @@ import { EventBoxView } from './EventView';
 //let timeout = undefined;
 const EventBoxWeek = ({
   boxHeight,
-  boxTime,
+  boxTime = 1,
   eventObj,
   boxDay,
 
@@ -134,7 +134,7 @@ const EventBoxWeek = ({
    * */
   const handleMouseUpResize = e => {
     setIsResizing(false);
-    console.log('mouser up reisze', eventObj);
+
     if (!isResizing) return;
     e.preventDefault();
     lastCleintYRef.current = 0;

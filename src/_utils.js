@@ -115,16 +115,11 @@ export const calculatePositions = (events, isMonth) => {
     let left = 0;
     let leftOvercome = [];
 
-    //  console.log('\n\nEvent==================', sortedEvents[i].title);
-    //console.log('i>>>>>>>>>>>', i);
     for (let k = 0; k < i; k++) {
-      console.log('k', k, i, sortedEvents[k].title);
-      console.log(sortedEvents[k][endKey], sortedEvents[i][startKey]);
       if (sortedEvents[k][endKey] >= sortedEvents[i][startKey]) {
         leftOvercome.push(sortedEvents[k]);
       }
     }
-    // console.log('leftOvercome', leftOvercome);
 
     if (leftOvercome.length) {
       leftOvercome.sort((a, b) => a.left - b.left);
@@ -324,14 +319,16 @@ export function eventObjectToEvent(eventObj) {
 }
 
 export function getPreviousDay(dayNo, date) {
-  dayNo = dayNo ? dayNo : 1;
+  console.log('dayNo', dayNo);
+  console.log('date', date);
+  dayNo = dayNo !== undefined ? dayNo : 1;
+
   const today = date ? date : new Date();
   if (today.getDay() === dayNo) {
     return today;
   }
   const daysToPreviousDay = (today.getDay() + 7 - dayNo) % 7;
   const previousDay = new Date(today.getTime() - daysToPreviousDay * 86400000);
-  console.log(previousDay);
   return previousDay;
 }
 
@@ -358,7 +355,6 @@ export const timeFormateFromHour = (hours, timeFormat) => {
 };
 
 export const formateEventDateAndTimeForOUtput = eventObj => {
-  console.log(eventObj);
   const event = {
     ...eventObj,
     startDate: eventObj.startTime

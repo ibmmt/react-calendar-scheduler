@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AddEventModal } from './AddEventModal';
 import CalendarMonth from './CalanderMonth';
 import CalendarWeek from './CalendarWeek';
@@ -9,7 +9,7 @@ import {
 } from './_utils';
 
 function ReactCalnaderScedular({
-  events,
+  events = [],
   selectedDate = new Date(),
   calanderType: _calanderType = 'week', // week or day
   monthCalanderTitleFormate = 'dddd', //month title formate
@@ -17,10 +17,10 @@ function ReactCalnaderScedular({
   monthCalanderDayHeight = 50, //day column title formate
   minimumEventThickness = 30, //minimum event thickness
   weekHourBoxHeight = 50,
-  weekStartingFrom = 7, // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
+  startingWeekday = 1, // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
   weekCalanderDayStartFromHour = 7, //day start from hour,
   weekCalanderVisibleHour = 12, //day visible hour
-  weekCalanderTitleFormate = 'ddd, MMM DD', //day column title formate
+  weekCalanderTitleFormate = 'ddd, MMM dd', //day column title formate
   weekCalanderTimeFormate = 12, //day column title formate
   monthCalanderMinCellHeight = 50,
   disabaleEventPopup = false,
@@ -42,14 +42,14 @@ function ReactCalnaderScedular({
   const [isShowAddEvent, setIsShowAddEvent] = useState(false);
   const [eventEdit, setEventEdit] = useState({});
   const [calanderType, setCalanderType] = useState(_calanderType);
-  const [eventsState, setEventsState] = useState(events);
+  const [eventsState, setEventsState] = useState(setEventID(events));
 
   /**
    * set event id for events
    */
-  useEffect(() => {
-    setEventsState(setEventID(events));
-  }, [events]);
+  // useEffect(() => {
+  //   setEventsState(setEventID(events));
+  // }, [events]);
 
   /**
    * update event while dragin or resizing
@@ -72,6 +72,7 @@ function ReactCalnaderScedular({
    * @param {Event} eventObjEdit
    */
   const calanderToAddOrUpdateEvent = eventObjEdit => {
+    console.log('eventObjEdit', eventObjEdit);
     if (eventObjEdit.sc_app__id) {
       typeof _handleEventClick === 'function' &&
         _handleEventClick(formateEventDateAndTimeForOUtput(eventObjEdit));
@@ -95,6 +96,7 @@ function ReactCalnaderScedular({
           ? formatDate(new Date(eventObjEdit.endTime), 'H:mm:ss')
           : '',
       });
+
       setIsShowAddEvent(true);
     }
   };
@@ -119,6 +121,7 @@ function ReactCalnaderScedular({
         _handleAddNewEvent(formateEventDateAndTimeForOUtput(eventObj));
       eventsState.push(eventObj);
     }
+
     setEventsState([...eventsState]);
     setIsShowAddEvent(false);
   };
@@ -147,6 +150,7 @@ function ReactCalnaderScedular({
     _handleClanderTypeChange && _handleClanderTypeChange(type);
   };
 
+  console.log('eventsState', eventsState);
   return (
     <div className="App react-calander-scedule">
       <div className="ib__sc_rcs-container">
@@ -186,7 +190,7 @@ function ReactCalnaderScedular({
             selectedDate={selectedDate}
             calanderType={calanderType}
             weekHourBoxHeight={weekHourBoxHeight}
-            weekStartingFrom={weekStartingFrom} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
+            startingWeekday={startingWeekday} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
             weekCalanderDayStartFromHour={weekCalanderDayStartFromHour} //day start from hour,
             weekCalanderVisibleHour={weekCalanderVisibleHour} //day visible hour
             weekCalanderTitleFormate={weekCalanderTitleFormate} //day column title formate
@@ -198,7 +202,9 @@ function ReactCalnaderScedular({
             handleChangeCurrentDate={_handleChangeCurrentDate}
             updateEvent={updateEventDrag}
             calanderToAddOrUpdateEvent={eventObj => {
+              console.log('eventObj', eventObj);
               calanderToAddOrUpdateEvent(eventObj);
+
               setIsShowAddEvent(true);
             }}
           />
@@ -212,6 +218,7 @@ function ReactCalnaderScedular({
             selectedDate={selectedDate} //{parseDate('11/04/2023', 'dd/MM/yyyy')} // validation date
             dayStartFrom={0} // validation 0-6
             calanderType={calanderType}
+            startingWeekday={startingWeekday} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
             handleNextClick={_handleNextClick}
             handlePrevClick={_handlePrevClick}
             monthCalanderMinCellHeight={monthCalanderMinCellHeight}

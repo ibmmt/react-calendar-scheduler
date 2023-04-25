@@ -1,4 +1,4 @@
-import ReactCalnaderScedular from './ReactCalanderScedule';
+import ReactCalnaderScedular from './ReactCalanderScedular';
 
 function App() {
   const events = [
@@ -94,19 +94,20 @@ function App() {
       bg_color: '#FFAB91',
     },
   ];
-
+  console.log('appppp', events);
   return (
     <div className="App" style={{ padding: '4em' }}>
-      <ReactCalnaderScedular
+      <ReactCalnaderScedular calanderType="week" events={events} />
+      {/* <ReactCalnaderScedular
         events={events}
         selectedDate={new Date()}
         calanderType="week" // week or day
         monthCalanderTitleFormate="dddd" //month title formate
         monthCalanderTitle="ddd" //day column title formate
         monthCalanderMinCellHeight={50} //day column title formate
-        weekHourBoxHeight={50}
-        weekStartingFrom={7} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
-        weekCalanderDayStartFromHour={7} //day start from hour,
+        weekHourBoxHeight={50} //Height of the hour box
+        startingWeekday={0} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
+        weekCalanderDayStartFromHour={7} // Day start from hour
         weekCalanderVisibleHour={12} //day visible hour
         weekCalanderTitleFormate="ddd, MMM dd" //day column title formate
         weekCalanderTimeFormate={12} //day column title formate
@@ -162,7 +163,7 @@ function App() {
             '============================================handleClanderTypeChange',
           );
         }}
-      />
+      /> */}
     </div>
   );
 }

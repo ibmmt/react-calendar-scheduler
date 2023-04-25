@@ -4,7 +4,6 @@ import { isSameDay } from './_utils';
 const DayColumnWeek = ({
   events,
   boxHeight,
-  boxTime,
   boxDay,
   updateEvent,
   calanderTableRef,
@@ -62,17 +61,14 @@ const DayColumnWeek = ({
                 boxDay={boxDay}
                 calanderTableRef={calanderTableRef}
                 boxHeight={boxHeight}
-                boxTime={boxTime}
                 dragingEventId={dragingEventId}
                 updateEvent={updateEvent}
                 calanderToAddOrUpdateEvent={calanderToAddOrUpdateEvent}
               />
             ))}
-
           {isSameDay(boxDay, new Date()) && (
             <CurrentTimeBar boxHeight={boxHeight} />
           )}
-
           {/* This is hour boxes */}
           {[...Array(24).keys()].map((hour, index) => (
             <div
