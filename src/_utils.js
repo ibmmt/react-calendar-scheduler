@@ -319,8 +319,6 @@ export function eventObjectToEvent(eventObj) {
 }
 
 export function getPreviousDay(dayNo, date) {
-  console.log('dayNo', dayNo);
-  console.log('date', date);
   dayNo = dayNo !== undefined ? dayNo : 1;
 
   const today = date ? date : new Date();

@@ -195,7 +195,11 @@ const CalendarWeek = ({
 
   return (
     <div>
-      <div className="ib__sc__table ib__sc__table-week">
+      <div
+        className={
+          'ib__sc__table ib__sc__table-week ib_sc_type_' + calanderType
+        }
+      >
         <div className="ib__sc__week-header">
           <div className="ib__sc__week-date">
             <div className="ib__sc__week-date-btn-group">

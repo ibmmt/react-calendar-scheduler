@@ -278,7 +278,11 @@ function CalanderMonth({
           resizeEnd: dropHandler,
         }}
       >
-        <div className="ib__sc__table ib__sc__table-month-wrap">
+        <div
+          className={
+            'ib__sc__table ib__sc__table-month-wrap ib_sc_type_' + calanderType
+          }
+        >
           <div className="ib__sc__month-header">
             <div className="ib__sc__month-date">
               <div className="ib__sc__month-date-btn-group">

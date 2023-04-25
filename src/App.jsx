@@ -1,4 +1,4 @@
-import ReactCalnaderScedular from './ReactCalanderScedular';
+import ReactCalnaderScheduler from './ReactCalanderScheduler';
 
 function App() {
   const events = [
@@ -94,11 +94,10 @@ function App() {
       bg_color: '#FFAB91',
     },
   ];
-  console.log('appppp', events);
+
   return (
     <div className="App" style={{ padding: '4em' }}>
-      <ReactCalnaderScedular calanderType="week" events={events} />
-      {/* <ReactCalnaderScedular
+      <ReactCalnaderScheduler
         events={events}
         selectedDate={new Date()}
         calanderType="week" // week or day
@@ -163,7 +162,7 @@ function App() {
             '============================================handleClanderTypeChange',
           );
         }}
-      /> */}
+      />
     </div>
   );
 }

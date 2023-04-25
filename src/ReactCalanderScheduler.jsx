@@ -8,7 +8,7 @@ import {
   setEventID,
 } from './_utils';
 
-function ReactCalnaderScedular({
+function ReactCalnaderScheduler({
   events = [],
   selectedDate = new Date(),
   calanderType: _calanderType = 'week', // week or day
@@ -72,7 +72,6 @@ function ReactCalnaderScedular({
    * @param {Event} eventObjEdit
    */
   const calanderToAddOrUpdateEvent = eventObjEdit => {
-    console.log('eventObjEdit', eventObjEdit);
     if (eventObjEdit.sc_app__id) {
       typeof _handleEventClick === 'function' &&
         _handleEventClick(formateEventDateAndTimeForOUtput(eventObjEdit));
@@ -113,12 +112,10 @@ function ReactCalnaderScedular({
           break;
         }
       }
-      typeof _handleUpdateEvent === 'function' &&
-        _handleUpdateEvent(formateEventDateAndTimeForOUtput(eventObj));
+      typeof _handleUpdateEvent === 'function' && _handleUpdateEvent(eventObj);
     } else {
       eventObj.sc_app__id = new Date().getTime();
-      typeof _handleAddNewEvent === 'function' &&
-        _handleAddNewEvent(formateEventDateAndTimeForOUtput(eventObj));
+      typeof _handleAddNewEvent === 'function' && _handleAddNewEvent(eventObj);
       eventsState.push(eventObj);
     }
 
@@ -150,7 +147,6 @@ function ReactCalnaderScedular({
     _handleClanderTypeChange && _handleClanderTypeChange(type);
   };
 
-  console.log('eventsState', eventsState);
   return (
     <div className="App react-calander-scedule">
       <div className="ib__sc_rcs-container">
@@ -158,7 +154,8 @@ function ReactCalnaderScedular({
         <div className="ib__sc__btn-group">
           <button
             className={
-              'ib__sc__btn ' + (calanderType === 'month' ? 'active' : '')
+              'ib__sc__btn ib_sc_btn_month ' +
+              (calanderType === 'month' ? 'active' : '')
             }
             onClick={() => handleClanderTypeChange('month')}
           >
@@ -166,7 +163,8 @@ function ReactCalnaderScedular({
           </button>
           <button
             className={
-              'ib__sc__btn ' + (calanderType === 'week' ? 'active' : '')
+              'ib__sc__btn ib_sc_btn_week ' +
+              (calanderType === 'week' ? 'active' : '')
             }
             onClick={() => handleClanderTypeChange('week')}
           >
@@ -174,7 +172,8 @@ function ReactCalnaderScedular({
           </button>
           <button
             className={
-              'ib__sc__btn ' + (calanderType === 'day' ? 'active' : '')
+              'ib__sc__btn ib_sc_btn_day ' +
+              (calanderType === 'day' ? 'active' : '')
             }
             onClick={() => handleClanderTypeChange('day')}
           >
@@ -202,9 +201,7 @@ function ReactCalnaderScedular({
             handleChangeCurrentDate={_handleChangeCurrentDate}
             updateEvent={updateEventDrag}
             calanderToAddOrUpdateEvent={eventObj => {
-              console.log('eventObj', eventObj);
               calanderToAddOrUpdateEvent(eventObj);
-
               setIsShowAddEvent(true);
             }}
           />
@@ -251,4 +248,4 @@ function ReactCalnaderScedular({
   );
 }
 
-export default ReactCalnaderScedular;
+export default ReactCalnaderScheduler;
