@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { AddEventModal } from './AddEventModal';
 import CalendarMonth from './CalanderMonth';
 import CalendarWeek from './CalendarWeek';
@@ -7,6 +7,8 @@ import {
   formateEventDateAndTimeForOUtput,
   setEventID,
 } from './_utils';
+import './index.css';
+window.React = React;
 
 function ReactCalnaderScheduler({
   events = [],
