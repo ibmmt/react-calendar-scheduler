@@ -244,6 +244,7 @@ export const isDateBetween = (dateObj, startDateString, endDateString) => {
 };
 
 export const setEventID = events => {
+  if (!events) return [];
   for (let i = 0; i < events.length; i++) {
     events[i].sc_app__id = i + 1;
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AddEventModal } from './AddEventModal';
 import CalendarMonth from './CalanderMonth';
 import CalendarWeek from './CalendarWeek';
@@ -11,7 +11,6 @@ import './index.css';
 window.React = React;
 
 function ReactCalnaderScheduler({
-  events = [],
   selectedDate = new Date(),
   calanderType: _calanderType = 'week', // week or day
   monthCalanderTitleFormate = 'dddd', //month title formate
@@ -26,11 +25,7 @@ function ReactCalnaderScheduler({
   weekCalanderTimeFormate = 12, //day column title formate
   monthCalanderMinCellHeight = 50,
   disabaleEventPopup = false,
-  //hideAddEventButton = false,
-  // disableAddEvent = false, //disable add event
-  // disabaleEventPopup = false, //disable event popup
-  // isShowAddNewEventButton = true, //show add new event button
-  //isShowAddOrUpadateEventButton = true, //show add or update event button
+  disabaleAddEventPopup = false,
   handleUpdateEvent: _handleUpdateEvent,
   handleAddNewEvent: _handleAddNewEvent,
   handleDeleteEvent: _handleDeleteEvent,
@@ -40,18 +35,20 @@ function ReactCalnaderScheduler({
   handlePrevClick: _handlePrevClick,
   handleClanderTypeChange: _handleClanderTypeChange,
   handleChangeCurrentDate: _handleChangeCurrentDate,
+  events,
 }) {
+  /**
+   * set event id for events
+   */
+
   const [isShowAddEvent, setIsShowAddEvent] = useState(false);
   const [eventEdit, setEventEdit] = useState({});
   const [calanderType, setCalanderType] = useState(_calanderType);
   const [eventsState, setEventsState] = useState(setEventID(events));
 
-  /**
-   * set event id for events
-   */
-  // useEffect(() => {
-  //   setEventsState(setEventID(events));
-  // }, [events]);
+  useEffect(() => {
+    setEventsState(setEventID(events));
+  }, [events]);
 
   /**
    * update event while dragin or resizing
@@ -81,7 +78,7 @@ function ReactCalnaderScheduler({
       typeof _handleColumnClick === 'function' &&
         _handleColumnClick(formateEventDateAndTimeForOUtput(eventObjEdit));
     }
-    if (!disabaleEventPopup) {
+    if (!disabaleEventPopup && !disabaleAddEventPopup) {
       setEventEdit({
         ...eventObjEdit,
         startDate: eventObjEdit.startTime
@@ -204,7 +201,6 @@ function ReactCalnaderScheduler({
             updateEvent={updateEventDrag}
             calanderToAddOrUpdateEvent={eventObj => {
               calanderToAddOrUpdateEvent(eventObj);
-              setIsShowAddEvent(true);
             }}
           />
         )}
@@ -228,7 +224,6 @@ function ReactCalnaderScheduler({
             updateEvent={updateEventDrag}
             calanderToAddOrUpdateEvent={eventObj => {
               calanderToAddOrUpdateEvent(eventObj);
-              setIsShowAddEvent(true);
             }}
           />
         )}

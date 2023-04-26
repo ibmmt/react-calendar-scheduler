@@ -51,6 +51,10 @@ export default function DayCellMonth({
       onClick={handleClickBox}
       style={{ height: `${currentBoxHeight}px` }}
     >
+      <div className="ib__sc_month_cell_wrapper">
+        <span className="ib__sc_month_day">{day}</span>
+      </div>
+
       <div
         className="ib__sc__table-td__day_cell"
         style={{ minHeight: `${currentBoxHeight}px` }}
@@ -68,7 +72,6 @@ export default function DayCellMonth({
           />
         ))}
       </div>
-      <span className="ib__sc_month_day">{day}</span>
     </td>
   );
 }

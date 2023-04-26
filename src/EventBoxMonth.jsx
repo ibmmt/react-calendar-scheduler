@@ -9,7 +9,6 @@ const EventBoxMonth = ({
   boxTime,
   eventObj,
   boxDay,
-
   isCalander,
   isDraging,
   isResizing,

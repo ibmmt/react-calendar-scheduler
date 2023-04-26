@@ -170,6 +170,7 @@ body {
   background: #ffffff;
   border-top: 1px dashed #dbdbdb;
   margin-top: -1px;
+  cursor: pointer;
 }
 .ib__sc__tb_week_time .ib__sc__table-hr-box-week{
   border-top: 1px solid #fff;
@@ -411,6 +412,7 @@ user-select: none;
  
     padding: 10px;
     width: 100%;
+    cursor: pointer;
     height: 100%;
   }
 
