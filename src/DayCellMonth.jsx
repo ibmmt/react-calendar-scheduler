@@ -49,28 +49,31 @@ export default function DayCellMonth({
       ref={BoxRef}
       className=" ib__sc__table-td ib__sc__table-td-month"
       onClick={handleClickBox}
-      style={{ height: `${currentBoxHeight}px` }}
     >
-      <div className="ib__sc_month_cell_wrapper">
-        <span className="ib__sc_month_day">{day}</span>
-      </div>
-
       <div
-        className="ib__sc__table-td__day_cell"
-        style={{ minHeight: `${currentBoxHeight}px` }}
+        className="ib__sc_month_cell"
+        style={{ minHeight: `${currentBoxHeight + 20}px` }}
       >
-        {eventsInDay.map((event, key) => (
-          <EventBoxMonth
-            key={key}
-            eventObj={event}
-            boxHeight={boxHeight}
-            boxTime={1}
-            boxDay={boxDay}
-            isDraging={dragingEventId == event.sc_app__id}
-            isResizing={resizingEventId == event.sc_app__id}
-            isCalander={true}
-          />
-        ))}
+        <div className="ib__sc_month_cell_wrapper">
+          <span className="ib__sc_month_day">{day}</span>
+        </div>
+        <div
+          className="ib__sc__table-td__day_cell"
+          style={{ minHeight: `${currentBoxHeight}px` }}
+        >
+          {eventsInDay.map((event, key) => (
+            <EventBoxMonth
+              key={key}
+              eventObj={event}
+              boxHeight={boxHeight}
+              boxTime={1}
+              boxDay={boxDay}
+              isDraging={dragingEventId == event.sc_app__id}
+              isResizing={resizingEventId == event.sc_app__id}
+              isCalander={true}
+            />
+          ))}
+        </div>
       </div>
     </td>
   );
