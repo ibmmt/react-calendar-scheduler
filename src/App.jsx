@@ -10,6 +10,7 @@ function App() {
       endTime: '09:00:00',
       id: 133,
       bg_color: '#FFAB91',
+      element: <div>**</div>,
     },
     {
       title: '2',
@@ -19,6 +20,7 @@ function App() {
       endTime: '12:00:00',
       id: 2,
       bg_color: '#5c6bc0',
+      element: <div>*</div>,
     },
 
     {
@@ -29,6 +31,7 @@ function App() {
       endTime: '14:00:00',
       id: 23,
       bg_color: '#5c6bc0',
+      element: <div>*</div>,
     },
     {
       title: '5',
@@ -64,6 +67,7 @@ function App() {
       endTime: '15:00:00',
       id: 55,
       bg_color: '#FFAB91',
+      element: <div>*</div>,
     },
 
     {
@@ -74,6 +78,7 @@ function App() {
       endTime: '16:00:00',
       id: 8,
       bg_color: '#FFAB91',
+      element: <div>*</div>,
     },
     {
       title: '9',
@@ -104,7 +109,7 @@ function App() {
         calanderType="week" // week or day
         monthCalanderTitleFormate="dddd" //month title formate
         monthCalanderTitle="ddd" //day column title formate
-        monthCalanderMinCellHeight={50} //day column title formate
+        monthCalanderMinCellHeight={80} //day column title formate
         weekHourBoxHeight={50} //Height of the hour box
         startingWeekday={0} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
         weekCalanderDayStartFromHour={7} // Day start from hour
@@ -114,7 +119,7 @@ function App() {
         isShowAddNewEventButton={true} //show add new event button
         isShowDeleteEventButton={true} //show delete event button
         isShowAddOrUpadateEventButton={true} //show add or update event button
-        disabaleEventPopup={true} //disable event popup
+        disabaleEventPopup={false} //disable event popup
         handleUpdateEvent={event => {
           console.log(event);
           console.log(

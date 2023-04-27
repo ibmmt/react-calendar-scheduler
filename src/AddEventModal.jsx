@@ -105,6 +105,11 @@ export const AddEventModal = ({
   return (
     <div
       className="modal-wrapper ib__sc-modal"
+      onClick={e => {
+        if (e.target.className.includes('ib__sc-modal')) {
+          handleClose();
+        }
+      }}
       style={{
         transform: show ? 'translateY(0vh)' : 'translateY(-100vh)',
         opacity: show ? '1' : '0',

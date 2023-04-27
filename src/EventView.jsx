@@ -10,6 +10,8 @@ export const EventBoxView = ({ eventObj, isShowTitle }) => {
           {eventObj.title}
         </div>
       )}
+      {eventObj.element && eventObj.element}
+      {eventObj.description && eventObj.description}
     </div>
   );
 };

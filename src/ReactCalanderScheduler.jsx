@@ -150,35 +150,6 @@ function ReactCalnaderScheduler({
     <div className="App react-calander-scedule">
       <div className="ib__sc_rcs-container">
         {/* Add Week Calander */}
-        <div className="ib__sc__btn-group">
-          <button
-            className={
-              'ib__sc__btn ib_sc_btn_month ' +
-              (calanderType === 'month' ? 'active' : '')
-            }
-            onClick={() => handleClanderTypeChange('month')}
-          >
-            Month
-          </button>
-          <button
-            className={
-              'ib__sc__btn ib_sc_btn_week ' +
-              (calanderType === 'week' ? 'active' : '')
-            }
-            onClick={() => handleClanderTypeChange('week')}
-          >
-            Week{' '}
-          </button>
-          <button
-            className={
-              'ib__sc__btn ib_sc_btn_day ' +
-              (calanderType === 'day' ? 'active' : '')
-            }
-            onClick={() => handleClanderTypeChange('day')}
-          >
-            Day
-          </button>
-        </div>
 
         {/*  Week Calander */}
 
@@ -198,6 +169,7 @@ function ReactCalnaderScheduler({
             handlePrevClick={_handlePrevClick}
             noOfDayColumn={calanderType == 'week' ? 7 : 1}
             handleChangeCurrentDate={_handleChangeCurrentDate}
+            handleClanderTypeChange={handleClanderTypeChange}
             updateEvent={updateEventDrag}
             calanderToAddOrUpdateEvent={eventObj => {
               calanderToAddOrUpdateEvent(eventObj);
@@ -222,6 +194,7 @@ function ReactCalnaderScheduler({
             monthCalanderTitle={monthCalanderTitle} //day column title formate
             handleChangeCurrentDate={_handleChangeCurrentDate}
             updateEvent={updateEventDrag}
+            handleClanderTypeChange={handleClanderTypeChange}
             calanderToAddOrUpdateEvent={eventObj => {
               calanderToAddOrUpdateEvent(eventObj);
             }}

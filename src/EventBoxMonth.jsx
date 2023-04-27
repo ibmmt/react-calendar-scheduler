@@ -162,15 +162,11 @@ const EventBoxMonth = ({
           }
           ref={eventRef}
           onMouseDown={handleDragStart}
-          onDoubleClick={e => {
+          onClick={e => {
             e.stopPropagation();
             e.preventDefault();
             dragEnd();
             calanderToAddOrUpdateEvent(eventObj);
-          }}
-          onClick={e => {
-            e.stopPropagation();
-            e.preventDefault();
           }}
           onMouseUp={handleMouseUpDrag}
           style={eventStyle}

@@ -190,16 +190,11 @@ const EventBoxWeek = ({
           }
           ref={eventRef}
           onMouseDown={handleDragStart}
-          onDoubleClick={e => {
-            e.stopPropagation();
-            e.preventDefault();
-            dragEnd();
-            // handleAddEvent(eventObj);
-            calanderToAddOrUpdateEvent(eventObj);
-          }}
           onClick={e => {
             e.stopPropagation();
             e.preventDefault();
+            dragEnd();
+            calanderToAddOrUpdateEvent(eventObj);
           }}
           style={eventStyle}
         >

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import CalanderSwitch from './CalanderSwitch';
 import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
 import DayCellMonth from './DayCellMonth';
@@ -26,6 +27,7 @@ function CalanderMonth({
   handlePrevClick: _handlePrevClick,
   handleChangeCurrentDate: _handleChangeCurrentDate,
   fromDate = new Date(),
+  handleClanderTypeChange,
 }) {
   const [selectedDate, setSelectedDate] = useState(fromDate);
   const month = selectedDate.getMonth();
@@ -112,6 +114,15 @@ function CalanderMonth({
     // document.removeEventListener('mousemove', dragingMouseMoveHandler);
   };
 
+  const findAndSetEvent = (event, events) => {
+    const index = events.findIndex(e => e.sc_app__id === event.sc_app__id);
+    // alert(index);
+    if (index > -1) {
+      events[index] = event;
+      setEvents([...events]);
+    }
+  };
+
   const dragBoxMouseEnterToCell = date => {
     if (!editingEventRef.current) return;
 
@@ -131,14 +142,7 @@ function CalanderMonth({
     }
     editingEventRef.current = newEvent;
     currentDragDate.current = date.getTime();
-
-    for (let i = 0; i < events.length; i++) {
-      if (events[i].sc_app__id === newEvent.sc_app__id) {
-        events[i] = newEvent;
-        break;
-      }
-    }
-    setEvents([...events]);
+    findAndSetEvent(newEvent, events);
   };
   const renderDaysOfWeek = () => {
     return (
@@ -283,32 +287,53 @@ function CalanderMonth({
             'ib__sc__table ib__sc__table-month-wrap ib_sc_type_' + calanderType
           }
         >
-          <div className="ib__sc__month-header">
-            <div className="ib__sc__month-date">
-              <div className="ib__sc__month-date-btn-group">
-                <button
-                  className="ib__sc__month-date__bt-prev"
-                  onClick={() => onmonthChangeNextPrev(-1)}
-                >
-                  <LeftIcon />
-                </button>
+          <div className="ib__sc__header_wrapper">
+            <div className="ib__sc__header">
+              <div className="ib__sc__header__left">
+                <CalanderSwitch
+                  calanderType={calanderType}
+                  handleClanderTypeChange={handleClanderTypeChange}
+                />
+              </div>
+              <div className="ib__sc__header__date-switch">
+                <div className="ib__sc__month-date">
+                  <div className="ib__sc__month-date-btn-group">
+                    <button
+                      className="ib__sc__month-date__bt-prev ib__sc__np__btn"
+                      onClick={() => onmonthChangeNextPrev(-1)}
+                    >
+                      <LeftIcon />
+                    </button>
 
-                <span className="ib__sc__month-date__bt-text">
-                  <input
-                    type="month"
-                    className="ib__sc-form-control"
-                    placeholder="yyyy-mm"
-                    onChange={selectMonth}
-                    value={yearMonth}
-                  />
-                </span>
+                    <span className="ib__sc__month-date__bt-text">
+                      <input
+                        type="month"
+                        className="ib__sc-form-control"
+                        placeholder="yyyy-mm"
+                        onChange={selectMonth}
+                        value={yearMonth}
+                      />
+                    </span>
 
-                <button
-                  className="ib__sc__month-date__bt-next"
-                  onClick={() => onmonthChangeNextPrev(1)}
-                >
-                  <RightIcon />
-                </button>
+                    <button
+                      className="ib__sc__month-date__bt-next ib__sc__np__btn"
+                      onClick={() => onmonthChangeNextPrev(1)}
+                    >
+                      <RightIcon />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="ib__sc__header__right">
+                <div className="ib__sc__header__right__btn-group">
+                  <button
+                    className="ib__sc__btn"
+                    onClick={calanderToAddOrUpdateEvent}
+                  >
+                    Add Event
+                  </button>
+                </div>
               </div>
             </div>
           </div>

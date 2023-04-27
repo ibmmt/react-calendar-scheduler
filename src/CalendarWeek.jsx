@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import CalanderSwitch from './CalanderSwitch';
 import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
 import DayColumnWeek from './DayColumnWeek';
@@ -34,6 +35,7 @@ const CalendarWeek = ({
   handlePrevClick: _handlePrevClick,
   handleChangeCurrentDate: _handleChangeCurrentDate,
   calanderToAddOrUpdateEvent,
+  handleClanderTypeChange,
 }) => {
   const [events, setEvents] = useState(eventsData);
   const calanderTableRef = useRef();
@@ -56,6 +58,15 @@ const CalendarWeek = ({
       return getPreviousDay(startingWeekday, initDay);
     } else {
       return initDay;
+    }
+  };
+
+  const findAndSetEvent = (event, events) => {
+    const index = events.findIndex(e => e.sc_app__id === event.sc_app__id);
+    // alert(index);
+    if (index > -1) {
+      events[index] = event;
+      setEvents([...events]);
     }
   };
 
@@ -117,7 +128,9 @@ const CalendarWeek = ({
       dragEventRef.current.startTime += daysDiff * 24 * HOUR_MILLISECONDS;
       dragEventRef.current.endTime += daysDiff * 24 * HOUR_MILLISECONDS;
       currentDragDate.current = date;
-      updateEvent({ ...dragEventRef.current });
+      findAndSetEvent({ ...dragEventRef.current }, events);
+
+      //  updateEvent({ ...dragEventRef.current });
     }
   };
 
@@ -139,7 +152,8 @@ const CalendarWeek = ({
         dragEventRef.current.startTime + (diff / boxHeight) * boxTime * 3600000;
       dragEventRef.current.endTime =
         dragEventRef.current.endTime + (diff / boxHeight) * boxTime * 3600000;
-      updateEvent({ ...dragEventRef.current });
+      // updateEvent({ ...dragEventRef.current });
+      findAndSetEvent({ ...dragEventRef.current }, events);
       lastCleintYRef.current = e.clientY;
     }
   };
@@ -200,33 +214,54 @@ const CalendarWeek = ({
           'ib__sc__table ib__sc__table-week ib_sc_type_' + calanderType
         }
       >
-        <div className="ib__sc__week-header">
-          <div className="ib__sc__week-date">
-            <div className="ib__sc__week-date-btn-group">
-              <button
-                className="ib__sc__week-date__bt-prev"
-                onClick={() => onWeekChange(-noOfDayColumn)}
-              >
-                <LeftIcon />
-              </button>
+        <div className="ib__sc__header_wrapper">
+          <div className="ib__sc__header">
+            <div className="ib__sc__header__left">
+              <CalanderSwitch
+                calanderType={calanderType}
+                handleClanderTypeChange={handleClanderTypeChange}
+              />
+            </div>
+            <div className="ib__sc__header__date-switch">
+              <div className="ib__sc__week-date">
+                <div className="ib__sc__week-date-btn-group">
+                  <button
+                    className="ib__sc__week-date__bt-prev ib__sc__np__btn"
+                    onClick={() => onWeekChange(-noOfDayColumn)}
+                  >
+                    <LeftIcon />
+                  </button>
 
-              <div className="ib__sc__week-date__bt-text">
-                <input
-                  type="date"
-                  className="ib__sc-form-control"
-                  onChange={e => {
-                    setDateStartFrom(new Date(e.target.value));
-                  }}
-                  value={formatDate(new Date(dateStartFrom), 'yyyy-MM-dd')}
-                />
+                  <div className="ib__sc__week-date__bt-text">
+                    <input
+                      type="date"
+                      className="ib__sc-form-control"
+                      onChange={e => {
+                        setDateStartFrom(new Date(e.target.value));
+                      }}
+                      value={formatDate(new Date(dateStartFrom), 'yyyy-MM-dd')}
+                    />
+                  </div>
+
+                  <button
+                    className="ib__sc__week-date__bt-next ib__sc__np__btn"
+                    onClick={() => onWeekChange(noOfDayColumn)}
+                  >
+                    <RightIcon />
+                  </button>
+                </div>
               </div>
+            </div>
 
-              <button
-                className="ib__sc__week-date__bt-next"
-                onClick={() => onWeekChange(noOfDayColumn)}
-              >
-                <RightIcon />
-              </button>
+            <div className="ib__sc__header__right">
+              <div className="ib__sc__header__right__btn-group">
+                <button
+                  className="ib__sc__btn"
+                  onClick={calanderToAddOrUpdateEvent}
+                >
+                  Add Event
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -255,9 +290,9 @@ const CalendarWeek = ({
                         className=" ib__sc__week-time"
                       >
                         {index !== 0 && (
-                          <>
+                          <span className="ib__sc__time_title">
                             {timeFormateFromHour(hour, weekCalanderTimeFormate)}
-                          </>
+                          </span>
                         )}
                       </div>
                     ))}
