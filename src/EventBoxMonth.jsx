@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
@@ -17,6 +17,7 @@ const EventBoxMonth = ({
   const [eventHeight, setEventHeight] = useState(0);
   const [overLap, setOverLap] = useState({ start: false, end: false });
   const newEventTime = useRef({ start: 0, end: 0 });
+  const mouseDownRef = useRef(false);
   const {
     dragStart,
     dragEnd,
@@ -161,12 +162,25 @@ const EventBoxMonth = ({
             (overLap.end ? 'overlap-end' : '')
           }
           ref={eventRef}
-          onMouseDown={handleDragStart}
+          onMouseDown={e => {
+            mouseDownRef.current = true;
+            setTimeout(() => {
+              if (mouseDownRef.current) {
+                handleDragStart(e);
+              }
+              mouseDownRef.current = false;
+            }, 100);
+          }}
           onClick={e => {
             e.stopPropagation();
             e.preventDefault();
-            dragEnd();
-            calanderToAddOrUpdateEvent(eventObj);
+
+            if (mouseDownRef.current) {
+              dragEnd();
+              calanderToAddOrUpdateEvent(eventObj);
+            }
+            mouseDownRef.current = false;
+            // mouseDownRef.current = 0;
           }}
           onMouseUp={handleMouseUpDrag}
           style={eventStyle}

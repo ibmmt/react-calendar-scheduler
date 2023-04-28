@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CalanderSwitch from './CalanderSwitch';
 import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
@@ -167,7 +167,11 @@ const CalendarWeek = ({
       e.preventDefault();
     }
     if (dragEventRef.current) {
+      console.log('dragEventRef.current', dragEventRef.current);
+      console.log('events', events);
+
       updateEvent({ ...dragEventRef.current });
+
       lastCleintYRef.current = 0;
       dragEventRef.current = null;
     }
@@ -216,12 +220,6 @@ const CalendarWeek = ({
       >
         <div className="ib__sc__header_wrapper">
           <div className="ib__sc__header">
-            <div className="ib__sc__header__left">
-              <CalanderSwitch
-                calanderType={calanderType}
-                handleClanderTypeChange={handleClanderTypeChange}
-              />
-            </div>
             <div className="ib__sc__header__date-switch">
               <div className="ib__sc__week-date">
                 <div className="ib__sc__week-date-btn-group">
@@ -252,8 +250,13 @@ const CalendarWeek = ({
                 </div>
               </div>
             </div>
+            <div className="ib__sc__header__center"></div>
 
             <div className="ib__sc__header__right">
+              <CalanderSwitch
+                calanderType={calanderType}
+                handleClanderTypeChange={handleClanderTypeChange}
+              />
               <div className="ib__sc__header__right__btn-group">
                 <button
                   className="ib__sc__btn"

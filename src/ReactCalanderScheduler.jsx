@@ -8,7 +8,6 @@ import {
   setEventID,
 } from './_utils';
 import './index.css';
-window.React = React;
 
 function ReactCalnaderScheduler({
   selectedDate = new Date(),
@@ -58,12 +57,19 @@ function ReactCalnaderScheduler({
     const index = eventsState.findIndex(
       event => event.sc_app__id === eventObj.sc_app__id,
     );
+    const newEvent = formateEventDateAndTimeForOUtput(eventObj);
+    if (
+      newEvent['startDate'] !== eventsState[index]['startDate'] ||
+      newEvent['endDate'] !== eventsState[index]['endDate'] ||
+      newEvent['startTime'] !== eventsState[index]['startTime'] ||
+      newEvent['endTime'] !== eventsState[index]['endTime']
+    ) {
+      eventsState[index] = newEvent;
+      typeof _handleUpdateEvent === 'function' &&
+        _handleUpdateEvent(eventsState[index]);
 
-    eventsState[index] = formateEventDateAndTimeForOUtput(eventObj);
-    typeof _handleUpdateEvent === 'function' &&
-      _handleUpdateEvent(eventsState[index]);
-
-    setEventsState([...eventsState]);
+      setEventsState([...eventsState]);
+    }
   };
 
   /**
@@ -111,6 +117,7 @@ function ReactCalnaderScheduler({
           break;
         }
       }
+
       typeof _handleUpdateEvent === 'function' && _handleUpdateEvent(eventObj);
     } else {
       eventObj.sc_app__id = new Date().getTime();

@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import TimeInput from './TimeInput';
 import { addTimeStringTodate, formatDate } from './_utils';
-
 export const AddEventModal = ({
   show,
   handleClose,

@@ -1,5 +1,5 @@
+import React from 'react';
 import ReactCalnaderScheduler from './ReactCalanderScheduler';
-
 function App() {
   const events = [
     {
@@ -11,6 +11,9 @@ function App() {
       id: 133,
       bg_color: '#FFAB91',
       element: <div>**</div>,
+      editable: true,
+      deletable: true,
+      draggable: true,
     },
     {
       title: '2',

@@ -1,5 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
 import { EventBoxView } from './EventView';
@@ -23,6 +22,7 @@ const EventBoxWeek = ({
   const eventRef = useRef();
   const lastCleintYRef = useRef(0);
   const sideRef = useRef('');
+  const mouseDownRef = useRef(false);
   //const [clickCount, setClickCount] = useState(0);
 
   /**
@@ -189,12 +189,24 @@ const EventBoxWeek = ({
             (isDraging ? 'dragging' : '')
           }
           ref={eventRef}
-          onMouseDown={handleDragStart}
+          onMouseDown={e => {
+            mouseDownRef.current = true;
+            setTimeout(() => {
+              if (mouseDownRef.current) {
+                handleDragStart(e);
+              }
+              mouseDownRef.current = false;
+            }, 100);
+          }}
           onClick={e => {
             e.stopPropagation();
             e.preventDefault();
-            dragEnd();
-            calanderToAddOrUpdateEvent(eventObj);
+
+            if (mouseDownRef.current) {
+              dragEnd();
+              calanderToAddOrUpdateEvent(eventObj);
+            }
+            mouseDownRef.current = false;
           }}
           style={eventStyle}
         >

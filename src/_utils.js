@@ -371,3 +371,14 @@ export const formateEventDateAndTimeForOUtput = eventObj => {
   };
   return event;
 };
+
+export const isUpadteNeeded = (eventObj, events) => {
+  const event = events.find(e => e.sc_app__id === eventObj.sc_app__id);
+  if (
+    event.startTime !== eventObj.startTime ||
+    event.endTime !== eventObj.endTime
+  ) {
+    return true;
+  }
+  return false;
+};

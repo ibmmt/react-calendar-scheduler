@@ -71,7 +71,7 @@ body {
   align-items: stretch;
   width: 100%;
   display: table-cell;
-  border-radius: 6px;
+  border-radius: 0.25rem;
   overflow: hidden;
 }
 .ib__sc__btn-group .ib__sc__btn{
@@ -102,6 +102,11 @@ body {
 
 
 /* Ib table */
+.ib__sc__table{
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+
+
 .ib__sc__header {
   width: 100%;
   display: flex;
@@ -109,7 +114,16 @@ body {
   align-items: center;
   padding: 5px;
   box-sizing: border-box;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  
+}
+.ib__sc__header__right{
+  display: flex;
+  align-items: center;
+}
+.ib__sc__header__right__btn-group{
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
 }
 .ib__sc__np__btn{
   border: none;
@@ -186,6 +200,10 @@ body {
   margin-top: -1px;
   cursor: pointer;
 }
+.ib__sc__table-hr-box-week:hover{
+  background: #eff1ff;
+}
+
 .ib__sc__tb_week_time .ib__sc__table-hr-box-week{
   border-top: 1px solid #fff;
 }
@@ -205,7 +223,7 @@ body {
   position: sticky;
   z-index: 1001;
   padding: 10px;
-  background: #f6f6f6;
+  background: #fff;
   border: 1px solid #ccc;
   font-weight: normal;
   color: #4e4e4e;
@@ -316,7 +334,8 @@ body {
   position: absolute;
   background: #03A9F4;
   z-index: 1004;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+
+  
 
 }
 
@@ -416,7 +435,7 @@ justify-content: space-between;
 -moz-user-select: none;
 -ms-user-select: none;
 user-select: none;
-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+
 
   
 }
@@ -446,6 +465,10 @@ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px
     height: 100%;
     width: 100%;
   }
+  .ib__sc_month_cell:hover{
+    background: #eff1ff;
+
+  }
 
   .ib__sc_month_day {
  
@@ -458,7 +481,8 @@ box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px
 }
 
   table.ib__sc__table-month { border: none; border-collapse: collapse;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+
+    
 
 } 
 table.ib__sc__table-month td { border-right: 1px solid #dfdfdf;vertical-align: top; }

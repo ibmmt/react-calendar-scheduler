@@ -1,3 +1,4 @@
+import React from 'react';
 export const EventBoxView = ({ eventObj, isShowTitle }) => {
   const viewStyle = {
     height: 100 + '%',

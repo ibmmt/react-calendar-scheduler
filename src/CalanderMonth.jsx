@@ -106,7 +106,7 @@ function CalanderMonth({
     }
     sideUseRef.current = '';
     if (editingEventRef.current) {
-      updateEvent(editingEventRef.current);
+      updateEvent({ ...editingEventRef.current });
 
       editingEventRef.current = null;
     }
@@ -289,12 +289,6 @@ function CalanderMonth({
         >
           <div className="ib__sc__header_wrapper">
             <div className="ib__sc__header">
-              <div className="ib__sc__header__left">
-                <CalanderSwitch
-                  calanderType={calanderType}
-                  handleClanderTypeChange={handleClanderTypeChange}
-                />
-              </div>
               <div className="ib__sc__header__date-switch">
                 <div className="ib__sc__month-date">
                   <div className="ib__sc__month-date-btn-group">
@@ -324,8 +318,13 @@ function CalanderMonth({
                   </div>
                 </div>
               </div>
+              <div className="ib__sc__header__center"></div>
 
               <div className="ib__sc__header__right">
+                <CalanderSwitch
+                  calanderType={calanderType}
+                  handleClanderTypeChange={handleClanderTypeChange}
+                />
                 <div className="ib__sc__header__right__btn-group">
                   <button
                     className="ib__sc__btn"
