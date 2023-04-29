@@ -20,8 +20,12 @@ export const EventBoxView = ({ eventObj, isShowTitle, isStart }) => {
       )}
       {isShowTitle && (
         <>
-          {eventObj.element && eventObj.element}
-          {eventObj.description && eventObj.description}
+          <div className="ib__sc__event-element">
+            {eventObj.element && eventObj.element}
+          </div>
+          <div className="ib__sc__event-description">
+            {eventObj.description && eventObj.description}
+          </div>
         </>
       )}
     </div>
