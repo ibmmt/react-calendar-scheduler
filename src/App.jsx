@@ -14,6 +14,7 @@ function App() {
       editable: true,
       deletable: true,
       draggable: true,
+      custom_class: 'custom-class',
     },
     {
       title: '2',

@@ -186,7 +186,7 @@ const EventBoxMonth = ({
           style={eventStyle}
         >
           <div
-            className="ib__sc__event-box ib__sc__event-box-week"
+            className="ib__sc__event-box ib__sc__event-box-month"
             style={eventBoxStyle}
           >
             {overLap && !overLap.start && (
@@ -207,6 +207,7 @@ const EventBoxMonth = ({
               overLap={overLap}
               isCalander={isCalander}
               isShowTitle={!overLap.start}
+              isStart={!overLap.start}
             />
             {overLap && !overLap.end && (
               <div

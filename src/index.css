@@ -132,7 +132,7 @@ body {
   cursor: pointer;
   display: flex;
   align-items: center;
-  width: 1.5em;
+  width: 30px
 }
 
 
@@ -269,13 +269,25 @@ body {
   padding: 0px;
   width: 100%;
   height: 100%;
-  border-radius: 0.5em;
+  
   text-align: center;
   box-sizing: border-box;
-  border: 0.001em solid #ffffff;
+  border: 2px solid #ffffff;
+  position: relative;
   overflow: hidden;
 }
+.ib__sc__staring_event_box::before {
+  content: "";
+  display: block;
+  width: 5px;
+  top: 0px;
+  bottom: 0px;
+  background-color: #ccc;
+  position: absolute;
+  left: 0;
+}
 .dragging-handler-week{
+  text-align: center;
   display: none;
 }
 
