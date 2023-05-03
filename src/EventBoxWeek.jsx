@@ -60,6 +60,13 @@ const EventBoxWeek = ({
     setIsResizing(true);
   };
 
+  const handleMouseUpDrag = e => {
+    e.preventDefault();
+    if (isDraging) {
+      dragEnd();
+    }
+  };
+
   /**
    * Handle mouse move on the event box, to drag
    * @param {number} startTime
@@ -163,6 +170,14 @@ const EventBoxWeek = ({
       document.removeEventListener('mouseup', handleMouseUpResize);
     };
   }, [isResizing]);
+
+  useEffect(() => {
+    if (!isDraging) return;
+    document.addEventListener('mouseup', handleMouseUpDrag);
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUpDrag);
+    };
+  }, [isDraging]);
 
   /*
    * use effect to set the event position and height

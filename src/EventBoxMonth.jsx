@@ -176,7 +176,6 @@ const EventBoxMonth = ({
           onMouseUp={e => {
             e.preventDefault();
             mouseDownRef.current = false;
-            handleMouseUpDrag(e);
           }}
           onMouseMove={() => {
             // e.stopPropagation();
