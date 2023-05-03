@@ -63,6 +63,7 @@ const EventBoxWeek = ({
   const handleMouseUpDrag = e => {
     e.preventDefault();
     if (isDraging) {
+      setIsDraging(false);
       dragEnd();
     }
   };
@@ -220,12 +221,14 @@ const EventBoxWeek = ({
           onMouseMove={() => {
             // e.stopPropagation();
             //  e.preventDefault();
-            if (mouseDownRef.current) {
+            if (mouseDownRef.current && !isDraging) {
               handleDragStart();
             }
           }}
           onClick={e => {
             if (isResizing) return;
+            if (isDraging) return;
+            console.log('click===============================', isResizing);
 
             e.stopPropagation();
             e.preventDefault();
