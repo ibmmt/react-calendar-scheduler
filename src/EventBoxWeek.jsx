@@ -31,6 +31,7 @@ const EventBoxWeek = ({
    */
 
   const handleDragStart = () => {
+    console.log('handleDragStart');
     setIsDraging(true);
     dragStart(eventObj, boxDay);
   };
@@ -55,6 +56,7 @@ const EventBoxWeek = ({
     newEventTime.current.end = eventObj.endTime;
     lastCleintYRef.current = 0;
     sideRef.current = side;
+
     setIsResizing(true);
   };
 
@@ -133,10 +135,13 @@ const EventBoxWeek = ({
    * @param {Event} e
    * */
   const handleMouseUpResize = e => {
-    setIsResizing(false);
-
     if (!isResizing) return;
     e.preventDefault();
+    e.stopPropagation();
+    setTimeout(() => {
+      setIsResizing(false);
+    }, 100);
+
     lastCleintYRef.current = 0;
     updateEvent({
       ...eventObj,
@@ -190,24 +195,74 @@ const EventBoxWeek = ({
           }
           ref={eventRef}
           onMouseDown={e => {
+            e.preventDefault();
             mouseDownRef.current = true;
-            setTimeout(() => {
-              if (mouseDownRef.current) {
-                handleDragStart(e);
-              }
-              mouseDownRef.current = false;
-            }, 100);
+          }}
+          onMouseUp={e => {
+            e.preventDefault();
+            mouseDownRef.current = false;
+          }}
+          onMouseMove={() => {
+            // e.stopPropagation();
+            //  e.preventDefault();
+            if (mouseDownRef.current) {
+              handleDragStart();
+            }
           }}
           onClick={e => {
+            if (isResizing) return;
+
             e.stopPropagation();
             e.preventDefault();
 
-            if (mouseDownRef.current) {
-              dragEnd();
-              calanderToAddOrUpdateEvent(eventObj);
-            }
-            mouseDownRef.current = false;
+            dragEnd();
+            calanderToAddOrUpdateEvent(eventObj);
           }}
+          // onMouseDown={e => {
+          //   console.log(mouseDownRef.current);
+          //   e.currentTarget.isDragging = true;
+          //   console.log('onMouseDown');
+          // }}
+          // onDragStart={handleDragStart}
+          // //---On mouse down start drag
+          // // onDragStart={() => {
+          // //   console.log('onDragStart down');
+          // //   mouseDownRef.current = true;
+          // //   handleDragStart();
+          // //   // setTimeout(e => {
+          // //   //   console.log('mouse down2');
+          // //   //   if (mouseDownRef.current) {
+          // //   //     handleDragStart(e);
+          // //   //   }
+          // //   //   mouseDownRef.current = false;
+          // //   // }, 200);
+          // // }}
+          // //--->On mouse leave start drag if mouse down
+          // onMouseLeave={e => {
+          //   e.preventDefault();
+          //   // console.log('mouse leave');
+          //   // if (mouseDownRef.current & !isDraging) {
+          //   //   handleDragStart(e);
+          //   // }
+          // }}
+          // onMouseUp={() => {
+          //   dragEnd();
+          // }}
+          // //--->On mouse up stop drag
+          // onClick={e => {
+          //   e.stopPropagation();
+          //   e.preventDefault();
+          //   console.log('click');
+          //   dragEnd();
+          //   calanderToAddOrUpdateEvent(eventObj);
+
+          //   // if (mouseDownRef.current) {
+          //   //   console.log('click 2');
+          //   //   dragEnd();
+          //   //   calanderToAddOrUpdateEvent(eventObj);
+          //   // }
+          //   // mouseDownRef.current = false;
+          // }}
           style={eventStyle}
         >
           <div

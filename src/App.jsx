@@ -4,8 +4,8 @@ function App() {
   const events = [
     {
       title: '177',
-      startDate: '28/04/2023',
-      endDate: '28/04/2023',
+      startDate: '05/05/2023',
+      endDate: '05/05/2023',
       startTime: '08:30:00',
       endTime: '09:00:00',
       id: 133,
@@ -18,8 +18,8 @@ function App() {
     },
     {
       title: '2',
-      startDate: '28/04/2023',
-      endDate: '28/04/2023',
+      startDate: '05/05/2023',
+      endDate: '05/05/2023',
       startTime: '08:30:00',
       endTime: '12:00:00',
       id: 2,
@@ -29,8 +29,8 @@ function App() {
 
     {
       title: '4',
-      startDate: '28/04/2023',
-      endDate: '28/04/2023',
+      startDate: '05/05/2023',
+      endDate: '05/05/2023',
       startTime: '10:30:00',
       endTime: '14:00:00',
       id: 23,
@@ -39,8 +39,8 @@ function App() {
     },
     {
       title: '5',
-      startDate: '28/04/2023',
-      endDate: '28/04/2023',
+      startDate: '05/05/2023',
+      endDate: '05/05/2023',
       startTime: '14:30:00',
       endTime: '18:00:00',
       id: 3,
@@ -48,16 +48,16 @@ function App() {
     },
     // {
     //   title: '5.5',
-    //   startDate: '28/04/2023',
-    //   endDate: '28/04/2023',
+    //   startDate: '05/05/2023',
+    //   endDate: '05/05/2023',
     //   startTime: '06:30:00',
     //   endTime: '07:00:00',
     //   id: 22,
     // },
     {
       title: '6',
-      startDate: '28/04/2023',
-      endDate: '28/04/2023',
+      startDate: '05/05/2023',
+      endDate: '05/05/2023',
       startTime: '11:30:00',
       endTime: '12:00:00',
       id: 4,
@@ -65,8 +65,8 @@ function App() {
     },
     {
       title: '7',
-      startDate: '28/04/2023',
-      endDate: '28/04/2023',
+      startDate: '05/05/2023',
+      endDate: '05/05/2023',
       startTime: '11:00:00',
       endTime: '15:00:00',
       id: 55,
@@ -76,8 +76,8 @@ function App() {
 
     {
       title: '8',
-      startDate: '28/04/2023',
-      endDate: '28/04/2023',
+      startDate: '05/05/2023',
+      endDate: '05/05/2023',
       startTime: '13:30:00',
       endTime: '16:00:00',
       id: 8,
@@ -86,8 +86,8 @@ function App() {
     },
     {
       title: '9',
-      startDate: '28/04/2023',
-      endDate: '28/04/2023',
+      startDate: '05/05/2023',
+      endDate: '05/05/2023',
       startTime: '12:30:00',
       endTime: '16:00:00',
       id: 11,

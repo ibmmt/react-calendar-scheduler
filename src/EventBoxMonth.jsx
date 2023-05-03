@@ -102,13 +102,20 @@ const EventBoxMonth = ({
     dragEnd();
   };
 
+  useEffect(() => {
+    if (!isDraging) return;
+    document.addEventListener('mouseup', handleMouseUpDrag);
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUpDrag);
+    };
+  }, [isDraging]);
+
   /*
    * use effect to add mouse move and mouse up event listener
    * */
 
   useEffect(() => {
     if (!isResizing) return;
-
     document.addEventListener('mouseup', handleMouseUpResize);
     return () => {
       document.removeEventListener('mouseup', handleMouseUpResize);
@@ -163,26 +170,51 @@ const EventBoxMonth = ({
           }
           ref={eventRef}
           onMouseDown={e => {
+            e.preventDefault();
             mouseDownRef.current = true;
-            setTimeout(() => {
-              if (mouseDownRef.current) {
-                handleDragStart(e);
-              }
-              mouseDownRef.current = false;
-            }, 100);
+          }}
+          onMouseUp={e => {
+            e.preventDefault();
+            mouseDownRef.current = false;
+            handleMouseUpDrag(e);
+          }}
+          onMouseMove={() => {
+            // e.stopPropagation();
+            //  e.preventDefault();
+            if (mouseDownRef.current) {
+              handleDragStart();
+            }
           }}
           onClick={e => {
+            if (isResizing) return;
+
             e.stopPropagation();
             e.preventDefault();
 
-            if (mouseDownRef.current) {
-              dragEnd();
-              calanderToAddOrUpdateEvent(eventObj);
-            }
-            mouseDownRef.current = false;
-            // mouseDownRef.current = 0;
+            dragEnd();
+            calanderToAddOrUpdateEvent(eventObj);
           }}
-          onMouseUp={handleMouseUpDrag}
+          // onMouseDown={e => {
+          //   mouseDownRef.current = true;
+          //   setTimeout(() => {
+          //     if (mouseDownRef.current) {
+          //       handleDragStart(e);
+          //     }
+          //     mouseDownRef.current = false;
+          //   }, 100);
+          // }}
+          // onClick={e => {
+          //   e.stopPropagation();
+          //   e.preventDefault();
+
+          //   if (mouseDownRef.current) {
+          //     dragEnd();
+          //     calanderToAddOrUpdateEvent(eventObj);
+          //   }
+          //   mouseDownRef.current = false;
+          //   // mouseDownRef.current = 0;
+          // }}
+          // onMouseUp={handleMouseUpDrag}
           style={eventStyle}
         >
           <div
