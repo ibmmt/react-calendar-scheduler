@@ -63,7 +63,9 @@ const EventBoxWeek = ({
   const handleMouseUpDrag = e => {
     e.preventDefault();
     if (isDraging) {
-      setIsDraging(false);
+      setTimeout(() => {
+        setIsDraging(false);
+      }, 100);
       dragEnd();
     }
   };
