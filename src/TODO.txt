@@ -4,3 +4,5 @@
 4. Total Day count
 5.typescript
 6.documentation
+
+//next prev button action handle

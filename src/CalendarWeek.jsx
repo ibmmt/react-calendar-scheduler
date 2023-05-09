@@ -31,10 +31,12 @@ const CalendarWeek = ({
   weekCalanderTitleFormate, //day column title formate
   weekCalanderTimeFormate = 24, //day column title formate
   noOfDayColumn,
+  weekCalanderNextBtnDayIncrement,
   handleNextClick: _handleNextClick,
   handlePrevClick: _handlePrevClick,
   handleChangeCurrentDate: _handleChangeCurrentDate,
   calanderToAddOrUpdateEvent,
+  handleIncreaseTimeSpan: _handleIncreaseTimeSpan,
   handleClanderTypeChange,
 }) => {
   const [events, setEvents] = useState(eventsData);
@@ -200,7 +202,13 @@ const CalendarWeek = ({
    * @param {number} diff
    */
   const onWeekChange = diff => {
-    const newDateString = addDays(dateStartFrom, diff);
+    //
+    const dayDiff =
+      noOfDayColumn > weekCalanderNextBtnDayIncrement
+        ? weekCalanderNextBtnDayIncrement
+        : noOfDayColumn;
+
+    const newDateString = addDays(dateStartFrom, dayDiff * diff);
     setDateStartFrom(newDateString);
     if (diff > 0) {
       typeof _handleNextClick == 'function' &&
@@ -225,7 +233,7 @@ const CalendarWeek = ({
                 <div className="ib__sc__week-date-btn-group">
                   <button
                     className="ib__sc__week-date__bt-prev ib__sc__np__btn"
-                    onClick={() => onWeekChange(-noOfDayColumn)}
+                    onClick={() => onWeekChange(-1)}
                   >
                     <LeftIcon />
                   </button>
@@ -243,7 +251,7 @@ const CalendarWeek = ({
 
                   <button
                     className="ib__sc__week-date__bt-next ib__sc__np__btn"
-                    onClick={() => onWeekChange(noOfDayColumn)}
+                    onClick={() => onWeekChange(1)}
                   >
                     <RightIcon />
                   </button>
@@ -284,7 +292,24 @@ const CalendarWeek = ({
             >
               <div className="ib__sc__tb-wrapper ib__sc__tb-wrapper-week">
                 <div className="ib__sc__tb_week_time">
-                  <div className="ib__sc__table-th">-</div>
+                  <div className="ib__sc__table-th">
+                    <div className="ib__sc__btn-group ib__sc__increment-timespan ib__sc__flex_center">
+                      <button
+                        className="ib__sc__btn"
+                        onClick={() => _handleIncreaseTimeSpan(-1)}
+                      >
+                        -
+                      </button>
+                      <button
+                        className="ib__sc__btn"
+                        onClick={() => {
+                          _handleIncreaseTimeSpan(1);
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
                   <div className="ib__sc__cell ib__sc__cell-week">
                     {[...Array(24).keys()].map((hour, index) => (
                       <div

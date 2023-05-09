@@ -4,8 +4,8 @@ function App() {
   const events = [
     {
       title: '177',
-      startDate: '05/05/2023',
-      endDate: '05/05/2023',
+      startDate: '12/05/2023',
+      endDate: '12/05/2023',
       startTime: '08:30:00',
       endTime: '09:00:00',
       id: 133,
@@ -18,8 +18,8 @@ function App() {
     },
     {
       title: '2',
-      startDate: '05/05/2023',
-      endDate: '05/05/2023',
+      startDate: '12/05/2023',
+      endDate: '12/05/2023',
       startTime: '08:30:00',
       endTime: '12:00:00',
       id: 2,
@@ -29,8 +29,8 @@ function App() {
 
     {
       title: '4',
-      startDate: '05/05/2023',
-      endDate: '05/05/2023',
+      startDate: '12/05/2023',
+      endDate: '12/05/2023',
       startTime: '10:30:00',
       endTime: '14:00:00',
       id: 23,
@@ -39,8 +39,8 @@ function App() {
     },
     {
       title: '5',
-      startDate: '05/05/2023',
-      endDate: '05/05/2023',
+      startDate: '12/05/2023',
+      endDate: '12/05/2023',
       startTime: '14:30:00',
       endTime: '18:00:00',
       id: 3,
@@ -48,16 +48,16 @@ function App() {
     },
     // {
     //   title: '5.5',
-    //   startDate: '05/05/2023',
-    //   endDate: '05/05/2023',
+    //   startDate: '12/05/2023',
+    //   endDate: '12/05/2023',
     //   startTime: '06:30:00',
     //   endTime: '07:00:00',
     //   id: 22,
     // },
     {
       title: '6',
-      startDate: '05/05/2023',
-      endDate: '05/05/2023',
+      startDate: '12/05/2023',
+      endDate: '12/05/2023',
       startTime: '11:30:00',
       endTime: '12:00:00',
       id: 4,
@@ -65,8 +65,8 @@ function App() {
     },
     {
       title: '7',
-      startDate: '05/05/2023',
-      endDate: '05/05/2023',
+      startDate: '12/05/2023',
+      endDate: '12/05/2023',
       startTime: '11:00:00',
       endTime: '15:00:00',
       id: 55,
@@ -76,8 +76,8 @@ function App() {
 
     {
       title: '8',
-      startDate: '05/05/2023',
-      endDate: '05/05/2023',
+      startDate: '12/05/2023',
+      endDate: '12/05/2023',
       startTime: '13:30:00',
       endTime: '16:00:00',
       id: 8,
@@ -86,8 +86,8 @@ function App() {
     },
     {
       title: '9',
-      startDate: '05/05/2023',
-      endDate: '05/05/2023',
+      startDate: '12/05/2023',
+      endDate: '12/05/2023',
       startTime: '12:30:00',
       endTime: '16:00:00',
       id: 11,
@@ -114,12 +114,13 @@ function App() {
         monthCalanderTitleFormate="dddd" //month title formate
         monthCalanderTitle="ddd" //day column title formate
         monthCalanderMinCellHeight={80} //day column title formate
-        weekHourBoxHeight={50} //Height of the hour box
+        weekHourBoxHeight={160} //Height of the hour box
         startingWeekday={0} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
         weekCalanderDayStartFromHour={7} // Day start from hour
         weekCalanderVisibleHour={12} //day visible hour
         weekCalanderTitleFormate="ddd, MMM dd" //day column title formate
         weekCalanderTimeFormate={12} //day column title formate
+        weekCalanderNextBtnDayIncrement={3} //
         isShowAddNewEventButton={true} //show add new event button
         isShowDeleteEventButton={true} //show delete event button
         isShowAddOrUpadateEventButton={true} //show add or update event button
@@ -144,6 +145,7 @@ function App() {
         }}
         handleEventClick={event => {
           console.log(event);
+
           console.log(
             '============================================handleEventClick',
           );

@@ -14,9 +14,10 @@ function ReactCalnaderScheduler({
   calanderType: _calanderType = 'week', // week or day
   monthCalanderTitleFormate = 'dddd', //month title formate
   monthCalanderTitle = 'ddd', //day column title formate
-  monthCalanderDayHeight = 50, //day column title formate
+  monthCalanderDayHeight = 120, //day column title formate
   minimumEventThickness = 30, //minimum event thickness
-  weekHourBoxHeight = 50,
+  weekHourBoxHeight: _weekHourBoxHeight = 50,
+  weekCalanderNextBtnDayIncrement = 7, //day increment on next button click
   startingWeekday = 1, // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
   weekCalanderDayStartFromHour = 7, //day start from hour,
   weekCalanderVisibleHour = 12, //day visible hour
@@ -34,6 +35,7 @@ function ReactCalnaderScheduler({
   handlePrevClick: _handlePrevClick,
   handleClanderTypeChange: _handleClanderTypeChange,
   handleChangeCurrentDate: _handleChangeCurrentDate,
+  handleIncreaseTimeSpan: _handleIncreaseTimeSpan,
   events,
 }) {
   /**
@@ -44,6 +46,9 @@ function ReactCalnaderScheduler({
   const [eventEdit, setEventEdit] = useState({});
   const [calanderType, setCalanderType] = useState(_calanderType);
   const [eventsState, setEventsState] = useState(setEventID(events));
+
+  const [weekHourBoxHeight, setWeekHourBoxHeight] =
+    useState(_weekHourBoxHeight);
 
   useEffect(() => {
     setEventsState(setEventID(events));
@@ -153,6 +158,14 @@ function ReactCalnaderScheduler({
     _handleClanderTypeChange && _handleClanderTypeChange(type);
   };
 
+  const handleIncreaseTimeSpan = diff => {
+    if (weekHourBoxHeight + diff < 20) {
+      return;
+    }
+    setWeekHourBoxHeight(weekHourBoxHeight + 10 * diff);
+    _handleIncreaseTimeSpan && _handleIncreaseTimeSpan();
+  };
+
   return (
     <div className="App react-calander-scedule">
       <div className="ib__sc_rcs-container">
@@ -166,6 +179,7 @@ function ReactCalnaderScheduler({
             selectedDate={selectedDate}
             calanderType={calanderType}
             weekHourBoxHeight={weekHourBoxHeight}
+            handleIncreaseTimeSpan={handleIncreaseTimeSpan}
             startingWeekday={startingWeekday} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
             weekCalanderDayStartFromHour={weekCalanderDayStartFromHour} //day start from hour,
             weekCalanderVisibleHour={weekCalanderVisibleHour} //day visible hour
@@ -174,6 +188,11 @@ function ReactCalnaderScheduler({
             minimumEventThickness={minimumEventThickness}
             handleNextClick={_handleNextClick}
             handlePrevClick={_handlePrevClick}
+            weekCalanderNextBtnDayIncrement={
+              weekCalanderNextBtnDayIncrement > 7
+                ? 7
+                : weekCalanderNextBtnDayIncrement
+            }
             noOfDayColumn={calanderType == 'week' ? 7 : 1}
             handleChangeCurrentDate={_handleChangeCurrentDate}
             handleClanderTypeChange={handleClanderTypeChange}

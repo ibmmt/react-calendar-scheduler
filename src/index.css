@@ -99,7 +99,10 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.ib__sc__flex_center{
+  display: flex;
+  justify-content: center;
+}
 
 /* Ib table */
 .ib__sc__table{
@@ -131,8 +134,9 @@ body {
   background: transparent;
   cursor: pointer;
   display: flex;
+  opacity: 0.5;
   align-items: center;
-  width: 30px
+  width: 24px;
 }
 
 
@@ -164,15 +168,20 @@ body {
 .ib__sc__week-date-btn-group{
   display: flex;
   justify-content: center;
-  border: 1px solid #e8e8e8;
+   
 
   border-radius: 4px;
+}
+.ib__sc__week-date-btn-group{
+  border: 1px solid #eeeeee;
 }
 
 .ib__sc__week-date__bt-text .ib__sc-form-control{
   width:auto;
   border: none;
- 
+  border-left: 1px solid #eeeeee;
+  border-radius: 0;
+  border-right: 1px solid #eeeeee;;
 
 }
  
@@ -227,6 +236,7 @@ body {
   border: 1px solid #ccc;
   font-weight: normal;
   color: #4e4e4e;
+  height: 22px;
 }
 .ib__sc__table-th-week{
   border: 1px solid #000;
@@ -236,6 +246,12 @@ body {
 .ib__sc__tb-wrapper-week{
   display: flex;
  width: 100%;
+}
+
+.ib__sc__increment-timespan .ib__sc__btn {
+  line-height: 21px;
+  text-align: center;
+  padding: 1px 8px;
 }
 .ib__sc__cell{
   

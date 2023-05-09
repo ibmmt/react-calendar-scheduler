@@ -37,11 +37,13 @@ const EventBoxWeek = ({
   };
 
   useEffect(() => {
-    if (dragingEventId === eventObj.sc_app__id) {
-      setIsDraging(true);
-    } else {
-      setIsDraging(false);
-    }
+    setTimeout(() => {
+      if (dragingEventId === eventObj.sc_app__id) {
+        setIsDraging(true);
+      } else {
+        setIsDraging(false);
+      }
+    }, 100);
   }, [dragingEventId]);
 
   /**
@@ -101,7 +103,10 @@ const EventBoxWeek = ({
     setEventHeight(height);
     let hours_difference_from_start =
       (startTime - boxDayTimeStart) / HOUR_MILLISECONDS;
-    let event_top = hours_difference_from_start * (boxHeight / boxTime);
+
+    let event_top =
+      hours_difference_from_start * (boxHeight / boxTime) -
+      hours_difference_from_start * 1; // 1 is the border width
     setOffset(event_top);
   };
 
