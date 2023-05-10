@@ -193,7 +193,7 @@ const EventBoxWeek = ({
   useEffect(() => {
     if (!eventObj) return;
     setPostionAndHeight(eventObj.startTime, eventObj.endTime);
-  }, [eventObj]);
+  }, [eventObj, boxHeight, boxTime, boxDay]);
 
   const eventStyle = {
     width: (isDraging ? 100 : eventObj.width) + '%',

@@ -128,7 +128,14 @@ const EventBoxMonth = ({
   useEffect(() => {
     if (!eventObj) return;
     setPostionAndHeight(eventObj.startTime, eventObj.endTime);
-  }, [eventObj, eventObj.startTime, eventObj.endTime]);
+  }, [
+    eventObj,
+    eventObj.startTime,
+    eventObj.endTime,
+    boxHeight,
+    boxTime,
+    boxDay,
+  ]);
 
   const eventStyle = {
     width: eventObj.width + '%',

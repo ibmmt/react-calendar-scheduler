@@ -106,7 +106,7 @@ const CalendarWeek = ({
       calanderTableRef.current.scrollTop =
         (weekCalanderDayStartFromHour * boxHeight) / boxTime;
     }
-  }, []);
+  }, [weekHourBoxHeight]);
 
   /**
    * Dragin event mouse move handler
