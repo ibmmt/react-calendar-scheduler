@@ -1,61 +1,7 @@
-# React Calendar Scheduler
 
-React Calendar Scheduler is a flexible and customizable calendar component for scheduling events in React applications.
 
-## Features
 
-- Supports week and month views for calendar scheduling.
-- Drag and drop functionality for event placement and resizing.
-- Customizable event rendering and styling.
-- Easily add, update, and delete events.
-- Responsive design for mobile and desktop devices.
 
-## Installation
-
-You can install the React Calendar Scheduler package using npm or yarn.
-
-Using npm:
-
-npm install react-calendar-scheduler
-
-Using yarn:
-
-yarn add react-calendar-scheduler
-
-Once installed, you can import the component in your React application and start using it.
-
-## Usage
-
-Import the `ReactCalnaderScheduler` component and use it in your React application:
-
-```jsx
-import ReactCalnaderScheduler from 'react-calendar-scheduler';
-import 'react-calendar-scheduler/dist/index.css';
-
-function App() {
-  // Define your event data
-  const events = [
-    // Event objects
-  ];
-
-  return (
-    <div>
-      <h1>React Calendar Scheduler</h1>
-      <ReactCalnaderScheduler
-        events={events}
-        // Other props
-      />
-    </div>
-  );
-}
-
-export default App;
-```
-
-Certainly! Here's a single-page version of the README file for your React component package:
-
-markdown
-Copy code
 
 # React Calendar Scheduler
 
