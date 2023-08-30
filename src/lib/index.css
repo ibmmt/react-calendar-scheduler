@@ -1,0 +1,559 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ib__sc__form-group {
+  margin-bottom: 1em;
+}
+
+.ib__sc-form-control {
+  display: block;
+    padding: 0.375rem 0.75rem;
+    font-weight: 100;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    line-height: 1.5;
+    color: #5b5b5b;
+    background-color: #fff;
+    background-clip: padding-box;
+    appearance: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ib__sc__btn {
+  color: #5b5b5b;
+  background-color: #e0e0e0;
+  border-color: #9e9e9e;
+  display: inline-block;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: .8em;
+  line-height: 1.2em;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ib__sc__btn.active {
+  background-color: #b6b6b6;
+  border-color: #adadad;
+}
+.ib__sc__btn:hover {
+  background-color: #b6b6b6;
+  border-color: #adadad;
+}
+.ib__sc__btn-group {
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  display: table-cell;
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+.ib__sc__btn-group .ib__sc__btn {
+  border-radius: 0;
+}
+.ib__sc__btn-group .ib__sc__btn {
+  border-left: 1px solid #ccc;
+}
+.ib__sc__btn-group .ib__sc__btn:first-child {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  border-left: none;
+}
+
+.ib__sc__btn-group .ib__sc__btn:last-child {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.ib__sc__truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ib__sc__flex_center {
+  display: flex;
+  justify-content: center;
+}
+
+/* Ib table */
+.ib__sc__table {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.ib__sc__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px;
+  box-sizing: border-box;
+}
+.ib__sc__header__right {
+  display: flex;
+  align-items: center;
+}
+.ib__sc__header__right__btn-group {
+  display: flex;
+  align-items: center;
+  margin-right: 1em;
+  font-size: .8em;
+}
+.ib__sc__np__btn {
+  border: none;
+  outline: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  opacity: 0.5;
+  align-items: center;
+  width: 24px;
+}
+.ib__sc__calander_switch {
+  font-size: .8em;
+}
+
+.ib__sc__table-out-week {
+  display: flex;
+  width: 100%;
+  overflow-y: scroll;
+}
+.ib__sc__table-out-week::-webkit-scrollbar {
+  width: 0.4em;
+  border-radius: 1em;
+}
+
+.ib__sc__table-out-week::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(154, 154, 154, 0.3);
+  border-radius: 0.3em;
+}
+
+.ib__sc__table-out-week::-webkit-scrollbar-thumb {
+  background-color: rgb(211, 211, 211);
+  outline: 1px solid rgb(173, 181, 190);
+}
+.ib__sc__week-date {
+  display: flex;
+  justify-content: center;
+}
+.ib__sc__week-date-btn-group {
+  display: flex;
+  justify-content: center;
+
+  border-radius: 4px;
+}
+.ib__sc__week-date-btn-group {
+  border: 1px solid #eeeeee;
+}
+
+.ib__sc__week-date__bt-text .ib__sc-form-control {
+  width: auto;
+  border: none;
+  border-left: 1px solid #eeeeee;
+  border-radius: 0;
+  border-right: 1px solid #eeeeee;
+}
+
+.ib__sc__table-week {
+  border-spacing: 0;
+  z-index: 1003;
+  margin-bottom: 100px;
+}
+
+.ib__sc__table-td-week {
+  position: relative;
+  flex: 1 1;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  margin-left: -1px;
+}
+
+.ib__sc__table-hr-box-week {
+  background: #ffffff;
+  border-top: 1px dashed #dbdbdb;
+  margin-top: -1px;
+  cursor: pointer;
+}
+.ib__sc__table-hr-box-week:hover {
+  background: #eff1ff;
+}
+
+.ib__sc__tb_week_time .ib__sc__table-hr-box-week {
+  border-top: 1px solid #fff;
+}
+.ib__sc__tb_week_time .ib__sc__cell {
+  border: none;
+}
+.ib__sc__tb_week_time .ib__sc__table-hr-box-week small {
+  margin-top: -1em;
+}
+.ib__sc__time_title {
+  margin-top: -0.5em;
+  display: block;
+}
+.ib__sc__table-th {
+  text-align: center;
+  top: 0;
+  position: sticky;
+  z-index: 1001;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #4e4e4e;
+  height: 1.6em;
+  line-height: 1.6em;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  /* display: table-cell; */
+  vertical-align: middle;
+}
+.ib__sc__table-th-week {
+  border: 1px solid #000;
+  text-align: center;
+}
+
+.ib__sc__tb-wrapper-week {
+  display: flex;
+  width: 100%;
+}
+
+.ib__sc__increment-timespan .ib__sc__btn {
+  line-height: 21px;
+  text-align: center;
+  padding: 1px 8px;
+}
+.ib__sc__cell {
+  border: 1px dashed #ccc;
+}
+.ib__sc__cell-wrapper {
+  position: relative;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+}
+.ib__sc__event-wrapper {
+  position: absolute;
+  overflow: hidden;
+}
+.ib__sc__event {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  padding: 5px 10px 0px 5px;
+}
+.ib__sc__event-box {
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+
+  text-align: center;
+  box-sizing: border-box;
+  border: 2px solid #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+.ib__sc__staring_event_box::before {
+  content: '';
+  display: block;
+  width: 5px;
+  top: 0px;
+  bottom: 0px;
+  background-color: #ccc;
+  position: absolute;
+  left: 0;
+}
+.dragging-handler-week {
+  text-align: center;
+  display: none;
+}
+
+.ib__sc__event-box:hover .dragging-handler-week {
+  display: block;
+}
+.dragging-handler-week {
+  position: absolute;
+  cursor: re-resize;
+  left: 1px;
+  right: 1px;
+  height: 12px;
+  z-index: 100;
+  background: #ededed;
+  line-height: 10px;
+  color: #777;
+  opacity: 0.8;
+}
+
+.dragging-handler-week.top {
+  cursor: s-resize;
+  top: 0px;
+}
+.dragging-handler-week.bottom {
+  cursor: s-resize;
+  bottom: 0px;
+}
+
+.resize-event-bg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgb(139 139 139 / 27%);
+  opacity: 1;
+  z-index: 100;
+}
+
+.placeholder {
+  /* display: none; */
+  cursor: move;
+  cursor: grab;
+  position: absolute;
+  pointer-events: none;
+  border: 1px dashed black;
+  background: red;
+}
+
+.ib__sc__daybar-week {
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  background: #03a9f4;
+  z-index: 1004;
+}
+
+.ib__sc__week-time {
+  font-size: 0.7em;
+  text-align: right;
+  line-height: 1em;
+  color: #373737;
+  width: 72px;
+  margin-top: -1px;
+  padding-right: 3px;
+  border-top: 1px dashed transparent;
+}
+
+/* Add Event popup */
+
+.ib__sc-modal {
+  position: fixed;
+  z-index: 1100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  /* display: none; */
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ib__sc-modal-content {
+  background-color: white;
+  padding: 20px;
+  width: 90%;
+  border-radius: 5px;
+  max-width: 400px;
+  position: relative;
+}
+.ib__sc__close-modal-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  line-height: 20px;
+  height: 20px;
+  width: 20px;
+  font-weight: 700;
+  font-size: 24px;
+  background: white;
+  text-align: center;
+  color: #ccc;
+  cursor: pointer;
+}
+.ib__sc__modal_footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ib__sc-form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #adadad;
+  outline: 0;
+}
+
+.ib__sc__form-time-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ib__sc__form-time-row > * + * {
+  margin-left: 10px;
+}
+
+.ib__sc-label {
+  font-size: 13px;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+}
+
+/* Month Calender */
+.ib__sc__table-out-week {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.ib__sc__table-month {
+  border-spacing: 0;
+  z-index: 1003;
+  width: 100%;
+}
+.ib__sc__table-td-month {
+  text-align: left;
+  padding-left: 0;
+  position: relative;
+}
+.ib__sc__table-td__day_cell {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  height: 100%;
+  position: relative;
+}
+.ib__sc_month_cell {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.ib__sc_month_cell:hover {
+  background: #eff1ff;
+}
+
+.ib__sc_month_day {
+  color: #b3b3b3;
+  font-weight: 600;
+  font-size: .8em;
+  line-height: .8em;
+  padding: 5px;
+  z-index: 1000;
+  position: absolute;
+  box-sizing: border-box;
+
+}
+
+table.ib__sc__table-month {
+  border: none;
+  border-collapse: collapse;
+}
+table.ib__sc__table-month td {
+  border-right: 1px solid #dfdfdf;
+  vertical-align: top;
+}
+table.ib__sc__table-month td:first-child {
+  border-left: 1px solid #dfdfdf;
+}
+table.ib__sc__table-month tr {
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.ib__sc__month-date {
+  display: flex;
+  justify-content: center;
+}
+.ib__sc__month-date-btn-group {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+
+.ib__sc__month-date__bt-text .ib__sc-form-control {
+  width: auto;
+  border: none;
+}
+
+.dragging-handler-month {
+  position: absolute;
+
+  top: 1px;
+  bottom: 1px;
+  width: 12px;
+  z-index: 100;
+
+  line-height: 10px;
+  color: #777;
+  font-size: 0.5em;
+  align-items: center;
+  opacity: 0.8;
+  display: none;
+  justify-content: center;
+}
+
+.dragging-handler-month.left {
+  cursor: w-resize;
+  left: 0px;
+}
+.dragging-handler-month.right {
+  cursor: w-resize;
+  right: 0px;
+}
+
+.ib__sc__event-box:hover .dragging-handler-month {
+  display: flex;
+}
+.dragging .dragging-handler-month {
+  display: flex;
+}
+.dragging-handler-month:hover {
+  display: flex;
+}
+.ib__sc__event-wrapper.dragging {
+  z-index: 3003;
+}
+.ib__sc__event-wrapper-month.overlap-start {
+  left: -1px !important;
+}
+.ib__sc__event-wrapper-month.overlap-end {
+  width: calc(100% + 2px) !important;
+}
+
+.ib__sc__event-wrapper-month.overlap-start .ib__sc__event-box {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+}
+
+.ib__sc__event-wrapper-month.overlap-end .ib__sc__event-box {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
+}
+
+.ib__sc__np__btn img{
+  width: 100%;
+}

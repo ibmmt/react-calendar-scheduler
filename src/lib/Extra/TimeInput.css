@@ -1,0 +1,29 @@
+.time-input-wrapper {
+    position: relative;
+}
+
+.dropdown-time {
+    position: absolute;
+    width: 100%;
+    border: 1px solid #ccc;
+    max-height: 120px;
+    overflow-y: scroll;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.dropdown-time div {
+    padding: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    height: 20px;
+
+}
+.dropdown-time  .active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.dropdown-time div:hover {
+    background-color: #ddd;
+}

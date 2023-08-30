@@ -1,0 +1,12 @@
+/node_modules
+/dist
+/node_modules
+/.git
+/__src
+/.gitignore
+/.gitattributes
+/.npmignore
+*.config.js
+*.test.js
+.eslintrc.js
+package.json
