@@ -38,7 +38,7 @@ Import the `ReactCalnaderScheduler` component and use it in your React applicati
 
 ```jsx
 import { ReactCalnaderScheduler } from 'react-calendar-scheduler';
-import 'react-calendar-scheduler/dist/index.css';
+
 
 function App() {
   // Define your event data
