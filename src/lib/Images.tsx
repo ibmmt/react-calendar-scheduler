@@ -1,10 +1,13 @@
+// Importing image paths using ES6 module syntax
+import closeIconImg from '../assets/img/close.png';
+import leftIconImg from '../assets/img/left-arrow.png';
+import rightIconImg from '../assets/img/right-arrow.png';
 
-const closeIconImg  ='../assets/img/close.png';
-const leftIconImg = '../assets/img/left-arrow.png';
-const  rightIconImg = '../assets/img/right-arrow.png';
 
-export const LeftIcon = () => <img src={leftIconImg} alt="lefticon" />;
+
+
 
 export const RightIcon = () => <img src={rightIconImg} alt="righticon" />;
+export const LeftIcon = () => <img src={leftIconImg} alt="lefticon" />;
 
-export const CrossIcon = () => <img src={closeIconImg} alt="righticon" />;
+export const CrossIcon = () => <img src={closeIconImg} alt="close" />;
