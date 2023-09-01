@@ -1,4 +1,5 @@
 //import React from 'react';
+import TimeInput from './Extra/TimeInput';
 import ReactCalendarScheduler from './ReactCalendarScheduler';
 
 // import ReactDOM from 'react-dom/client';
@@ -11,4 +12,4 @@ import ReactCalendarScheduler from './ReactCalendarScheduler';
 //   </React.StrictMode>,
 // );
 
-export { ReactCalendarScheduler };
+export { ReactCalendarScheduler, TimeInput };

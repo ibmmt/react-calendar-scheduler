@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
+import TimeInput from './Extra/TimeInput';
 import { addTimeStringTodate, formatDate } from './_utils';
 import { EventObjectInput } from './type/EventObject';
-import TimeInput from './Extra/TimeInput';
 
 
 interface Props {
@@ -116,7 +116,7 @@ const AddEventModal: React.FC<Props> = ({
   return (
     <div
       className="modal-wrapper ib__sc-modal"
-      onClick={e => {
+      onKeyDown={e => {
         if (
           e.target instanceof HTMLElement &&
           e.target.className.includes('ib__sc-modal')

@@ -1,7 +1,8 @@
 {
   "name": "react-calendar-scheduler",
-  "version": "2.0.0",
+  "version": "2.0.5",
   "description": "A calendar scheduler built with React,Timebox and Event Drag and Drop",
+  "homepage": "https://github.com/ibmmt/react-calendar-scheduler",
   "private": false,
   "author": "Ibrahim mt",
   "main": "dist/index.js",

@@ -93,8 +93,10 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
       (startTime - boxDayTimeStart) / HOUR_MILLISECONDS;
 
     const event_top =
-      hours_difference_from_start * (boxHeight / boxTime) -
-      hours_difference_from_start * 1;
+      hours_difference_from_start * ((boxHeight / boxTime))
+      //hours_difference_from_start * 1;
+      
+      
     setOffset(event_top);
   };
 

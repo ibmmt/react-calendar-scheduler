@@ -1,4 +1,4 @@
-import { ReactCalendarScheduler } from './lib';
+import { ReactCalendarScheduler, TimeInput } from './lib';
 
-export { ReactCalendarScheduler };
+export { ReactCalendarScheduler, TimeInput };
 

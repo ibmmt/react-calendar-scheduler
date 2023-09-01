@@ -135,10 +135,11 @@ export const calculatePositions = (events: any[], isMonth: boolean) => {
   for (let i = 0; i < sortedEvents.length; i++) {
     let width = 0;
     let left = 0;
+
     const leftOvercome: any[] = [];
 
     for (let k = 0; k < i; k++) {
-      if (sortedEvents[k][endKey] >= sortedEvents[i][startKey]) {
+      if (sortedEvents[k][endKey] - sortedEvents[i][startKey] > 1 * 1000) {
         leftOvercome.push(sortedEvents[k]);
       }
     }
@@ -410,6 +411,12 @@ export const isUpadteNeeded = (
 };
 
 export const convertTo12Hour = (timeStr: string) => {
+  if (!timeStr) return '';
+  console.log('------timeStr----12--', timeStr);
+  timeStr = timeStr.trim();
+  timeStr = timeStr.toUpperCase();
+  if (timeStr.includes('AM') || timeStr.includes('PM')) return timeStr;
+
   const [hours, minutes] = timeStr.split(':');
 
   let hoursInt = parseInt(hours, 10);
@@ -419,41 +426,51 @@ export const convertTo12Hour = (timeStr: string) => {
   if (hoursInt >= 12) {
     period = 'PM';
   }
+  if (hoursInt > 24) {
+    hoursInt = hoursInt % 10;
+  }
 
   if (hoursInt == 0) {
     hoursInt = 12;
   } else if (hoursInt > 12) {
     hoursInt -= 12;
   }
-
-  return `${hours}:${minutes} ${period}`;
+  console.log('------hoursInt----12--', hoursInt);
+  return `${hoursInt.toString().padStart(2, '0')}:${minutes
+    .toString()
+    .padStart(2, '0')} ${period}`;
 };
 
-export const convertTo24HourFormat = (timeStr: string) => {
-  if (!timeStr) {
-    return '';
-  }
-  timeStr = timeStr.trim();
-  timeStr = timeStr.toUpperCase();
+export const convertTo24HourFormat = (timeStr: string): string => {
+  // Check for AM or PM in the time string
+  console.log('------timeStr----', timeStr);
+  const isPM = timeStr.toLowerCase().includes('pm');
+  const timeParts = timeStr.split(/[:\s]/); // Split by colon and/or whitespace
 
-  let [time, meridian] = timeStr.split(' ');
-  const [hours, minutes] = time.split(':');
-  if (!meridian) {
-    meridian = 'AM';
-  }
-  if (!time) {
-    time = '0';
-  }
-
-  let hoursInt = parseInt(hours, 10);
-
-  if (meridian.toLowerCase() === 'PM' && hoursInt !== 12) {
-    hoursInt += 12;
-  } else if (meridian.toLowerCase() === 'AM' && hoursInt === 12) {
-    hoursInt = 0;
+  let hours = parseInt(timeParts[0], 10);
+  const minutes = parseInt(timeParts[1], 10);
+  if (
+    isNaN(hours) ||
+    isNaN(minutes) ||
+    hours > 12 ||
+    hours < 1 ||
+    minutes > 59 ||
+    minutes < 0
+  ) {
+    console.error('Invalid time format');
+    return '12:00';
   }
 
-  return `${hours.toString().padStart(2, '0')}:${minutes
-    .toString()
-    .padStart(2, '0')}`;
+  if (isPM && hours !== 12) {
+    hours += 12;
+  }
+
+  if (!isPM && hours === 12) {
+    hours = 0;
+  }
+  const timeString = `${String(hours).padStart(2, '0')}:${String(
+    minutes,
+  ).padStart(2, '0')}`;
+  console.log(timeString);
+  return timeString;
 };

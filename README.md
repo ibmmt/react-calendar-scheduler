@@ -34,11 +34,10 @@ Once installed, you can import the component in your React application and start
 
 ## Usage
 
-Import the `ReactCalnaderScheduler` component and use it in your React application:
+Import the `ReactCalendarScheduler` component and use it in your React application:
 
 ```jsx
-import ReactCalnaderScheduler from 'react-calendar-scheduler';
-import 'react-calendar-scheduler/dist/index.css';
+import { ReactCalendarScheduler } from 'react-calendar-scheduler';
 
 function App() {
   // Define your event data
@@ -49,7 +48,7 @@ function App() {
   return (
     <div>
       <h1>React Calendar Scheduler</h1>
-      <ReactCalnaderScheduler
+      <ReactCalendarScheduler
         events={events}
         // Other props
       />
