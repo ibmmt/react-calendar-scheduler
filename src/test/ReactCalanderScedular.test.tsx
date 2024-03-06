@@ -26,11 +26,9 @@ describe('React clanader scheduler', () => {
     expect(weekBtn).toBeInTheDocument();
     expect(monthBtn).toBeInTheDocument();
     expect(dayBtn).toBeInTheDocument();
-    if(weekBtn)
-    fireEvent.click(weekBtn);
+    if (weekBtn) fireEvent.click(weekBtn);
     expect(document.querySelector('.ib_sc_type_week')).toBeInTheDocument();
-    if(monthBtn)
-    fireEvent.click(monthBtn);
+    if (monthBtn) fireEvent.click(monthBtn);
     expect(document.querySelector('.ib_sc_type_month')).toBeInTheDocument();
     // fireEvent.click(dayBtn);
     // expect(document.querySelector('.ib_sc_type_day')).toBeInTheDocument();

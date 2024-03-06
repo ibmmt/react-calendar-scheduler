@@ -8,7 +8,7 @@ import {
   calculatePositions,
   getDaysDifference,
   isDateBetween,
-  weekdaysArr
+  weekdaysArr,
 } from './_utils';
 import { EventObject } from './type/EventObject';
 
@@ -26,17 +26,17 @@ interface CalenderMonthProps {
   minimumEventThickness: number;
   calenderHeight: number;
   isShowAddNewEventButton?: boolean;
-  calenderToAddOrUpdateEvent: (eventObj:EventObject) => void;
+  calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
   monthCalenderMinCellHeight: number;
   handleNextClick?: (date: Date, calenderType: string) => void;
   handlePrevClick?: (date: Date, calenderType: string) => void;
   handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
- 
+
   handleClanderTypeChange: (calenderType: string) => void;
 }
 
-function  CalenderMonth({
-  currentDay=new Date(),
+function CalenderMonth({
+  currentDay = new Date(),
   eventsData,
   updateEvent,
   calenderType,
@@ -62,7 +62,9 @@ function  CalenderMonth({
   const yearMonth = `${year}-${(month + 1).toString().padStart(2, '0')}`;
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const [events, setEvents] = useState<EventObject[]>( calculatePositions(eventsData,true));
+  const [events, setEvents] = useState<EventObject[]>(
+    calculatePositions(eventsData, true),
+  );
   const currentDragDate = useRef<number>();
   const editingEventRef = useRef<any>();
   const [isDraging, setIsDraging] = useState(false);
@@ -113,7 +115,7 @@ function  CalenderMonth({
    * @param {Event} event
    * @param {Number} selectedDate
    */
-  const dragStart = (event:EventObject, selectedDate: number) => {
+  const dragStart = (event: EventObject, selectedDate: number) => {
     console.log('dragStart');
     console.log(event);
     currentDragDate.current = selectedDate;
@@ -127,7 +129,11 @@ function  CalenderMonth({
    * @param {Number} date
    * @param {string} side
    */
-  const resizeStart = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, date: number, side: string) => {
+  const resizeStart = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    date: number,
+    side: string,
+  ) => {
     currentDragDate.current = date;
     editingEventRef.current = { ...event, left: 0, width: '100' };
     sideUseRef.current = side;
@@ -153,7 +159,7 @@ function  CalenderMonth({
   };
 
   const findAndSetEvent = (event: EventObject, events: EventObject[]) => {
-    const index = events.findIndex((e) => e.sc_app__id === event.sc_app__id);
+    const index = events.findIndex(e => e.sc_app__id === event.sc_app__id);
     // alert(index);
     if (index > -1) {
       events[index] = event;
@@ -163,10 +169,10 @@ function  CalenderMonth({
 
   const dragBoxMouseEnterToCell = (date: Date) => {
     if (!editingEventRef.current) return;
-    if(!currentDragDate.current) return;
- 
+    if (!currentDragDate.current) return;
+
     const newEvent = editingEventRef.current;
- 
+
     const daysDiff = getDaysDifference(date, new Date(currentDragDate.current));
 
     if (daysDiff === 0) return;
@@ -222,10 +228,14 @@ function  CalenderMonth({
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(year, month, i);
       let minPercentage = 100;
-      const eventsInDay = events.filter((event) => {
-       
-       // console.log( 'event.width',event.width)
-        if ( event.startTime&& event.endTime&& event.width&& isDateBetween(date, event.startTime, event.endTime)) {
+      const eventsInDay = events.filter(event => {
+        // console.log( 'event.width',event.width)
+        if (
+          event.startTime &&
+          event.endTime &&
+          event.width &&
+          isDateBetween(date, event.startTime, event.endTime)
+        ) {
           minPercentage = Math.min(minPercentage, event.width);
           return true;
         } else {
@@ -241,7 +251,7 @@ function  CalenderMonth({
       cells.push(
         <DayCellMonth
           key={i}
-         // isDraging={isDraging}
+          // isDraging={isDraging}
           currentBoxHeight={currentBoxHeight}
           eventsInDay={eventsInDay}
           dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
@@ -257,7 +267,7 @@ function  CalenderMonth({
               : undefined
           }
           boxHeight={boxHeight}
-         boxDay={new Date(date).getTime()}
+          boxDay={new Date(date).getTime()}
           day={i}
         />,
       );
@@ -312,7 +322,7 @@ function  CalenderMonth({
       _handleChangeCurrentDate(newDate, calenderType);
   };
 
-  console.log('render eventsData',eventsData);
+  console.log('render eventsData', eventsData);
 
   return (
     <div>
@@ -365,17 +375,18 @@ function  CalenderMonth({
               <div className="ib__sc__header__center"></div>
 
               <div className="ib__sc__header__right">
-               
-               {isShowAddNewEventButton && <div className="ib__sc__header__right__btn-group">
-                  <button
-                    className="ib__sc__btn"
-                    onClick={()=>{calenderToAddOrUpdateEvent({})}}
-                  >
-                    Add Event
-                  </button>
-               
-                </div>
-                }
+                {isShowAddNewEventButton && (
+                  <div className="ib__sc__header__right__btn-group">
+                    <button
+                      className="ib__sc__btn"
+                      onClick={() => {
+                        calenderToAddOrUpdateEvent({});
+                      }}
+                    >
+                      Add Event
+                    </button>
+                  </div>
+                )}
 
                 <CalenderSwitch
                   calenderType={calenderType}

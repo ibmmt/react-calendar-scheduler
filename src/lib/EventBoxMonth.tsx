@@ -67,8 +67,8 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
    * @param {number} endTime
    */
   const setPostionAndHeight = (startTime?: number, endTime?: number) => {
-    if(!startTime || !endTime) {
-      return
+    if (!startTime || !endTime) {
+      return;
     }
     const boxDayTimeStart = new Date(boxDay).setHours(0, 0, 0, 0);
     const boxDayTimeEnd = new Date(boxDay).setHours(23, 59, 59, 999);
@@ -178,7 +178,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
     <>
       {eventObj && (
         <div
-          id={eventObj.sc_app__id+''}
+          id={eventObj.sc_app__id + ''}
           className={
             'ib__sc__event-wrapper ib__sc__event-wrapper-month ' +
             (isDraging ? 'dragging' : '') +
@@ -253,9 +253,9 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
 
             <EventBoxView
               eventObj={eventObj}
-             // eventHeight={eventHeight}
-            ///  overLap={overLap}
-             // isCalender={isCalender}
+              // eventHeight={eventHeight}
+              ///  overLap={overLap}
+              // isCalender={isCalender}
               isShowTitle={!overLap.start}
               isStart={!overLap.start}
             />

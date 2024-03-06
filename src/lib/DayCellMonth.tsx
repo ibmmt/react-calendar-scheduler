@@ -34,11 +34,11 @@ export default function DayCellMonth({
    */
   const dragMouseEnter = (e: MouseEvent) => {
     e.preventDefault();
-    console.log("boxDay",boxDay)
+    console.log('boxDay', boxDay);
     dragBoxMouseEnterToCell(new Date(boxDay));
   };
 
-  const handleClickBox: React.MouseEventHandler<HTMLTableCellElement> = (e) => {
+  const handleClickBox: React.MouseEventHandler<HTMLTableCellElement> = e => {
     e.preventDefault();
     e.stopPropagation();
     calenderToAddOrUpdateEvent({
@@ -46,8 +46,6 @@ export default function DayCellMonth({
       endTime: new Date(boxDay + 24 * HOUR_MILLISECONDS).setHours(0, 0, 0, 0),
     });
   };
-  
- 
 
   /**
    * Add event listener on mouse enter

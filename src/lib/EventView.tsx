@@ -2,7 +2,7 @@ import React from 'react';
 import { EventObject } from './type/EventObject';
 
 interface EventBoxViewProps {
-  eventObj:EventObject;
+  eventObj: EventObject;
   isShowTitle: boolean;
   isStart?: boolean;
 }
@@ -18,7 +18,9 @@ export const EventBoxView: React.FC<EventBoxViewProps> = ({
 
   return (
     <div
-      className={`ib__sc__event-box-view ${isStart ? 'ib__sc__staring_event_box' : ''} ${eventObj.custom_class ?? ''}`}
+      className={`ib__sc__event-box-view ${
+        isStart ? 'ib__sc__staring_event_box' : ''
+      } ${eventObj.custom_class ?? ''}`}
       style={viewStyle}
     >
       {isShowTitle && (
