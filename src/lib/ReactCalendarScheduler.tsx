@@ -273,6 +273,8 @@ function ReactCalendarScheduler({
             calenderToAddOrUpdateEvent={(eventObj: EventObject) => {
               calenderToAddOrUpdateEvent(eventObj);
             }}
+            handleNextClick={_handleNextClick}
+            handlePrevClick={_handlePrevClick}
           />
         )}
 
