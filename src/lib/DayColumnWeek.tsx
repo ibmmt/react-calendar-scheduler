@@ -64,7 +64,6 @@ const DayColumnWeek: React.FC<DayColumnWeekProps> = ({
     };
   }, [dragingEventId]);
   if (events.length) {
-    console.log('events------Day column', events);
   }
   return (
     <>

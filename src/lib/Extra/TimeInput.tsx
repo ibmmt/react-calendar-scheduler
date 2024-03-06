@@ -41,9 +41,6 @@ function TimeInput({ onChange, value }: TimeInputProps) {
   }, [value]);
 
   function handleInputBlur(value?: string): void {
-    console.log('handleInputBlur');
-    console.log('inputValue', inputValue);
-    console.log('value', value);
     // Remove all non-digit characters and convert to uppercase
     const originalStr = (value ? value : inputValue).toUpperCase();
     const inputStr = originalStr.replace(/[^\d]/g, '');
@@ -51,7 +48,7 @@ function TimeInput({ onChange, value }: TimeInputProps) {
     // Get the first two characters for hours and the next two for minutes
     let hours = parseInt(inputStr.substring(0, 2), 10) || 0;
     const minutes = parseInt(inputStr.substring(2, 4), 10) || 0;
-    console.log('inputStr========', inputStr, hours);
+
     // Determine AM/PM based on input
     let ampm = 'AM';
     if (originalStr.includes('P')) {
@@ -85,7 +82,6 @@ function TimeInput({ onChange, value }: TimeInputProps) {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent): void {
-      console.log('handleKeyDown');
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         setActiveIndex(prevIndex =>

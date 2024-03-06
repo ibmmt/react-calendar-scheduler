@@ -412,7 +412,7 @@ export const isUpadteNeeded = (
 
 export const convertTo12Hour = (timeStr: string) => {
   if (!timeStr) return '';
-  console.log('------timeStr----12--', timeStr);
+
   timeStr = timeStr.trim();
   timeStr = timeStr.toUpperCase();
   if (timeStr.includes('AM') || timeStr.includes('PM')) return timeStr;
@@ -435,7 +435,7 @@ export const convertTo12Hour = (timeStr: string) => {
   } else if (hoursInt > 12) {
     hoursInt -= 12;
   }
-  console.log('------hoursInt----12--', hoursInt);
+
   return `${hoursInt.toString().padStart(2, '0')}:${minutes
     .toString()
     .padStart(2, '0')} ${period}`;
@@ -443,7 +443,7 @@ export const convertTo12Hour = (timeStr: string) => {
 
 export const convertTo24HourFormat = (timeStr: string): string => {
   // Check for AM or PM in the time string
-  console.log('------timeStr----', timeStr);
+
   const isPM = timeStr.toLowerCase().includes('pm');
   const timeParts = timeStr.split(/[:\s]/); // Split by colon and/or whitespace
 
@@ -471,6 +471,6 @@ export const convertTo24HourFormat = (timeStr: string): string => {
   const timeString = `${String(hours).padStart(2, '0')}:${String(
     minutes,
   ).padStart(2, '0')}`;
-  console.log(timeString);
+
   return timeString;
 };

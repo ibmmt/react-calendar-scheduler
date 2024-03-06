@@ -116,8 +116,6 @@ function CalenderMonth({
    * @param {Number} selectedDate
    */
   const dragStart = (event: EventObject, selectedDate: number) => {
-    console.log('dragStart');
-    console.log(event);
     currentDragDate.current = selectedDate;
     editingEventRef.current = { ...event, left: 0, width: '100' };
     setIsDraging(true);
@@ -321,8 +319,6 @@ function CalenderMonth({
     typeof _handleChangeCurrentDate === 'function' &&
       _handleChangeCurrentDate(newDate, calenderType);
   };
-
-  console.log('render eventsData', eventsData);
 
   return (
     <div>
