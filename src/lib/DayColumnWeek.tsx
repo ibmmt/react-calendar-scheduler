@@ -11,7 +11,7 @@ interface DayColumnWeekProps {
   calenderTableRef: React.RefObject<any>;
   dragBoxMouseEnterToCell: (day: Date) => void;
   calenderToAddOrUpdateEvent: (event: EventObject) => void;
-  dragingEventId?: string| number;
+  dragingEventId?: string | number;
 }
 
 const DayColumnWeek: React.FC<DayColumnWeekProps> = ({
@@ -25,21 +25,24 @@ const DayColumnWeek: React.FC<DayColumnWeekProps> = ({
 }) => {
   const BoxRef = useRef<HTMLDivElement>(null);
 
- /**
- * Handle event while entering in box
- * @param {MouseEvent} e
- */
-const dragMouseEnter = (e: MouseEvent) => {
-  e.preventDefault();
-  dragBoxMouseEnterToCell(boxDay);
-};
+  /**
+   * Handle event while entering in box
+   * @param {MouseEvent} e
+   */
+  const dragMouseEnter = (e: MouseEvent) => {
+    e.preventDefault();
+    dragBoxMouseEnterToCell(boxDay);
+  };
 
   /**
    * Handle click on hour box
    * @param {*} e
    * @param {Number} hour
    */
-  const handleClickHourBox = (e: React.MouseEvent<HTMLDivElement>, hour: number) => {
+  const handleClickHourBox = (
+    e: React.MouseEvent<HTMLDivElement>,
+    hour: number,
+  ) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -60,9 +63,8 @@ const dragMouseEnter = (e: MouseEvent) => {
       BoxRef.current?.removeEventListener('mouseenter', dragMouseEnter, true);
     };
   }, [dragingEventId]);
-if(events.length){
- console.log("events------Day column",events)
-}
+  if (events.length) {
+  }
   return (
     <>
       <div ref={BoxRef} className="ib__sc__cell ib__sc__cell-week">
@@ -74,11 +76,11 @@ if(events.length){
                 key={eventObj.sc_app__id}
                 eventObj={eventObj}
                 boxDay={boxDay}
-               // calenderTableRef={calenderTableRef}
+                // calenderTableRef={calenderTableRef}
                 boxHeight={boxHeight}
                 dragingEventId={dragingEventId}
-              //  updateEvent={updateEvent}
-               // calenderToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
+                //  updateEvent={updateEvent}
+                // calenderToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
               />
             ))}
           {isSameDay(boxDay, new Date()) && (
@@ -89,8 +91,8 @@ if(events.length){
             <div
               key={index}
               onClick={e => handleClickHourBox(e, hour)}
-              style={{ height: boxHeight + 'px'}}
-              draggable={true} 
+              style={{ height: boxHeight + 'px' }}
+              draggable={true}
               className="ib__sc__table-hr-box-week"
             ></div>
           ))}

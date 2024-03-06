@@ -1,44 +1,42 @@
-import React from "react";
-import { ReactCalendarScheduler } from "./lib";
-import { EventObjectInput } from "./lib/type/EventObject";
-
+import React from 'react';
+import { ReactCalendarScheduler } from './lib';
+import { EventObjectInput } from './lib/type/EventObject';
 
 function App() {
   const events: EventObjectInput[] = [
     {
-      title: "178",
-      startDate: "12/06/2023",
-      endDate: "12/06/2023",
-      startTime: "08:30:00",
-      endTime: "09:00:00",
+      title: '178',
+      startDate: '12/06/2023',
+      endDate: '12/06/2023',
+      startTime: '08:30:00',
+      endTime: '09:00:00',
       id: 133,
-      bg_color: "#FFAB91",
+      bg_color: '#FFAB91',
       element: <div>**</div>,
       editable: true,
       deletable: true,
       draggable: true,
-      custom_class: "custom-class",
+      custom_class: 'custom-class',
     },
     {
-      title: "2",
-      startDate: "12/06/2023",
-      endDate: "12/06/2023",
-      startTime: "08:30:00",
-      endTime: "12:00:00",
+      title: '2',
+      startDate: '12/06/2023',
+      endDate: '12/06/2023',
+      startTime: '08:30:00',
+      endTime: '12:00:00',
       id: 2,
-      bg_color: "#5c6bc0",
+      bg_color: '#5c6bc0',
       element: <div>*</div>,
-    }
+    },
     // Rest of the events...
   ];
 
-  React.useEffect(() => { 
-    console.log("events", events);
+  React.useEffect(() => {
+    console.log('events', events);
   }, [events]);
-  
 
   return (
-    <div className="App" style={{ padding: "4em" }}>
+    <div className="App" style={{ padding: '4em' }}>
       <ReactCalendarScheduler
         events={events}
         selectedDate={new Date()}
@@ -54,39 +52,36 @@ function App() {
         weekCalenderTimeFormate={12} //day column title formate
         weekCalenderNextBtnDayIncrement={3} //
         isShowAddNewEventButton={true} //show add new event button
-
         disabaleEventPopup={false} //disable event popup
-        handleUpdateEvent={(event) => {
+        handleUpdateEvent={event => {
           console.log(event);
-          console.log("handleUpdateEvent");
+          console.log('handleUpdateEvent');
         }}
-        handleAddNewEvent={(event) => {
+        handleAddNewEvent={event => {
           console.log(event);
-          console.log("handleAddNewEvent");
+          console.log('handleAddNewEvent');
         }}
-        handleDeleteEvent={(event) => {
+        handleDeleteEvent={event => {
           console.log(event);
-          console.log("handleDeleteEvent");
+          console.log('handleDeleteEvent');
         }}
-        handleEventClick={(event) => {
+        handleEventClick={event => {
           console.log(event);
-          console.log("handleEventClick");
+          console.log('handleEventClick');
         }}
-        handleColumnClick={(event) => {
+        handleColumnClick={event => {
           console.log(event);
-          console.log("handleColumnClick");
+          console.log('handleColumnClick');
         }}
         handleNextClick={() => {
-          console.log("handleNextClick");
-      
+          console.log('handleNextClick');
         }}
         handlePrevClick={() => {
-      
-          console.log("handlePrevClick");
+          console.log('handlePrevClick');
         }}
-        handleClanderTypeChange={(type) => {
+        handleClanderTypeChange={type => {
           console.log(type);
-          console.log("handleClanderTypeChange");
+          console.log('handleClanderTypeChange');
         }}
       />
     </div>

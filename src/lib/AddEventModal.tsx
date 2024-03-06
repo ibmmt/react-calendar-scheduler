@@ -4,7 +4,6 @@ import TimeInput from './Extra/TimeInput';
 import { addTimeStringTodate, formatDate } from './_utils';
 import { EventObjectInput } from './type/EventObject';
 
-
 interface Props {
   show: boolean;
   handleClose: () => void;
@@ -171,7 +170,7 @@ const AddEventModal: React.FC<Props> = ({
                 </label>
                 <TimeInput
                   value={startTime as string}
-                  onChange={(value:string) => setStartTime(value)}
+                  onChange={(value: string) => setStartTime(value)}
                 />
               </div>
 
@@ -193,7 +192,7 @@ const AddEventModal: React.FC<Props> = ({
                 </label>
                 <TimeInput
                   value={endTime as string}
-                  onChange={(value:string) => setEndTime(value)}
+                  onChange={(value: string) => setEndTime(value)}
                 />
               </div>
             </div>

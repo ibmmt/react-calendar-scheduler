@@ -11,13 +11,12 @@ import {
   getDaysDifference,
   getPreviousDay,
   isDateBetween,
-  timeFormateFromHour
+  timeFormateFromHour,
 } from './_utils';
 import { EventObject } from './type/EventObject';
 
 const boxHeightInit = 25;
 const boxTime = 1; //1 hr
- 
 
 interface Props {
   eventsData: EventObject[];
@@ -32,12 +31,12 @@ interface Props {
   isShowAddNewEventButton?: boolean;
   weekCalenderTimeFormate: number;
   noOfDayColumn: number;
-  calenderHeight:number,
+  calenderHeight: number;
   weekCalenderNextBtnDayIncrement: number;
   handleNextClick?: (date: Date, calenderType: string) => void;
   handlePrevClick?: (date: Date, calenderType: string) => void;
-  handleChangeCurrentDate?:(date: Date, calenderType: string) => void;
-  calenderToAddOrUpdateEvent: (eventObj:EventObject) => void;
+  handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
+  calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
   handleIncreaseTimeSpan: (value: number) => void;
   handleClanderTypeChange: (calenderType: string) => void;
   minimumEventThickness: number;
@@ -52,7 +51,7 @@ const CalendarWeek: React.FC<Props> = ({
   startingWeekday,
   weekCalenderDayStartFromHour,
   weekCalenderVisibleHour = 12,
-  weekCalenderTitleFormate= 'ddd',
+  weekCalenderTitleFormate = 'ddd',
   weekCalenderTimeFormate = 24,
   noOfDayColumn,
   calenderHeight,
@@ -64,7 +63,6 @@ const CalendarWeek: React.FC<Props> = ({
   calenderToAddOrUpdateEvent,
   handleIncreaseTimeSpan: _handleIncreaseTimeSpan,
   handleClanderTypeChange,
- 
 }) => {
   const [events, setEvents] = useState<EventObject[]>(eventsData);
   const calenderTableRef = useRef<HTMLDivElement>(null);
@@ -89,9 +87,7 @@ const CalendarWeek: React.FC<Props> = ({
     }
   };
 
-  const findAndSetEvent = (event: EventObject, events: EventObject[]) =>
-
- {
+  const findAndSetEvent = (event: EventObject, events: EventObject[]) => {
     const index = events.findIndex(e => e.sc_app__id === event.sc_app__id);
     if (index > -1) {
       events[index] = event;
@@ -100,12 +96,7 @@ const CalendarWeek: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    setEvents(
-      calculatePositions(
-       eventsData,
-        false,
-      ),
-    );
+    setEvents(calculatePositions(eventsData, false));
   }, [eventsData]);
 
   useEffect(() => {
@@ -117,8 +108,8 @@ const CalendarWeek: React.FC<Props> = ({
   useEffect(() => {
     if (!dateStartFrom || Object.keys(dateStartFrom).length === 0) return;
     setDateStartFrom(dateStartFrom);
-    if(_handleChangeCurrentDate)
-    _handleChangeCurrentDate(dateStartFrom, calenderType);
+    if (_handleChangeCurrentDate)
+      _handleChangeCurrentDate(dateStartFrom, calenderType);
   }, [dateStartFrom]);
 
   useEffect(() => {
@@ -133,19 +124,20 @@ const CalendarWeek: React.FC<Props> = ({
     dragEventRef.current = { ...event, left: '0', width: 100 };
     setIsDraging(true);
   };
-  
 
   const dragBoxMouseEnterToCell = (date: Date) => {
-    if(!currentDragDate.current) return;
+    if (!currentDragDate.current) return;
     const daysDiff = getDaysDifference(date, currentDragDate.current);
     if (daysDiff != 0 && dragEventRef.current) {
-      dragEventRef.current.startTime=dragEventRef.current.startTime ? dragEventRef.current.startTime:0
-      dragEventRef.current.startTime +=
-        daysDiff * 24 * HOUR_MILLISECONDS;
-      dragEventRef.current.endTime=dragEventRef.current.endTime ? dragEventRef.current.endTime:0
+      dragEventRef.current.startTime = dragEventRef.current.startTime
+        ? dragEventRef.current.startTime
+        : 0;
+      dragEventRef.current.startTime += daysDiff * 24 * HOUR_MILLISECONDS;
+      dragEventRef.current.endTime = dragEventRef.current.endTime
+        ? dragEventRef.current.endTime
+        : 0;
 
-      dragEventRef.current.endTime +=
-        daysDiff * 24 * HOUR_MILLISECONDS;
+      dragEventRef.current.endTime += daysDiff * 24 * HOUR_MILLISECONDS;
       currentDragDate.current = date;
       findAndSetEvent({ ...dragEventRef.current }, events);
     }
@@ -159,13 +151,15 @@ const CalendarWeek: React.FC<Props> = ({
       return;
     }
     const diff = e.clientY - lastCleintYRef.current;
-    dragEventRef.current.startTime=dragEventRef.current.startTime ? dragEventRef.current.startTime:0
-    dragEventRef.current.endTime=dragEventRef.current.endTime ? dragEventRef.current.endTime:0
+    dragEventRef.current.startTime = dragEventRef.current.startTime
+      ? dragEventRef.current.startTime
+      : 0;
+    dragEventRef.current.endTime = dragEventRef.current.endTime
+      ? dragEventRef.current.endTime
+      : 0;
     if (diff > 10 || diff < -10) {
-      dragEventRef.current.startTime +=
-        (diff / boxHeight) * boxTime * 3600000;
-      dragEventRef.current.endTime +=
-        (diff / boxHeight) * boxTime * 3600000;
+      dragEventRef.current.startTime += (diff / boxHeight) * boxTime * 3600000;
+      dragEventRef.current.endTime += (diff / boxHeight) * boxTime * 3600000;
       findAndSetEvent({ ...dragEventRef.current }, events);
       lastCleintYRef.current = e.clientY;
     }
@@ -199,9 +193,7 @@ const CalendarWeek: React.FC<Props> = ({
   const onWeekChange = (diff: number) => {
     const dayDiff =
       noOfDayColumn > weekCalenderNextBtnDayIncrement
-       
-
- ? weekCalenderNextBtnDayIncrement
+        ? weekCalenderNextBtnDayIncrement
         : noOfDayColumn;
 
     const newDateString = addDays(dateStartFrom, dayDiff * diff);
@@ -215,7 +207,7 @@ const CalendarWeek: React.FC<Props> = ({
     }
   };
   const heightOfWeekColumnToShow =
-  (boxHeight / boxTime) * weekCalenderVisibleHour;
+    (boxHeight / boxTime) * weekCalenderVisibleHour;
 
   if (!calenderHeight) {
     calenderHeight = heightOfWeekColumnToShow;
@@ -243,7 +235,7 @@ const CalendarWeek: React.FC<Props> = ({
                     <input
                       type="date"
                       className="ib__sc-form-control"
-                      onChange={(e) => {
+                      onChange={e => {
                         setDateStartFrom(new Date(e.target.value));
                       }}
                       value={formatDate(dateStartFrom, 'yyyy-MM-dd')}
@@ -262,18 +254,24 @@ const CalendarWeek: React.FC<Props> = ({
             <div className="ib__sc__header__center"></div>
 
             <div className="ib__sc__header__right">
-              
-             {isShowAddNewEventButton&& <div className="ib__sc__header__right__btn-group">
-                <button
-                  className="ib__sc__btn"
-                  onClick={()=>{if(calenderToAddOrUpdateEvent)calenderToAddOrUpdateEvent({})}}
-                >
-                  Add Event
-                </button>
-              </div>}
+              {isShowAddNewEventButton && (
+                <div className="ib__sc__header__right__btn-group">
+                  <button
+                    className="ib__sc__btn"
+                    onClick={() => {
+                      if (calenderToAddOrUpdateEvent)
+                        calenderToAddOrUpdateEvent({});
+                    }}
+                  >
+                    Add Event
+                  </button>
+                </div>
+              )}
               <CalenderSwitch
                 calenderType={calenderType}
-                handleClanderTypeChange={(type)=>{ if(handleClanderTypeChange) handleClanderTypeChange(type)}}
+                handleClanderTypeChange={type => {
+                  if (handleClanderTypeChange) handleClanderTypeChange(type);
+                }}
               />
             </div>
           </div>
@@ -297,9 +295,9 @@ const CalendarWeek: React.FC<Props> = ({
               ref={calenderTableRef}
             >
               <div className="ib__sc__tb-wrapper ib__sc__tb-wrapper-week">
-                <div className="ib__sc__tb_week_time"
-                 style={{ minHeight: heightOfWeekColumn + 'px' }}
-                
+                <div
+                  className="ib__sc__tb_week_time"
+                  style={{ minHeight: heightOfWeekColumn + 'px' }}
                 >
                   <div className="ib__sc__table-th">
                     <div className="ib__sc__btn-group ib__sc__increment-timespan ib__sc__flex_center">
@@ -325,7 +323,7 @@ const CalendarWeek: React.FC<Props> = ({
                         key={index}
                         style={{ height: boxHeight + 'px' }}
                         className=" ib__sc__week-time"
-                        draggable={"true"}
+                        draggable={'true'}
                       >
                         {index !== 0 && (
                           <span className="ib__sc__time_title">
@@ -336,10 +334,10 @@ const CalendarWeek: React.FC<Props> = ({
                     ))}
                   </div>
                 </div>
-                {[...Array(noOfDayColumn).keys()].map((dayIndex) => {
+                {[...Array(noOfDayColumn).keys()].map(dayIndex => {
                   const now = new Date(dateStartFrom);
                   const boxDay = new Date(
-                    now.setDate(now.getDate() + dayIndex)
+                    now.setDate(now.getDate() + dayIndex),
                   ).setHours(0, 0, 0, 0);
                   return (
                     <div
@@ -365,23 +363,22 @@ const CalendarWeek: React.FC<Props> = ({
                         dragingEventId={
                           dragEventRef.current
                             ? dragEventRef.current.sc_app__id
-                            : ""
+                            : ''
                         }
-                       
                         boxDay={new Date(boxDay)}
                         dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
                         calenderToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
                         events={
                           events
-                            ? events.filter((event) =>{
-                                if( event.startTime && event.endTime){
+                            ? events.filter(event => {
+                                if (event.startTime && event.endTime) {
                                   return isDateBetween(
-                                  new Date(boxDay),
-                                event.startTime,
-                                  event.endTime
-                                )
-                            }}
-                              )
+                                    new Date(boxDay),
+                                    event.startTime,
+                                    event.endTime,
+                                  );
+                                }
+                              })
                             : []
                         }
                       />

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import AddEventModal from './AddEventModal';
 import CalendarWeek from './CalendarWeek';
@@ -7,11 +6,10 @@ import {
   convertToComponentEventFormat,
   convertToOutputEventFormat,
   formatDate,
-  setEventID
+  setEventID,
 } from './_utils';
 import './index.css';
 import { EventObject, EventObjectInput } from './type/EventObject';
-
 
 interface Props {
   selectedDate?: Date;
@@ -40,7 +38,7 @@ interface Props {
   handleNextClick?: () => void;
   handlePrevClick?: () => void;
   handleClanderTypeChange?: (type: string) => void;
-  handleChangeCurrentDate?: (date: Date,calenderType: string) => void;
+  handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
   handleIncreaseTimeSpan?: () => void;
   events: EventObjectInput[];
 }
@@ -62,7 +60,7 @@ function ReactCalendarScheduler({
   weekCalenderTimeFormate = 12, //day column title format
   monthCalenderMinCellHeight = 50, //minimum cell height
   disabaleEventPopup = false, //disable event popup
-  isShowAddNewEventButton,  //show add new event button
+  isShowAddNewEventButton, //show add new event button
   disabaleAddEventPopup = false, //disable add event popup
   handleUpdateEvent: _handleUpdateEvent, //update event
   handleAddNewEvent: _handleAddNewEvent, //add new event
@@ -88,7 +86,9 @@ function ReactCalendarScheduler({
     endTime: '',
   });
   const [calenderType, setCalenderType] = useState(_calenderType);
-  const [eventsState, setEventsState] = useState<EventObjectInput[]>(setEventID(events));
+  const [eventsState, setEventsState] = useState<EventObjectInput[]>(
+    setEventID(events),
+  );
 
   const [weekHourBoxHeight, setWeekHourBoxHeight] =
     useState(_weekHourBoxHeight);
@@ -215,7 +215,10 @@ function ReactCalendarScheduler({
         {/* Week Calendar */}
         {(calenderType === 'week' || calenderType === 'day') && (
           <CalendarWeek
-            eventsData={convertToComponentEventFormat(setEventID(eventsState), 'dd/MM/yyyy')} // array of events
+            eventsData={convertToComponentEventFormat(
+              setEventID(eventsState),
+              'dd/MM/yyyy',
+            )} // array of events
             selectedDate={selectedDate}
             calenderType={calenderType}
             weekHourBoxHeight={weekHourBoxHeight}
@@ -239,7 +242,7 @@ function ReactCalendarScheduler({
             handleChangeCurrentDate={_handleChangeCurrentDate}
             handleClanderTypeChange={handleClanderTypeChange}
             updateEvent={updateEventDrag}
-            calenderToAddOrUpdateEvent={(eventObj:EventObject) => {
+            calenderToAddOrUpdateEvent={(eventObj: EventObject) => {
               calenderToAddOrUpdateEvent(eventObj);
             }}
           />
@@ -248,7 +251,10 @@ function ReactCalendarScheduler({
         {/* Month Calendar */}
         {calenderType === 'month' && (
           <CalendarMonth
-            eventsData={convertToComponentEventFormat(setEventID(eventsState), 'dd/MM/yyyy')} // array of events
+            eventsData={convertToComponentEventFormat(
+              setEventID(eventsState),
+              'dd/MM/yyyy',
+            )} // array of events
             monthCalenderDayHeight={monthCalenderDayHeight} // validation 50-100
             selectedDate={selectedDate} // validation date
             dayStartFrom={0} // validation 0-6
@@ -264,9 +270,11 @@ function ReactCalendarScheduler({
             handleChangeCurrentDate={_handleChangeCurrentDate}
             updateEvent={updateEventDrag}
             handleClanderTypeChange={handleClanderTypeChange}
-            calenderToAddOrUpdateEvent={(eventObj:EventObject) => {
+            calenderToAddOrUpdateEvent={(eventObj: EventObject) => {
               calenderToAddOrUpdateEvent(eventObj);
             }}
+            handleNextClick={_handleNextClick}
+            handlePrevClick={_handlePrevClick}
           />
         )}
 
@@ -281,7 +289,7 @@ function ReactCalendarScheduler({
             handleAddEvent={handleUpdateOrUpdateEvent}
             eventObj={eventEdit}
           />
-        )} 
+        )}
       </div>
     </div>
   );
