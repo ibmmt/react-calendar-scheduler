@@ -8,6 +8,7 @@ interface EventBoxMonthProps {
     isCalender: boolean;
     isDraging: boolean;
     isResizing: boolean;
+    isDragable: boolean;
 }
 declare const EventBoxMonth: React.FC<EventBoxMonthProps>;
 export default EventBoxMonth;

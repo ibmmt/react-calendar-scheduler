@@ -6,27 +6,28 @@ import { EventObjectInput } from "./lib/type/EventObject";
 function App() {
   const events: EventObjectInput[] = [
     {
-      title: "178",
-      startDate: "12/06/2023",
-      endDate: "12/06/2023",
+      title: "Title 4",
+      startDate: "12/08/2024",
+      endDate: "12/08/2024",
       startTime: "08:30:00",
       endTime: "09:00:00",
       id: 133,
       bg_color: "#FFAB91",
       element: <div>**</div>,
       editable: true,
-      deletable: true,
-      draggable: true,
+    
+      draggable: false,
       custom_class: "custom-class",
     },
     {
-      title: "2",
-      startDate: "12/06/2023",
-      endDate: "12/06/2023",
+      title: "Title 2",
+      startDate: "12/08/2024",
+      endDate: "12/08/2024",
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
       bg_color: "#5c6bc0",
+      draggable: false,
       element: <div>*</div>,
     }
     // Rest of the events...
@@ -39,6 +40,7 @@ function App() {
 
   return (
     <div className="App" style={{ padding: "4em" }}>
+
       <ReactCalendarScheduler
         events={events}
         selectedDate={new Date()}
@@ -55,7 +57,7 @@ function App() {
         weekCalenderNextBtnDayIncrement={3} //
         isShowAddNewEventButton={true} //show add new event button
 
-        disabaleEventPopup={false} //disable event popup
+        disableEventPopup={false} //disable event popup
         handleUpdateEvent={(event) => {
           console.log(event);
           console.log("handleUpdateEvent");

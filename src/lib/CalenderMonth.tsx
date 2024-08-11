@@ -62,7 +62,7 @@ function  CalenderMonth({
   const yearMonth = `${year}-${(month + 1).toString().padStart(2, '0')}`;
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const [events, setEvents] = useState<EventObject[]>( calculatePositions(eventsData,true));
+  const [events, setEvents] = useState<EventObject[]>( calculatePositions(eventsData));
   const currentDragDate = useRef<number>();
   const editingEventRef = useRef<any>();
   const [isDraging, setIsDraging] = useState(false);
@@ -91,8 +91,7 @@ function  CalenderMonth({
     setEvents(
       calculatePositions(
         //convertToComponentEventFormat(setEventID(eventsData), 'dd/MM/yyyy'),
-        eventsData,
-        true,
+        eventsData
       ),
     );
   }, [eventsData]);
@@ -114,8 +113,7 @@ function  CalenderMonth({
    * @param {Number} selectedDate
    */
   const dragStart = (event:EventObject, selectedDate: number) => {
-    console.log('dragStart');
-    console.log(event);
+   if(event.isDragable === false) return;
     currentDragDate.current = selectedDate;
     editingEventRef.current = { ...event, left: 0, width: '100' };
     setIsDraging(true);
@@ -369,7 +367,11 @@ function  CalenderMonth({
                {isShowAddNewEventButton && <div className="ib__sc__header__right__btn-group">
                   <button
                     className="ib__sc__btn"
-                    onClick={()=>{calenderToAddOrUpdateEvent({})}}
+                    onClick={()=>{calenderToAddOrUpdateEvent({
+                      isDragable: false,
+                      startTime: new Date().setHours(0, 0, 0, 0),
+                      endTime: new Date().setHours(1, 0, 0, 0),
+                    })}}
                   >
                     Add Event
                   </button>

@@ -13,6 +13,7 @@ interface EventBoxMonthProps {
   isCalender: boolean;
   isDraging: boolean;
   isResizing: boolean;
+  isDragable: boolean;
 }
 
 const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
@@ -23,6 +24,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
   isCalender,
   isDraging,
   isResizing,
+  isDragable,
 }) => {
   const [offset, setOffset] = useState(0);
   const [eventHeight, setEventHeight] = useState(0);
@@ -106,6 +108,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
    * @param {Event} e
    * */
   const handleMouseUpResize = (e: MouseEvent) => {
+    if(!isDragable)return;
     if (!isResizing) return;
     e.preventDefault();
     resizeEnd();

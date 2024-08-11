@@ -124,13 +124,14 @@ const strinkEvent = (
   });
 };
 
-export const calculatePositions = (events: any[], isMonth: boolean) => {
+export const calculatePositions = (events: any[]) => {
+  
   const totalWidth = 100;
   //sort events by start time
   const sortedEvents = events.sort((a, b) => a['startTime'] - b['startTime']);
 
-  const startKey = isMonth ? 'startDate' : 'startTime';
-  const endKey = isMonth ? 'endDate' : 'endTime';
+  const startKey =  'startTime';
+  const endKey =  'endTime';
 
   for (let i = 0; i < sortedEvents.length; i++) {
     let width = 0;
@@ -199,6 +200,9 @@ export const calculatePositions = (events: any[], isMonth: boolean) => {
     sortedEvents[i].width = width;
     sortedEvents[i].left = left;
   }
+
+
+
   return sortedEvents;
 };
 
@@ -252,6 +256,7 @@ export const convertToComponentEventFormat = (
       startTime,
       endTime,
       total_event_time,
+      isDragable: eventObj.draggable === undefined ? true : eventObj.draggable,
     };
     tempEvents.push(eventObjNew);
   }
@@ -412,7 +417,7 @@ export const isUpadteNeeded = (
 
 export const convertTo12Hour = (timeStr: string) => {
   if (!timeStr) return '';
-  console.log('------timeStr----12--', timeStr);
+
   timeStr = timeStr.trim();
   timeStr = timeStr.toUpperCase();
   if (timeStr.includes('AM') || timeStr.includes('PM')) return timeStr;
@@ -435,7 +440,7 @@ export const convertTo12Hour = (timeStr: string) => {
   } else if (hoursInt > 12) {
     hoursInt -= 12;
   }
-  console.log('------hoursInt----12--', hoursInt);
+ 
   return `${hoursInt.toString().padStart(2, '0')}:${minutes
     .toString()
     .padStart(2, '0')} ${period}`;
@@ -443,7 +448,7 @@ export const convertTo12Hour = (timeStr: string) => {
 
 export const convertTo24HourFormat = (timeStr: string): string => {
   // Check for AM or PM in the time string
-  console.log('------timeStr----', timeStr);
+
   const isPM = timeStr.toLowerCase().includes('pm');
   const timeParts = timeStr.split(/[:\s]/); // Split by colon and/or whitespace
 
@@ -471,6 +476,6 @@ export const convertTo24HourFormat = (timeStr: string): string => {
   const timeString = `${String(hours).padStart(2, '0')}:${String(
     minutes,
   ).padStart(2, '0')}`;
-  console.log(timeString);
+
   return timeString;
 };

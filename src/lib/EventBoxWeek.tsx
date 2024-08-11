@@ -32,7 +32,8 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
   const mouseDownRef = useRef(false);
 
   const handleDragStart = () => {
-    console.log('handleDragStart');
+    if(eventObj.draggable === false) return;
+
     setIsDraging(true);
     dragStart(eventObj, boxDay);
   };

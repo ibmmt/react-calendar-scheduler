@@ -4,7 +4,7 @@ export declare const fullWeekdayNames: string[];
 export declare const monthsArr: string[];
 export declare const formatDate: (dateObj: Date, formatStr: string) => string;
 export declare const parseDate: (dateStr: string, formatStr: string) => Date;
-export declare const calculatePositions: (events: any[], isMonth: boolean) => any[];
+export declare const calculatePositions: (events: any[]) => any[];
 export declare const convertToComponentEventFormat: (events: EventObjectInput[], dateFormat: string) => EventObject[];
 export declare const isDateBetween: (dateObj: Date, startTime: string | number | Date, endTime: string | number | Date) => boolean;
 export declare const setEventID: <T extends EventObjectInput | EventObject>(events: T[]) => T[];

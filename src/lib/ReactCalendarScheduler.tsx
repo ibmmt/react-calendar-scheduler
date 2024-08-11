@@ -29,8 +29,8 @@ interface Props {
   calenderHeight?: number;
   weekCalenderTimeFormate?: number;
   monthCalenderMinCellHeight?: number;
-  disabaleEventPopup?: boolean;
-  disabaleAddEventPopup?: boolean;
+  disableEventPopup?: boolean;
+  disableAddEventPopup?: boolean;
   isShowAddNewEventButton?: boolean;
   handleUpdateEvent?: (event: EventObjectInput) => void;
   handleAddNewEvent?: (event: EventObjectInput) => void;
@@ -61,9 +61,9 @@ function ReactCalendarScheduler({
   weekCalenderTitleFormate = 'ddd, MMM dd', //day column title format
   weekCalenderTimeFormate = 12, //day column title format
   monthCalenderMinCellHeight = 50, //minimum cell height
-  disabaleEventPopup = false, //disable event popup
+  disableEventPopup = false, //disable event popup
   isShowAddNewEventButton,  //show add new event button
-  disabaleAddEventPopup = false, //disable add event popup
+  disableAddEventPopup = false, //disable add event popup
   handleUpdateEvent: _handleUpdateEvent, //update event
   handleAddNewEvent: _handleAddNewEvent, //add new event
   handleDeleteEvent: _handleDeleteEvent, //delete event
@@ -132,7 +132,7 @@ function ReactCalendarScheduler({
       typeof _handleColumnClick === 'function' &&
         _handleColumnClick(convertToOutputEventFormat(eventObjEdit));
     }
-    if (!disabaleEventPopup && !disabaleAddEventPopup) {
+    if (!disableEventPopup && !disableAddEventPopup) {
       setEventEdit({
         ...convertToOutputEventFormat(eventObjEdit),
         startDate: eventObjEdit.startTime

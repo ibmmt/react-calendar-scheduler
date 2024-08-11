@@ -11,7 +11,7 @@ export interface EventObject {
   color?: string;
   textColor?: string;
   isAllDay?: boolean;
-  isDragable?: boolean;
+  isDragable: boolean;
   isResizable?: boolean;
   isDisabled?: boolean;
   isDeleted?: boolean;
@@ -35,7 +35,7 @@ export interface EventObjectInput {
   color?: string;
   textColor?: string;
   isAllDay?: boolean;
-  isDragable?: boolean;
+  draggable?: boolean;
   isResizable?: boolean;
   isDisabled?: boolean;
   isDeleted?: boolean;

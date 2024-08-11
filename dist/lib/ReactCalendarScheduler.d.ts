@@ -17,8 +17,8 @@ interface Props {
     calenderHeight?: number;
     weekCalenderTimeFormate?: number;
     monthCalenderMinCellHeight?: number;
-    disabaleEventPopup?: boolean;
-    disabaleAddEventPopup?: boolean;
+    disableEventPopup?: boolean;
+    disableAddEventPopup?: boolean;
     isShowAddNewEventButton?: boolean;
     handleUpdateEvent?: (event: EventObjectInput) => void;
     handleAddNewEvent?: (event: EventObjectInput) => void;
@@ -45,9 +45,9 @@ weekCalenderVisibleHour, //day visible hour
 weekCalenderTitleFormate, //day column title format
 weekCalenderTimeFormate, //day column title format
 monthCalenderMinCellHeight, //minimum cell height
-disabaleEventPopup, //disable event popup
+disableEventPopup, //disable event popup
 isShowAddNewEventButton, //show add new event button
-disabaleAddEventPopup, //disable add event popup
+disableAddEventPopup, //disable add event popup
 handleUpdateEvent: _handleUpdateEvent, //update event
 handleAddNewEvent: _handleAddNewEvent, //add new event
 handleDeleteEvent: _handleDeleteEvent, //delete event

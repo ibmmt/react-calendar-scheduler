@@ -103,7 +103,7 @@ const CalendarWeek: React.FC<Props> = ({
     setEvents(
       calculatePositions(
        eventsData,
-        false,
+       
       ),
     );
   }, [eventsData]);
@@ -129,6 +129,8 @@ const CalendarWeek: React.FC<Props> = ({
   }, [weekHourBoxHeight]);
 
   const dragStart = (event: EventObject, selectedDate: Date) => {
+ 
+
     currentDragDate.current = selectedDate;
     dragEventRef.current = { ...event, left: '0', width: 100 };
     setIsDraging(true);
@@ -266,7 +268,11 @@ const CalendarWeek: React.FC<Props> = ({
              {isShowAddNewEventButton&& <div className="ib__sc__header__right__btn-group">
                 <button
                   className="ib__sc__btn"
-                  onClick={()=>{if(calenderToAddOrUpdateEvent)calenderToAddOrUpdateEvent({})}}
+                  onClick={()=>{if(calenderToAddOrUpdateEvent)calenderToAddOrUpdateEvent({
+                    isDragable: false,
+                    startTime: new Date().setHours(0, 0, 0, 0),
+                    endTime: new Date().setHours(1, 0, 0, 0),
+                  })}}
                 >
                   Add Event
                 </button>

@@ -42,6 +42,7 @@ export default function DayCellMonth({
     e.preventDefault();
     e.stopPropagation();
     calenderToAddOrUpdateEvent({
+      isDragable: false,
       startTime: new Date(boxDay).setHours(0, 0, 0, 0),
       endTime: new Date(boxDay + 24 * HOUR_MILLISECONDS).setHours(0, 0, 0, 0),
     });
@@ -86,6 +87,7 @@ export default function DayCellMonth({
               boxHeight={boxHeight}
               boxTime={1}
               boxDay={boxDay}
+              isDragable={event.isDragable}
               isDraging={dragingEventId === event.sc_app__id}
               isResizing={resizingEventId === event.sc_app__id}
               isCalender={true}

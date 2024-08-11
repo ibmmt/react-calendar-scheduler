@@ -44,6 +44,7 @@ const dragMouseEnter = (e: MouseEvent) => {
     e.stopPropagation();
 
     calenderToAddOrUpdateEvent({
+      isDragable: false,
       startTime: new Date(boxDay).setHours(hour, 0, 0, 0),
       endTime: new Date(boxDay).setHours(hour + 1, 0, 0, 0),
     });

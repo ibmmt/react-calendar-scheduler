@@ -11,7 +11,7 @@ export default function CalendarSwitch({
 }: CalendarSwitchProps) {
   return (
     <React.Fragment>
-    <div className="ib__sc__btn-group ib__sc__calander_switch">
+    <div className="ib__sc__btn-group ib__sc__calender_switch">
       <button
         className={
           'ib__sc__btn ib_sc_btn_month ' +
