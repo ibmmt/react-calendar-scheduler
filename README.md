@@ -56,24 +56,23 @@ function App() {
   );
 }
 
-
 export default App;
 ```
+
 ```
 const event = {
  {
   "title": "Meeting with Team",
   "startDate": "15/04/2024",// dd/MM/yyy
-  "endDate": "15/04/2024", //dd/MM/yyy
+  "endDate": "15/04/2024", // dd/MM/yyy
   "startTime": "10:00:00",
   "endTime": "11:00:00",
   "bg_color": "#EA4D4D"
+  "draggable":true
+
 }
-
-
 };
 ```
-
 
 ## Props
 
@@ -93,8 +92,8 @@ const event = {
 | `weekCalenderTitleFormate`        | The format for the day column title in the week calendar. Defaults to `'ddd, MMM dd'`.          | `'ddd, MMM dd'` |
 | `weekCalenderTimeFormate`         | The format for the time display in the week calendar. Defaults to `12`.                         | `12`            |
 | `monthCalenderMinCellHeight`      | The minimum height of each cell in the month calendar. Defaults to `50`.                        | `50`            |
-| `disableEventPopup`              | Disables the event popup if set to `true`. Defaults to `false`.                                 | `false`         |
-| `disableAddEventPopup`           | Disables the add event popup if set to `true`. Defaults to `false`.                             | `false`         |
+| `disableEventPopup`               | Disables the event popup if set to `true`. Defaults to `false`.                                 | `false`         |
+| `disableAddEventPopup`            | Disables the add event popup if set to `true`. Defaults to `false`.                             | `false`         |
 | `handleUpdateEvent`               | Callback function for updating an event.                                                        |                 |
 | `handleAddNewEvent`               | Callback function for adding a new event.                                                       |                 |
 
