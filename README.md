@@ -56,8 +56,24 @@ function App() {
   );
 }
 
+
 export default App;
 ```
+```
+const event = {
+ {
+  "title": "Meeting with Team",
+  "startDate": "2024-08-15",
+  "endDate": "2024-08-15",
+  "startTime": "10:00",
+  "endTime": "11:00",
+  "bg_color": "#EA4D4D"
+}
+
+
+};
+```
+
 
 ## Props
 
