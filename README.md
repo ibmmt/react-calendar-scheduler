@@ -63,8 +63,8 @@ export default App;
 const event = {
  {
   "title": "Meeting with Team",
-  "startDate": "2024-08-15",
-  "endDate": "2024-08-15",
+  "startDate": "15/04/2024", dd/MM/yyy
+  "endDate": "15/04/2024", dd/MM/yyy
   "startTime": "10:00",
   "endTime": "11:00",
   "bg_color": "#EA4D4D"
