@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "_dist",
+    "outDir": "dist",
     "target": "es2015",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -17,7 +17,7 @@
     "noEmit": false,
     "jsx": "react-jsx",
     "declaration": true,
-    "declarationDir": "_dist",
+    "declarationDir": "dist",
     "typeRoots": ["node_modules/@types", "src/lib/types"]
   },
 

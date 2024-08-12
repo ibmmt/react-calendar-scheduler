@@ -4,5 +4,4 @@ interface CalendarSwitchProps {
     handleCalendarTypeChange: (type: string) => void;
 }
 export default function CalendarSwitch({ calenderType, handleCalendarTypeChange, }: CalendarSwitchProps): JSX.Element;
-export { };
-
+export {};

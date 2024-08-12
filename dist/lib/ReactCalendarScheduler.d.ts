@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import './index.css';
 import { EventObjectInput } from './type/EventObject';
 interface Props {
@@ -20,6 +20,7 @@ interface Props {
     disableEventModal?: boolean;
     disableAddEventModal?: boolean;
     showAddNewEventButton?: boolean;
+    calendarHeaderComponent?: React.ReactNode;
     handleUpdateEvent?: (event: EventObjectInput) => void;
     handleAddNewEvent?: (event: EventObjectInput) => void;
     handleDeleteEvent?: (event: EventObjectInput) => void;
@@ -47,6 +48,7 @@ weekCalenderTimeFormate, //day column title format
 monthCalenderMinCellHeight, //minimum cell height
 disableEventModal, //disable event modal
 showAddNewEventButton, //show add new event button
+calendarHeaderComponent, //calendar header component
 disableAddEventModal, //disable add event modal
 handleUpdateEvent: _handleUpdateEvent, //update event
 handleAddNewEvent: _handleAddNewEvent, //add new event
