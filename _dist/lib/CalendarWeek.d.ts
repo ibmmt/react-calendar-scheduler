@@ -22,6 +22,7 @@ interface Props {
     handleIncreaseTimeSpan: (value: number) => void;
     handleCalendarTypeChange: (calenderType: string) => void;
     minimumEventThickness: number;
+    calendarHeaderComponent: React.ReactNode;
 }
 declare const CalendarWeek: React.FC<Props>;
 export default CalendarWeek;

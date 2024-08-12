@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import { EventObject } from './type/EventObject';
 interface CalenderMonthProps {
     currentDay: Date;
@@ -14,6 +14,7 @@ interface CalenderMonthProps {
     minimumEventThickness: number;
     calenderHeight: number;
     showAddNewEventButton?: boolean;
+    calendarHeaderComponent?: React.ReactNode;
     calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
     monthCalenderMinCellHeight: number;
     handleNextClick?: (date: Date, calenderType: string) => void;
@@ -21,5 +22,5 @@ interface CalenderMonthProps {
     handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
     handleCalendarTypeChange: (calenderType: string) => void;
 }
-declare function CalenderMonth({ currentDay, eventsData, updateEvent, calenderType, startingWeekday, monthCalenderDayHeight, showAddNewEventButton, dayStartFrom, monthCalenderTitleFormate, monthCalenderTitle, calenderHeight, minimumEventThickness, calenderToAddOrUpdateEvent, monthCalenderMinCellHeight: boxHeight, handleNextClick: _handleNextClick, handlePrevClick: _handlePrevClick, handleChangeCurrentDate: _handleChangeCurrentDate, handleCalendarTypeChange, }: CalenderMonthProps): JSX.Element;
+declare function CalenderMonth({ currentDay, eventsData, updateEvent, calenderType, startingWeekday, monthCalenderDayHeight, showAddNewEventButton, dayStartFrom, monthCalenderTitleFormate, monthCalenderTitle, calenderHeight, minimumEventThickness, calendarHeaderComponent, calenderToAddOrUpdateEvent, monthCalenderMinCellHeight: boxHeight, handleNextClick: _handleNextClick, handlePrevClick: _handlePrevClick, handleChangeCurrentDate: _handleChangeCurrentDate, handleCalendarTypeChange, }: CalenderMonthProps): JSX.Element;
 export default CalenderMonth;
