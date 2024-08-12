@@ -29,9 +29,9 @@ interface Props {
   calenderHeight?: number;
   weekCalenderTimeFormate?: number;
   monthCalenderMinCellHeight?: number;
-  disableEventPopup?: boolean;
-  disableAddEventPopup?: boolean;
-  isShowAddNewEventButton?: boolean;
+  disableEventModal?: boolean;
+  disableAddEventModal?: boolean;
+  showAddNewEventButton?: boolean;
   handleUpdateEvent?: (event: EventObjectInput) => void;
   handleAddNewEvent?: (event: EventObjectInput) => void;
   handleDeleteEvent?: (event: EventObjectInput) => void;
@@ -39,7 +39,7 @@ interface Props {
   handleColumnClick?: (event: EventObjectInput) => void;
   handleNextClick?: () => void;
   handlePrevClick?: () => void;
-  handleClanderTypeChange?: (type: string) => void;
+  handleCalendarTypeChange?: (type: string) => void;
   handleChangeCurrentDate?: (date: Date,calenderType: string) => void;
   handleIncreaseTimeSpan?: () => void;
   events: EventObjectInput[];
@@ -61,9 +61,9 @@ function ReactCalendarScheduler({
   weekCalenderTitleFormate = 'ddd, MMM dd', //day column title format
   weekCalenderTimeFormate = 12, //day column title format
   monthCalenderMinCellHeight = 50, //minimum cell height
-  disableEventPopup = false, //disable event popup
-  isShowAddNewEventButton,  //show add new event button
-  disableAddEventPopup = false, //disable add event popup
+  disableEventModal = false, //disable event modal
+  showAddNewEventButton,  //show add new event button
+  disableAddEventModal = false, //disable add event modal
   handleUpdateEvent: _handleUpdateEvent, //update event
   handleAddNewEvent: _handleAddNewEvent, //add new event
   handleDeleteEvent: _handleDeleteEvent, //delete event
@@ -71,7 +71,7 @@ function ReactCalendarScheduler({
   handleColumnClick: _handleColumnClick, //column click
   handleNextClick: _handleNextClick, //next button click
   handlePrevClick: _handlePrevClick, //prev button click
-  handleClanderTypeChange: _handleClanderTypeChange, //calender type change
+  handleCalendarTypeChange: _handleCalendarTypeChange, //calender type change
   handleChangeCurrentDate: _handleChangeCurrentDate, //change current date
   handleIncreaseTimeSpan: _handleIncreaseTimeSpan, //increase time span
   events,
@@ -132,7 +132,7 @@ function ReactCalendarScheduler({
       typeof _handleColumnClick === 'function' &&
         _handleColumnClick(convertToOutputEventFormat(eventObjEdit));
     }
-    if (!disableEventPopup && !disableAddEventPopup) {
+    if (!disableEventModal && !disableAddEventModal) {
       setEventEdit({
         ...convertToOutputEventFormat(eventObjEdit),
         startDate: eventObjEdit.startTime
@@ -195,9 +195,9 @@ function ReactCalendarScheduler({
    * handle calendar type change
    * @param {string} type
    */
-  const handleClanderTypeChange = (type: string) => {
+  const handleCalendarTypeChange = (type: string) => {
     setCalenderType(type);
-    _handleClanderTypeChange && _handleClanderTypeChange(type);
+    _handleCalendarTypeChange && _handleCalendarTypeChange(type);
   };
 
   const handleIncreaseTimeSpan = (diff: number) => {
@@ -234,10 +234,10 @@ function ReactCalendarScheduler({
                 ? 7
                 : weekCalenderNextBtnDayIncrement
             }
-            isShowAddNewEventButton={isShowAddNewEventButton}
+            showAddNewEventButton={showAddNewEventButton}
             noOfDayColumn={calenderType === 'week' ? 7 : 1}
             handleChangeCurrentDate={_handleChangeCurrentDate}
-            handleClanderTypeChange={handleClanderTypeChange}
+            handleCalendarTypeChange={handleCalendarTypeChange}
             updateEvent={updateEventDrag}
             calenderToAddOrUpdateEvent={(eventObj:EventObject) => {
               calenderToAddOrUpdateEvent(eventObj);
@@ -254,7 +254,7 @@ function ReactCalendarScheduler({
             dayStartFrom={0} // validation 0-6
             calenderType={calenderType}
             startingWeekday={startingWeekday} // 0 for Sunday, 1 for Monday, 2 for Tuesday, 3 for Wednesday, 4 for Thursday, 5 for Friday, 6 for Saturday
-            isShowAddNewEventButton={isShowAddNewEventButton}
+            showAddNewEventButton={showAddNewEventButton}
             currentDay={selectedDate}
             calenderHeight={calenderHeight}
             monthCalenderMinCellHeight={monthCalenderMinCellHeight}
@@ -263,7 +263,7 @@ function ReactCalendarScheduler({
             monthCalenderTitle={monthCalenderTitle} //day column title format
             handleChangeCurrentDate={_handleChangeCurrentDate}
             updateEvent={updateEventDrag}
-            handleClanderTypeChange={handleClanderTypeChange}
+            handleCalendarTypeChange={handleCalendarTypeChange}
             calenderToAddOrUpdateEvent={(eventObj:EventObject) => {
               calenderToAddOrUpdateEvent(eventObj);
             }}

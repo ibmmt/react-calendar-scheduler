@@ -17,9 +17,9 @@ interface Props {
     calenderHeight?: number;
     weekCalenderTimeFormate?: number;
     monthCalenderMinCellHeight?: number;
-    disableEventPopup?: boolean;
-    disableAddEventPopup?: boolean;
-    isShowAddNewEventButton?: boolean;
+    disableEventModal?: boolean;
+    disableAddEventModal?: boolean;
+    showAddNewEventButton?: boolean;
     handleUpdateEvent?: (event: EventObjectInput) => void;
     handleAddNewEvent?: (event: EventObjectInput) => void;
     handleDeleteEvent?: (event: EventObjectInput) => void;
@@ -27,7 +27,7 @@ interface Props {
     handleColumnClick?: (event: EventObjectInput) => void;
     handleNextClick?: () => void;
     handlePrevClick?: () => void;
-    handleClanderTypeChange?: (type: string) => void;
+    handleCalendarTypeChange?: (type: string) => void;
     handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
     handleIncreaseTimeSpan?: () => void;
     events: EventObjectInput[];
@@ -45,9 +45,9 @@ weekCalenderVisibleHour, //day visible hour
 weekCalenderTitleFormate, //day column title format
 weekCalenderTimeFormate, //day column title format
 monthCalenderMinCellHeight, //minimum cell height
-disableEventPopup, //disable event popup
-isShowAddNewEventButton, //show add new event button
-disableAddEventPopup, //disable add event popup
+disableEventModal, //disable event modal
+showAddNewEventButton, //show add new event button
+disableAddEventModal, //disable add event modal
 handleUpdateEvent: _handleUpdateEvent, //update event
 handleAddNewEvent: _handleAddNewEvent, //add new event
 handleDeleteEvent: _handleDeleteEvent, //delete event
@@ -55,7 +55,7 @@ handleEventClick: _handleEventClick, //event click
 handleColumnClick: _handleColumnClick, //column click
 handleNextClick: _handleNextClick, //next button click
 handlePrevClick: _handlePrevClick, //prev button click
-handleClanderTypeChange: _handleClanderTypeChange, //calender type change
+handleCalendarTypeChange: _handleCalendarTypeChange, //calender type change
 handleChangeCurrentDate: _handleChangeCurrentDate, //change current date
 handleIncreaseTimeSpan: _handleIncreaseTimeSpan, //increase time span
 events, }: Props): JSX.Element;

@@ -25,14 +25,14 @@ interface CalenderMonthProps {
   monthCalenderTitle: string;
   minimumEventThickness: number;
   calenderHeight: number;
-  isShowAddNewEventButton?: boolean;
+  showAddNewEventButton?: boolean;
   calenderToAddOrUpdateEvent: (eventObj:EventObject) => void;
   monthCalenderMinCellHeight: number;
   handleNextClick?: (date: Date, calenderType: string) => void;
   handlePrevClick?: (date: Date, calenderType: string) => void;
   handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
  
-  handleClanderTypeChange: (calenderType: string) => void;
+  handleCalendarTypeChange: (calenderType: string) => void;
 }
 
 function  CalenderMonth({
@@ -42,7 +42,7 @@ function  CalenderMonth({
   calenderType,
   startingWeekday,
   monthCalenderDayHeight,
-  isShowAddNewEventButton = true,
+  showAddNewEventButton = true,
   dayStartFrom,
   monthCalenderTitleFormate,
   monthCalenderTitle,
@@ -54,7 +54,7 @@ function  CalenderMonth({
   handlePrevClick: _handlePrevClick,
   handleChangeCurrentDate: _handleChangeCurrentDate,
   //fromDate = new Date(),
-  handleClanderTypeChange,
+  handleCalendarTypeChange,
 }: CalenderMonthProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(currentDay);
   const month = selectedDate.getMonth();
@@ -364,7 +364,7 @@ function  CalenderMonth({
 
               <div className="ib__sc__header__right">
                
-               {isShowAddNewEventButton && <div className="ib__sc__header__right__btn-group">
+               {showAddNewEventButton && <div className="ib__sc__header__right__btn-group">
                   <button
                     className="ib__sc__btn"
                     onClick={()=>{calenderToAddOrUpdateEvent({
@@ -381,7 +381,7 @@ function  CalenderMonth({
 
                 <CalenderSwitch
                   calenderType={calenderType}
-                  handleClanderTypeChange={handleClanderTypeChange}
+                  handleCalendarTypeChange={handleCalendarTypeChange}
                 />
               </div>
             </div>

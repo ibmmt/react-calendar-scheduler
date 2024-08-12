@@ -10,7 +10,7 @@ interface Props {
     weekCalenderDayStartFromHour: number;
     weekCalenderVisibleHour: number;
     weekCalenderTitleFormate?: string;
-    isShowAddNewEventButton?: boolean;
+    showAddNewEventButton?: boolean;
     weekCalenderTimeFormate: number;
     noOfDayColumn: number;
     calenderHeight: number;
@@ -20,7 +20,7 @@ interface Props {
     handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
     calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
     handleIncreaseTimeSpan: (value: number) => void;
-    handleClanderTypeChange: (calenderType: string) => void;
+    handleCalendarTypeChange: (calenderType: string) => void;
     minimumEventThickness: number;
 }
 declare const CalendarWeek: React.FC<Props>;

@@ -13,13 +13,13 @@ interface CalenderMonthProps {
     monthCalenderTitle: string;
     minimumEventThickness: number;
     calenderHeight: number;
-    isShowAddNewEventButton?: boolean;
+    showAddNewEventButton?: boolean;
     calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
     monthCalenderMinCellHeight: number;
     handleNextClick?: (date: Date, calenderType: string) => void;
     handlePrevClick?: (date: Date, calenderType: string) => void;
     handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
-    handleClanderTypeChange: (calenderType: string) => void;
+    handleCalendarTypeChange: (calenderType: string) => void;
 }
-declare function CalenderMonth({ currentDay, eventsData, updateEvent, calenderType, startingWeekday, monthCalenderDayHeight, isShowAddNewEventButton, dayStartFrom, monthCalenderTitleFormate, monthCalenderTitle, calenderHeight, minimumEventThickness, calenderToAddOrUpdateEvent, monthCalenderMinCellHeight: boxHeight, handleNextClick: _handleNextClick, handlePrevClick: _handlePrevClick, handleChangeCurrentDate: _handleChangeCurrentDate, handleClanderTypeChange, }: CalenderMonthProps): JSX.Element;
+declare function CalenderMonth({ currentDay, eventsData, updateEvent, calenderType, startingWeekday, monthCalenderDayHeight, showAddNewEventButton, dayStartFrom, monthCalenderTitleFormate, monthCalenderTitle, calenderHeight, minimumEventThickness, calenderToAddOrUpdateEvent, monthCalenderMinCellHeight: boxHeight, handleNextClick: _handleNextClick, handlePrevClick: _handlePrevClick, handleChangeCurrentDate: _handleChangeCurrentDate, handleCalendarTypeChange, }: CalenderMonthProps): JSX.Element;
 export default CalenderMonth;

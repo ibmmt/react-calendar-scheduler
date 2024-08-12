@@ -29,7 +29,7 @@ interface Props {
   weekCalenderDayStartFromHour: number;
   weekCalenderVisibleHour: number;
   weekCalenderTitleFormate?: string;
-  isShowAddNewEventButton?: boolean;
+  showAddNewEventButton?: boolean;
   weekCalenderTimeFormate: number;
   noOfDayColumn: number;
   calenderHeight:number,
@@ -39,7 +39,7 @@ interface Props {
   handleChangeCurrentDate?:(date: Date, calenderType: string) => void;
   calenderToAddOrUpdateEvent: (eventObj:EventObject) => void;
   handleIncreaseTimeSpan: (value: number) => void;
-  handleClanderTypeChange: (calenderType: string) => void;
+  handleCalendarTypeChange: (calenderType: string) => void;
   minimumEventThickness: number;
 }
 
@@ -56,14 +56,14 @@ const CalendarWeek: React.FC<Props> = ({
   weekCalenderTimeFormate = 24,
   noOfDayColumn,
   calenderHeight,
-  isShowAddNewEventButton,
+  showAddNewEventButton,
   weekCalenderNextBtnDayIncrement,
   handleNextClick: _handleNextClick,
   handlePrevClick: _handlePrevClick,
   handleChangeCurrentDate: _handleChangeCurrentDate,
   calenderToAddOrUpdateEvent,
   handleIncreaseTimeSpan: _handleIncreaseTimeSpan,
-  handleClanderTypeChange,
+  handleCalendarTypeChange,
  
 }) => {
   const [events, setEvents] = useState<EventObject[]>(eventsData);
@@ -265,7 +265,7 @@ const CalendarWeek: React.FC<Props> = ({
 
             <div className="ib__sc__header__right">
               
-             {isShowAddNewEventButton&& <div className="ib__sc__header__right__btn-group">
+             {showAddNewEventButton&& <div className="ib__sc__header__right__btn-group">
                 <button
                   className="ib__sc__btn"
                   onClick={()=>{if(calenderToAddOrUpdateEvent)calenderToAddOrUpdateEvent({
@@ -279,7 +279,7 @@ const CalendarWeek: React.FC<Props> = ({
               </div>}
               <CalenderSwitch
                 calenderType={calenderType}
-                handleClanderTypeChange={(type)=>{ if(handleClanderTypeChange) handleClanderTypeChange(type)}}
+                handleCalendarTypeChange={(type)=>{ if(handleCalendarTypeChange) handleCalendarTypeChange(type)}}
               />
             </div>
           </div>

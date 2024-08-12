@@ -55,9 +55,9 @@ function App() {
         weekCalenderTitleFormate="ddd, MMM dd" //day column title formate
         weekCalenderTimeFormate={12} //day column title formate
         weekCalenderNextBtnDayIncrement={3} //
-        isShowAddNewEventButton={true} //show add new event button
+        showAddNewEventButton={true} //show add new event button
 
-        disableEventPopup={false} //disable event popup
+        disableEventModal={false} //disable event modal
         handleUpdateEvent={(event) => {
           console.log(event);
           console.log("handleUpdateEvent");
@@ -86,9 +86,9 @@ function App() {
       
           console.log("handlePrevClick");
         }}
-        handleClanderTypeChange={(type) => {
+        handleCalendarTypeChange={(type) => {
           console.log(type);
-          console.log("handleClanderTypeChange");
+          console.log("handleCalendarTypeChange");
         }}
       />
     </div>

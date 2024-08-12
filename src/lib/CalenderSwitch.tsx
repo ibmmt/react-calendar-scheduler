@@ -2,12 +2,12 @@
 import React from 'react';
 interface CalendarSwitchProps {
   calenderType: string;
-  handleClanderTypeChange: (type: string) => void;
+  handleCalendarTypeChange: (type: string) => void;
 }
 
 export default function CalendarSwitch({
   calenderType,
-  handleClanderTypeChange,
+  handleCalendarTypeChange,
 }: CalendarSwitchProps) {
   return (
     <React.Fragment>
@@ -17,7 +17,7 @@ export default function CalendarSwitch({
           'ib__sc__btn ib_sc_btn_month ' +
           (calenderType === 'month' ? 'active' : '')
         }
-        onClick={() => handleClanderTypeChange('month')}
+        onClick={() => handleCalendarTypeChange('month')}
       >
         Month
       </button>
@@ -26,7 +26,7 @@ export default function CalendarSwitch({
           'ib__sc__btn ib_sc_btn_week ' +
           (calenderType === 'week' ? 'active' : '')
         }
-        onClick={() => handleClanderTypeChange('week')}
+        onClick={() => handleCalendarTypeChange('week')}
       >
         Week
       </button>
@@ -35,7 +35,7 @@ export default function CalendarSwitch({
           'ib__sc__btn ib_sc_btn_day ' +
           (calenderType === 'day' ? 'active' : '')
         }
-        onClick={() => handleClanderTypeChange('day')}
+        onClick={() => handleCalendarTypeChange('day')}
       >
         Day
       </button>

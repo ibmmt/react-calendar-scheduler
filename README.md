@@ -92,8 +92,8 @@ const event = {
 | `weekCalenderTitleFormate`        | The format for the day column title in the week calendar. Defaults to `'ddd, MMM dd'`.          | `'ddd, MMM dd'` |
 | `weekCalenderTimeFormate`         | The format for the time display in the week calendar. Defaults to `12`.                         | `12`            |
 | `monthCalenderMinCellHeight`      | The minimum height of each cell in the month calendar. Defaults to `50`.                        | `50`            |
-| `disableEventPopup`               | Disables the event popup if set to `true`. Defaults to `false`.                                 | `false`         |
-| `disableAddEventPopup`            | Disables the add event popup if set to `true`. Defaults to `false`.                             | `false`         |
+| `disableEventModal`               | Disables the event modal if set to `true`. Defaults to `false`.                                 | `false`         |
+| `disableAddEventModal`            | Disables the add event modal if set to `true`. Defaults to `false`.                             | `false`         |
 | `handleUpdateEvent`               | Callback function for updating an event.                                                        |                 |
 | `handleAddNewEvent`               | Callback function for adding a new event.                                                       |                 |
 
