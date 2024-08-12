@@ -41,12 +41,14 @@ interface Props {
   handleIncreaseTimeSpan: (value: number) => void;
   handleCalendarTypeChange: (calenderType: string) => void;
   minimumEventThickness: number;
+  calendarHeaderComponent: React.ReactNode;
 }
 
 const CalendarWeek: React.FC<Props> = ({
   eventsData,
   updateEvent,
   selectedDate,
+  calendarHeaderComponent,
   calenderType,
   weekHourBoxHeight = boxHeightInit,
   startingWeekday,
@@ -261,7 +263,9 @@ const CalendarWeek: React.FC<Props> = ({
                 </div>
               </div>
             </div>
-            <div className="ib__sc__header__center"></div>
+            <div className="ib__sc__header__center">
+              {calendarHeaderComponent}
+            </div>
 
             <div className="ib__sc__header__right">
               

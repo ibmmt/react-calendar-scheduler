@@ -32,6 +32,7 @@ interface Props {
   disableEventModal?: boolean;
   disableAddEventModal?: boolean;
   showAddNewEventButton?: boolean;
+  calendarHeaderComponent?: React.ReactNode;
   handleUpdateEvent?: (event: EventObjectInput) => void;
   handleAddNewEvent?: (event: EventObjectInput) => void;
   handleDeleteEvent?: (event: EventObjectInput) => void;
@@ -63,6 +64,7 @@ function ReactCalendarScheduler({
   monthCalenderMinCellHeight = 50, //minimum cell height
   disableEventModal = false, //disable event modal
   showAddNewEventButton,  //show add new event button
+  calendarHeaderComponent, //calendar header component
   disableAddEventModal = false, //disable add event modal
   handleUpdateEvent: _handleUpdateEvent, //update event
   handleAddNewEvent: _handleAddNewEvent, //add new event
@@ -219,6 +221,7 @@ function ReactCalendarScheduler({
             selectedDate={selectedDate}
             calenderType={calenderType}
             weekHourBoxHeight={weekHourBoxHeight}
+            calendarHeaderComponent={calendarHeaderComponent}
             handleIncreaseTimeSpan={handleIncreaseTimeSpan}
             startingWeekday={startingWeekday} // 0 for Sunday, 1 for Monday, 2 for Tuesday, 3 for Wednesday, 4 for Thursday, 5 for Friday, 6 for Saturday
             weekCalenderDayStartFromHour={weekCalenderDayStartFromHour} //day start from hour,
@@ -257,6 +260,7 @@ function ReactCalendarScheduler({
             showAddNewEventButton={showAddNewEventButton}
             currentDay={selectedDate}
             calenderHeight={calenderHeight}
+            calendarHeaderComponent={calendarHeaderComponent}
             monthCalenderMinCellHeight={monthCalenderMinCellHeight}
             minimumEventThickness={minimumEventThickness}
             monthCalenderTitleFormate={monthCalenderTitleFormate} //month title format

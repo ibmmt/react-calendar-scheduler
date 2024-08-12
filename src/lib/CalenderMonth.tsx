@@ -26,6 +26,7 @@ interface CalenderMonthProps {
   minimumEventThickness: number;
   calenderHeight: number;
   showAddNewEventButton?: boolean;
+  calendarHeaderComponent?: React.ReactNode;
   calenderToAddOrUpdateEvent: (eventObj:EventObject) => void;
   monthCalenderMinCellHeight: number;
   handleNextClick?: (date: Date, calenderType: string) => void;
@@ -48,6 +49,7 @@ function  CalenderMonth({
   monthCalenderTitle,
   calenderHeight,
   minimumEventThickness,
+  calendarHeaderComponent,
   calenderToAddOrUpdateEvent,
   monthCalenderMinCellHeight: boxHeight = 60,
   handleNextClick: _handleNextClick,
@@ -360,7 +362,9 @@ function  CalenderMonth({
                   </div>
                 </div>
               </div>
-              <div className="ib__sc__header__center"></div>
+              <div className="ib__sc__header__center">
+                {calendarHeaderComponent}
+              </div>
 
               <div className="ib__sc__header__right">
                

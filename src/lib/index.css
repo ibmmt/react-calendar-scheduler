@@ -448,7 +448,7 @@ body {
   position: relative;
 }
 .ib__sc_month_cell {
-  position: relative;
+  /* position: relative; */
   height: 100%;
   width: 100%;
 }
