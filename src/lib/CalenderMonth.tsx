@@ -312,7 +312,7 @@ function  CalenderMonth({
       _handleChangeCurrentDate(newDate, calenderType);
   };
 
-  console.log('render eventsData',eventsData);
+
 
   return (
     <div>
