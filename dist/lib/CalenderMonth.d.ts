@@ -9,8 +9,6 @@ interface CalenderMonthProps {
     monthCalenderDayHeight: number;
     selectedDate: Date;
     dayStartFrom: number;
-    monthCalenderTitleFormate: string;
-    monthCalenderTitle: string;
     minimumEventThickness: number;
     calenderHeight: number;
     showAddNewEventButton?: boolean;
@@ -22,5 +20,5 @@ interface CalenderMonthProps {
     handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
     handleCalendarTypeChange: (calenderType: string) => void;
 }
-declare function CalenderMonth({ currentDay, eventsData, updateEvent, calenderType, startingWeekday, monthCalenderDayHeight, showAddNewEventButton, dayStartFrom, monthCalenderTitleFormate, monthCalenderTitle, calenderHeight, minimumEventThickness, calendarHeaderComponent, calenderToAddOrUpdateEvent, monthCalenderMinCellHeight: boxHeight, handleNextClick: _handleNextClick, handlePrevClick: _handlePrevClick, handleChangeCurrentDate: _handleChangeCurrentDate, handleCalendarTypeChange, }: CalenderMonthProps): JSX.Element;
+declare function CalenderMonth({ currentDay, eventsData, updateEvent, calenderType, startingWeekday, showAddNewEventButton, calenderHeight, minimumEventThickness, calendarHeaderComponent, calenderToAddOrUpdateEvent, monthCalenderMinCellHeight: boxHeight, handleNextClick: _handleNextClick, handlePrevClick: _handlePrevClick, handleChangeCurrentDate: _handleChangeCurrentDate, handleCalendarTypeChange, }: CalenderMonthProps): JSX.Element;
 export default CalenderMonth;

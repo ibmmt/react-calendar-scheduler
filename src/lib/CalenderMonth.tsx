@@ -21,8 +21,6 @@ interface CalenderMonthProps {
   monthCalenderDayHeight: number;
   selectedDate: Date;
   dayStartFrom: number;
-  monthCalenderTitleFormate: string;
-  monthCalenderTitle: string;
   minimumEventThickness: number;
   calenderHeight: number;
   showAddNewEventButton?: boolean;
@@ -42,11 +40,9 @@ function  CalenderMonth({
   updateEvent,
   calenderType,
   startingWeekday,
-  monthCalenderDayHeight,
+
   showAddNewEventButton = true,
-  dayStartFrom,
-  monthCalenderTitleFormate,
-  monthCalenderTitle,
+
   calenderHeight,
   minimumEventThickness,
   calendarHeaderComponent,
@@ -64,7 +60,7 @@ function  CalenderMonth({
   const yearMonth = `${year}-${(month + 1).toString().padStart(2, '0')}`;
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const [events, setEvents] = useState<EventObject[]>( calculatePositions(eventsData));
+  const [events, setEvents] = useState<EventObject[]>( calculatePositions(eventsData, 'month'));
   const currentDragDate = useRef<number>();
   const editingEventRef = useRef<any>();
   const [isDraging, setIsDraging] = useState(false);
@@ -93,7 +89,8 @@ function  CalenderMonth({
     setEvents(
       calculatePositions(
         //convertToComponentEventFormat(setEventID(eventsData), 'dd/MM/yyyy'),
-        eventsData
+        eventsData,
+        'month',
       ),
     );
   }, [eventsData]);
@@ -307,6 +304,9 @@ function  CalenderMonth({
 
   const selectMonth = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = new Date(e.target.value);
+     if (!newDate || isNaN(newDate.getTime())) {
+      return;
+    }
     setSelectedDate(newDate);
     typeof _handleChangeCurrentDate === 'function' &&
       _handleChangeCurrentDate(newDate, calenderType);
@@ -373,6 +373,7 @@ function  CalenderMonth({
                     className="ib__sc__btn"
                     onClick={()=>{calenderToAddOrUpdateEvent({
                       isDragable: false,
+                      isResizable: false,
                       startTime: new Date().setHours(0, 0, 0, 0),
                       endTime: new Date().setHours(1, 0, 0, 0),
                     })}}

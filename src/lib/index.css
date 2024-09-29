@@ -217,8 +217,7 @@ body {
   background: #fff;
   border: 1px solid #ccc;
   color: #4e4e4e;
-  height: 1.6em;
-  line-height: 1.6em;
+ 
   font-weight: bold;
   text-transform: uppercase;
   font-size: 12px;
@@ -226,8 +225,12 @@ body {
   vertical-align: middle;
 }
 .ib__sc__table-th-week {
-  border: 1px solid #000;
+  box-sizing: border-box;
   text-align: center;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ib__sc__tb-wrapper-week {

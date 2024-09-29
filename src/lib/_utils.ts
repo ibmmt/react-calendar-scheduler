@@ -106,11 +106,11 @@ export const parseDate = (dateStr: string, formatStr: string): Date => {
   return new Date(year, month, day, hours, minutes, seconds);
 };
 
-const strinkEvent = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+// Helper function to shrink overlapping events
+const shrinkEvent = (
   leftOvercome: any[],
   percentage: number,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   srinkedObject: any,
 ) => {
   if (leftOvercome.length === 0) return;
@@ -118,32 +118,59 @@ const strinkEvent = (
   leftOvercome.forEach(event => {
     if (srinkedObject[event.sc_app__id]) return;
     srinkedObject[event.sc_app__id] = true;
-    event.width = event.width * percentage;
-    event.left = event.left * percentage;
-    strinkEvent(event.leftOvercome, percentage, srinkedObject);
+    event.width *= percentage;
+    event.left *= percentage;
+    shrinkEvent(event.leftOvercome, percentage, srinkedObject);
   });
 };
 
-export const calculatePositions = (events: any[]) => {
-  
+export const calculatePositions = (events: any[],caType:string) => {
+console.log(events)
   const totalWidth = 100;
-  //sort events by start time
-  const sortedEvents = events.sort((a, b) => a['startTime'] - b['startTime']);
 
-  const startKey =  'startTime';
-  const endKey =  'endTime';
+  // Sort events by start time
+  const sortedEvents = events.sort((a, b) => a['startTime'] - b['startTime']);
+  const MIN_OVERLAP_DURATION = caType==='month' ?0: 10 * 60 * 1000; // 30 minutes in milliseconds
+  
+  let startKey = 'startTime';
+  let endKey = 'endTime';
+  if(caType==='month'){
+    startKey = 'temp_startDate';
+    endKey = 'temp_endDate';
+  }
+  
+
+  
 
   for (let i = 0; i < sortedEvents.length; i++) {
+    if(caType==='month'){
+    sortedEvents[i].temp_endDate = new Date(sortedEvents[i].endTime).setHours(0, 0, 0, 0);
+    sortedEvents[i].temp_startDate = new Date(sortedEvents[i].startTime).setHours(0, 0, 0, 0);
+    }
+
+
     let width = 0;
     let left = 0;
 
     const leftOvercome: any[] = [];
 
     for (let k = 0; k < i; k++) {
-      if (sortedEvents[k][endKey] - sortedEvents[i][startKey] > 1 * 1000) {
-        leftOvercome.push(sortedEvents[k]);
+     
+
+      if (sortedEvents[k][endKey] >= sortedEvents[i][startKey]) {
+    
+        const overlapDuration = sortedEvents[k][endKey] - sortedEvents[i][startKey];
+       
+
+        if (overlapDuration >= MIN_OVERLAP_DURATION) {
+          leftOvercome.push(sortedEvents[k]);
+        }
       }
+
     }
+
+
+    console.log("sortedEvents--->",sortedEvents)
 
     if (leftOvercome.length) {
       leftOvercome.sort((a, b) => a.left - b.left);
@@ -194,17 +221,116 @@ export const calculatePositions = (events: any[]) => {
       }
       left = totalWidth - width;
 
-      strinkEvent(leftOvercome, 1 - width / totalWidth, {});
+      shrinkEvent(leftOvercome, 1 - width / totalWidth, {});
     }
 
     sortedEvents[i].width = width;
     sortedEvents[i].left = left;
   }
 
-
-
   return sortedEvents;
 };
+
+
+// const strinkEvent = (
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   leftOvercome: any[],
+//   percentage: number,
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   srinkedObject: any,
+// ) => {
+//   if (leftOvercome.length === 0) return;
+
+//   leftOvercome.forEach(event => {
+//     if (srinkedObject[event.sc_app__id]) return;
+//     srinkedObject[event.sc_app__id] = true;
+//     event.width = event.width * percentage;
+//     event.left = event.left * percentage;
+//     strinkEvent(event.leftOvercome, percentage, srinkedObject);
+//   });
+// };
+
+// export const calculatePositions = (events: any[]) => {
+  
+//   const totalWidth = 100;
+//   //sort events by start time
+//   const sortedEvents = events.sort((a, b) => a['startTime'] - b['startTime']);
+
+//   const startKey =  'startTime';
+//   const endKey =  'endTime';
+
+//   for (let i = 0; i < sortedEvents.length; i++) {
+//     let width = 0;
+//     let left = 0;
+
+//     const leftOvercome: any[] = [];
+
+//     for (let k = 0; k < i; k++) {
+//       if (sortedEvents[k][endKey] - sortedEvents[i][startKey] > 1 * 1000) {
+//         leftOvercome.push(sortedEvents[k]);
+//       }
+//     }
+
+//     if (leftOvercome.length) {
+//       leftOvercome.sort((a, b) => a.left - b.left);
+
+//       if (leftOvercome[0].left > 0) {
+//         width = leftOvercome[0].left;
+//       } else {
+//         for (let k = 0; k < leftOvercome.length - 1; k++) {
+//           if (
+//             leftOvercome[k + 1].left -
+//               (leftOvercome[k].width + leftOvercome[k].left) >
+//             1
+//           ) {
+//             width =
+//               leftOvercome[k].left +
+//               leftOvercome[k].width -
+//               leftOvercome[k].left;
+//             left = leftOvercome[k].left + leftOvercome[k].width;
+//             break;
+//           }
+//         }
+//       }
+
+//       if (
+//         width === 0 &&
+//         totalWidth -
+//           leftOvercome[leftOvercome.length - 1].left -
+//           leftOvercome[leftOvercome.length - 1].width >
+//           1
+//       ) {
+//         width =
+//           totalWidth -
+//           leftOvercome[leftOvercome.length - 1].left -
+//           leftOvercome[leftOvercome.length - 1].width;
+//         left =
+//           leftOvercome[leftOvercome.length - 1].left +
+//           leftOvercome[leftOvercome.length - 1].width;
+//       }
+//     }
+
+//     sortedEvents[i].leftOvercome = leftOvercome;
+
+//     if (width === 0) {
+//       if (leftOvercome.length === 0) {
+//         width = totalWidth;
+//       } else {
+//         width = totalWidth / (1 + totalWidth / leftOvercome[0].width);
+//       }
+//       left = totalWidth - width;
+
+//       strinkEvent(leftOvercome, 1 - width / totalWidth, {});
+//     }
+
+//     sortedEvents[i].width = width;
+//     sortedEvents[i].left = left;
+//   }
+
+
+
+//   return sortedEvents;
+// };
 
 export const convertToComponentEventFormat = (
   events: EventObjectInput[],
@@ -256,7 +382,9 @@ export const convertToComponentEventFormat = (
       startTime,
       endTime,
       total_event_time,
-      isDragable: eventObj.draggable === undefined ? true : eventObj.draggable,
+      isDragable: eventObj.draggable === undefined ? true : Boolean(eventObj.draggable),
+      isResizable:
+        eventObj.resizable === undefined ? true : Boolean(eventObj.resizable),
     };
     tempEvents.push(eventObjNew);
   }

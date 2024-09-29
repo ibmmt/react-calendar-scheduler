@@ -43,6 +43,7 @@ export default function DayCellMonth({
     e.stopPropagation();
     calenderToAddOrUpdateEvent({
       isDragable: false,
+      isResizable: false,
       startTime: new Date(boxDay).setHours(0, 0, 0, 0),
       endTime: new Date(boxDay + 24 * HOUR_MILLISECONDS).setHours(0, 0, 0, 0),
     });

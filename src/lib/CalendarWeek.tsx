@@ -28,7 +28,9 @@ interface Props {
   startingWeekday: number;
   weekCalenderDayStartFromHour: number;
   weekCalenderVisibleHour: number;
-  weekCalenderTitleFormate?: string;
+  weekCalenderTitleFormate?: string | ((date: Date) => React.ReactNode);
+
+
   showAddNewEventButton?: boolean;
   weekCalenderTimeFormate: number;
   noOfDayColumn: number;
@@ -75,6 +77,10 @@ const CalendarWeek: React.FC<Props> = ({
   const currentDragDate = useRef<Date | null>(null);
   const boxHeight = weekHourBoxHeight;
   const heightOfWeekColumn = boxHeight * boxTime * 24;
+  const headColumnTime = useRef(null);
+  const headColumn = useRef <HTMLDivElement | null>(null);
+  const [headHeight, setHeadHeight] = useState(0);
+
   const [isDraging, setIsDraging] = useState(false);
 
   const initSelectedDate = () => {
@@ -102,13 +108,15 @@ const CalendarWeek: React.FC<Props> = ({
   };
 
   useEffect(() => {
+   
     setEvents(
       calculatePositions(
-       eventsData,
-       
+       eventsData, 
+       'week',
       ),
     );
   }, [eventsData]);
+  
 
   useEffect(() => {
     setDateStartFrom(initSelectedDate());
@@ -200,6 +208,14 @@ const CalendarWeek: React.FC<Props> = ({
     };
   }, [isDraging]);
 
+  useEffect(() => {
+    // Get the height of the first div and set it to the state
+    if (headColumn.current) {
+      //setClass1Height(class1Ref.current.offsetHeight);
+      setHeadHeight(headColumn?.current?.offsetHeight);
+    }
+  }, []);
+
   const onWeekChange = (diff: number) => {
     const dayDiff =
       noOfDayColumn > weekCalenderNextBtnDayIncrement
@@ -248,7 +264,13 @@ const CalendarWeek: React.FC<Props> = ({
                       type="date"
                       className="ib__sc-form-control"
                       onChange={(e) => {
-                        setDateStartFrom(new Date(e.target.value));
+                        const selectedDate = new Date(e.target.value);
+                        if (selectedDate&& !isNaN(selectedDate.getTime())){
+                          setDateStartFrom(new Date(e.target.value));
+
+                        }
+                        
+                       
                       }}
                       value={formatDate(dateStartFrom, 'yyyy-MM-dd')}
                     />
@@ -274,6 +296,7 @@ const CalendarWeek: React.FC<Props> = ({
                   className="ib__sc__btn"
                   onClick={()=>{if(calenderToAddOrUpdateEvent)calenderToAddOrUpdateEvent({
                     isDragable: false,
+                    isResizable: false,
                     startTime: new Date().setHours(0, 0, 0, 0),
                     endTime: new Date().setHours(1, 0, 0, 0),
                   })}}
@@ -311,7 +334,10 @@ const CalendarWeek: React.FC<Props> = ({
                  style={{ minHeight: heightOfWeekColumn + 'px' }}
                 
                 >
-                  <div className="ib__sc__table-th">
+                  <div className="ib__sc__table-th ib__sc__table-th-week "
+                  ref={headColumnTime}
+                  style={{ height: headHeight + 'px', maxHeight: headHeight + 'px' }}
+                  >
                     <div className="ib__sc__btn-group ib__sc__increment-timespan ib__sc__flex_center">
                       <button
                         className="ib__sc__btn"
@@ -355,13 +381,19 @@ const CalendarWeek: React.FC<Props> = ({
                     <div
                       key={dayIndex}
                       className="ib__sc__table-td ib__sc__table-td-week"
-                      style={{ minHeight: heightOfWeekColumn + 'px' }}
+                      style={{ minHeight: heightOfWeekColumn + 'px' , }}
                     >
                       <div
                         key={dayIndex}
-                        className="ib__sc__table-th ib__sc__truncate"
+                        className="ib__sc__table-th ib__sc__truncate "
+                        ref={headColumn}
                       >
-                        {formatDate(new Date(boxDay), weekCalenderTitleFormate)}
+                       {
+                        typeof weekCalenderTitleFormate === 'function' 
+                          ? weekCalenderTitleFormate(new Date(boxDay)) 
+                          : formatDate(new Date(boxDay), weekCalenderTitleFormate)
+                      }
+                       
                       </div>
                       <DayColumnWeek
                         calenderTableRef={calenderTableRef}

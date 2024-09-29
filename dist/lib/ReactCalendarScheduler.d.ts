@@ -13,7 +13,7 @@ interface Props {
     startingWeekday?: number;
     weekCalenderDayStartFromHour?: number;
     weekCalenderVisibleHour?: number;
-    weekCalenderTitleFormate?: string;
+    weekCalenderTitleFormate?: string | ((date: Date) => React.ReactNode);
     calenderHeight?: number;
     weekCalenderTimeFormate?: number;
     monthCalenderMinCellHeight?: number;
@@ -34,8 +34,6 @@ interface Props {
     events: EventObjectInput[];
 }
 declare function ReactCalendarScheduler({ selectedDate, calenderType: _calenderType, // week or day
-monthCalenderTitleFormate, //month title format
-monthCalenderTitle, //day column title format
 monthCalenderDayHeight, //day column height
 minimumEventThickness, //minimum event thickness
 calenderHeight, //calender height

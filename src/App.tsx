@@ -7,8 +7,8 @@ function App() {
   const events: EventObjectInput[] = [
     {
       title: "Title 4",
-      startDate: "12/08/2024",
-      endDate: "12/08/2024",
+      startDate: "28/09/2024",
+      endDate: "29/09/2024",
       startTime: "08:30:00",
       endTime: "09:00:00",
       id: 133,
@@ -16,18 +16,21 @@ function App() {
       element: <div>**</div>,
       editable: true,
     
-      draggable: false,
+      draggable: true,
+      resizable: true,
       custom_class: "custom-class",
     },
     {
       title: "Title 2",
-      startDate: "12/08/2024",
-      endDate: "12/08/2024",
+      startDate: "29/09/2024",
+      endDate: "30/09/2024",
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
       bg_color: "#5c6bc0",
-      draggable: false,
+      draggable: true,
+      resizable: true,
+    
       element: <div>*</div>,
     }
     // Rest of the events...
@@ -52,10 +55,11 @@ function App() {
         startingWeekday={0} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
         weekCalenderDayStartFromHour={7} // Day start from hour
         weekCalenderVisibleHour={12} //day visible hour
-        weekCalenderTitleFormate="ddd, MMM dd" //day column title formate
+        weekCalenderTitleFormate={(date: Date) => <p>{date.toLocaleDateString('en-US', { weekday: 'short' })} </p> } // correctly formatted function for week day titles
         weekCalenderTimeFormate={12} //day column title formate
         weekCalenderNextBtnDayIncrement={3} //
         showAddNewEventButton={true} //show add new event button
+        
 
         disableEventModal={false} //disable event modal
         handleUpdateEvent={(event) => {

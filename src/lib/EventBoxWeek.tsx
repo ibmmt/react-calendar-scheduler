@@ -6,7 +6,7 @@ import { EventBoxView } from './EventView';
 interface EventBoxWeekProps {
   boxHeight: number;
   boxTime?: number;
-  eventObj: any;
+  eventObj:any,
   boxDay: any;
   dragingEventId: any;
 }
@@ -32,7 +32,7 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
   const mouseDownRef = useRef(false);
 
   const handleDragStart = () => {
-    if(eventObj.draggable === false) return;
+    if(eventObj.isDragable === false) return;
 
     setIsDraging(true);
     dragStart(eventObj, boxDay);
@@ -236,7 +236,7 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
           
               isShowTitle={true}
             />
-            {overLap && !overLap.bottom && (
+            {overLap && !overLap.bottom && eventObj.isResizable && (
               <div
                 style={isResizing ? { display: 'block' } : {}}
                 className="dragging-handler-week bottom"

@@ -242,7 +242,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
             className="ib__sc__event-box ib__sc__event-box-month"
             style={eventBoxStyle}
           >
-            {overLap && !overLap.start && (
+            {overLap && !overLap.start && eventObj.isResizable&& (
               <div
                 style={isResizing ? { display: 'flex' } : {}}
                 className="dragging-handler-month left"
@@ -262,7 +262,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
               isShowTitle={!overLap.start}
               isStart={!overLap.start}
             />
-            {overLap && !overLap.end && (
+            {overLap && !overLap.end && eventObj.isResizable&& (
               <div
                 style={isResizing ? { display: 'flex' } : {}}
                 className="dragging-handler-month right"

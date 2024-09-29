@@ -9,7 +9,7 @@ interface Props {
     startingWeekday: number;
     weekCalenderDayStartFromHour: number;
     weekCalenderVisibleHour: number;
-    weekCalenderTitleFormate?: string;
+    weekCalenderTitleFormate?: string | ((date: Date) => React.ReactNode);
     showAddNewEventButton?: boolean;
     weekCalenderTimeFormate: number;
     noOfDayColumn: number;

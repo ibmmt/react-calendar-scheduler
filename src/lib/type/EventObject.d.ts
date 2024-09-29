@@ -12,7 +12,7 @@ export interface EventObject {
   textColor?: string;
   isAllDay?: boolean;
   isDragable: boolean;
-  isResizable?: boolean;
+  isResizable: boolean;
   isDisabled?: boolean;
   isDeleted?: boolean;
   startTime?: number;
@@ -20,6 +20,7 @@ export interface EventObject {
   bg_color?: string;
   custom_class?: string;
   element?: ReactNode;
+  
 
   // Add other properties as needed
 }
@@ -36,6 +37,7 @@ export interface EventObjectInput {
   textColor?: string;
   isAllDay?: boolean;
   draggable?: boolean;
+  resizable?: boolean;
   isResizable?: boolean;
   isDisabled?: boolean;
   isDeleted?: boolean;
