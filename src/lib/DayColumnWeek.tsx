@@ -62,9 +62,7 @@ const dragMouseEnter = (e: MouseEvent) => {
       BoxRef.current?.removeEventListener('mouseenter', dragMouseEnter, true);
     };
   }, [dragingEventId]);
-if(events.length){
- console.log("events------Day column",events)
-}
+
   return (
     <>
       <div ref={BoxRef} className="ib__sc__cell ib__sc__cell-week">

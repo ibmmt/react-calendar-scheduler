@@ -21,7 +21,7 @@ export interface EventObject {
   custom_class?: string;
   element?: ReactNode;
   
-
+  
   // Add other properties as needed
 }
 

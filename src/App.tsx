@@ -7,27 +7,28 @@ function App() {
   const events: EventObjectInput[] = [
     {
       title: "Title 4",
-      startDate: "28/09/2024",
-      endDate: "29/09/2024",
+      startDate: "01/10/2024",
+      endDate: "02/10/2024",
       startTime: "08:30:00",
       endTime: "09:00:00",
       id: 133,
       bg_color: "#FFAB91",
       element: <div>**</div>,
       editable: true,
-    
+     
       draggable: true,
       resizable: true,
       custom_class: "custom-class",
     },
     {
       title: "Title 2",
-      startDate: "29/09/2024",
-      endDate: "30/09/2024",
+      startDate: "5/10/2024",
+      endDate: "08/10/2024",
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
       bg_color: "#5c6bc0",
+     
       draggable: true,
       resizable: true,
     

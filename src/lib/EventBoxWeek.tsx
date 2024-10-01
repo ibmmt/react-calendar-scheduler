@@ -183,8 +183,8 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
         <div
           id={eventObj.sc_app__id}
           className={
-            'ib__sc__event-wrapper ib__sc__event-wrapper-week ' +
-            (isDraging ? 'dragging' : '')
+            'ib__sc__event-wrapper ib__sc__event-wrapper-week  ' + ( eventObj.custom_class || '') +
+            (isDraging ? ' dragging' : '')
           }
           ref={eventRef}
           onMouseDown={e => {

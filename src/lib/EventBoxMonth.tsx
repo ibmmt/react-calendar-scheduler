@@ -183,8 +183,8 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
         <div
           id={eventObj.sc_app__id+''}
           className={
-            'ib__sc__event-wrapper ib__sc__event-wrapper-month ' +
-            (isDraging ? 'dragging' : '') +
+            'ib__sc__event-wrapper ib__sc__event-wrapper-month ' + (eventObj.custom_class || ' ') +
+            (isDraging ? ' dragging' : '') +
             ' ' +
             (overLap.start ? 'overlap-start' : '') +
             ' ' +
