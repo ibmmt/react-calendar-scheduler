@@ -10,6 +10,7 @@ interface DayCellMonthProps {
     resizingEventId: number | undefined;
     calenderToAddOrUpdateEvent: (event: EventObject) => void;
     dragBoxMouseEnterToCell: (boxDay: Date) => void;
+    isCurrentDay: boolean;
 }
-export default function DayCellMonth({ currentBoxHeight, eventsInDay, boxHeight, boxDay, day, dragingEventId, resizingEventId, calenderToAddOrUpdateEvent, dragBoxMouseEnterToCell, }: DayCellMonthProps): JSX.Element;
+export default function DayCellMonth({ currentBoxHeight, eventsInDay, boxHeight, boxDay, day, dragingEventId, resizingEventId, calenderToAddOrUpdateEvent, dragBoxMouseEnterToCell, isCurrentDay }: DayCellMonthProps): JSX.Element;
 export {};

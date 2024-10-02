@@ -198,6 +198,7 @@ function  CalenderMonth({
    */
 
   const renderCalendarDays = () => {
+    const today = new Date().setHours(0, 0, 0, 0);
     const rows = [];
     let cells = [];
 
@@ -243,6 +244,7 @@ function  CalenderMonth({
           eventsInDay={eventsInDay}
           dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
           calenderToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
+          isCurrentDay={today === date.getTime()}
           dragingEventId={
             editingEventRef.current
               ? editingEventRef.current?.sc_app__id

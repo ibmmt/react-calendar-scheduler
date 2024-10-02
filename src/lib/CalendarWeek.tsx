@@ -17,6 +17,7 @@ import { EventObject } from './type/EventObject';
 
 const boxHeightInit = 25;
 const boxTime = 1; //1 hr
+let today = new Date().setHours(0, 0, 0, 0);
  
 
 interface Props {
@@ -45,6 +46,7 @@ interface Props {
   minimumEventThickness: number;
   calendarHeaderComponent: React.ReactNode;
 }
+
 
 const CalendarWeek: React.FC<Props> = ({
   eventsData,
@@ -80,6 +82,8 @@ const CalendarWeek: React.FC<Props> = ({
   const headColumnTime = useRef(null);
   const headColumn = useRef <HTMLDivElement | null>(null);
   const [headHeight, setHeadHeight] = useState(0);
+  
+ 
 
   const [isDraging, setIsDraging] = useState(false);
 
@@ -209,6 +213,7 @@ const CalendarWeek: React.FC<Props> = ({
   }, [isDraging]);
 
   useEffect(() => {
+    today = new Date().setHours(0, 0, 0, 0);
     // Get the height of the first div and set it to the state
     if (headColumn.current) {
       //setClass1Height(class1Ref.current.offsetHeight);
@@ -377,10 +382,12 @@ const CalendarWeek: React.FC<Props> = ({
                   const boxDay = new Date(
                     now.setDate(now.getDate() + dayIndex)
                   ).setHours(0, 0, 0, 0);
+                
                   return (
                     <div
                       key={dayIndex}
-                      className="ib__sc__table-td ib__sc__table-td-week"
+                      // add class 'ib__sc__current-day' if it is today
+                      className={"ib__sc__table-td ib__sc__table-td-week "+(today==boxDay? 'ib__sc__today':'') }
                       style={{ minHeight: heightOfWeekColumn + 'px' , }}
                     >
                       <div

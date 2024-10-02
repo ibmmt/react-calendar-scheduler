@@ -195,6 +195,22 @@ body {
   background: #eff1ff;
 }
 
+.ib__sc__table-td-week.ib__sc__today{
+  background: #fffbee;
+}
+.ib__sc__table-td-week.ib__sc__today .ib__sc__truncate{
+  background: #fffbee;
+}
+.ib__sc__table-td-week.ib__sc__today .ib__sc__table-hr-box-week{
+  background: #fffbee;
+}
+td.ib__sc__table-td.ib__sc__table-td-month.ib__sc__today {
+  background: #fffbee;
+}
+.ib__sc__today .ib__sc_month_day{
+  color: #ff9800
+}
+
 .ib__sc__tb_week_time .ib__sc__table-hr-box-week {
   border-top: 1px solid #fff;
 }

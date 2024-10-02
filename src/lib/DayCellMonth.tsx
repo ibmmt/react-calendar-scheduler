@@ -3,6 +3,7 @@ import { HOUR_MILLISECONDS } from './Constant';
 import EventBoxMonth from './EventBoxMonth';
 import { EventObject } from './type/EventObject';
 
+
 interface DayCellMonthProps {
   currentBoxHeight: number;
   eventsInDay: EventObject[];
@@ -13,6 +14,7 @@ interface DayCellMonthProps {
   resizingEventId: number | undefined;
   calenderToAddOrUpdateEvent: (event: EventObject) => void;
   dragBoxMouseEnterToCell: (boxDay: Date) => void;
+  isCurrentDay: boolean;
 }
 
 export default function DayCellMonth({
@@ -25,6 +27,7 @@ export default function DayCellMonth({
   resizingEventId,
   calenderToAddOrUpdateEvent,
   dragBoxMouseEnterToCell,
+  isCurrentDay
 }: DayCellMonthProps) {
   const BoxRef = useRef<HTMLTableCellElement>(null);
 
@@ -64,10 +67,12 @@ export default function DayCellMonth({
     };
   }, [dragingEventId, resizingEventId]);
 
+
+
   return (
     <td
       ref={BoxRef}
-      className=" ib__sc__table-td ib__sc__table-td-month"
+      className={" ib__sc__table-td ib__sc__table-td-month "+ (isCurrentDay ? 'ib__sc__today' : '')}
       onClick={handleClickBox}
     >
       <div
