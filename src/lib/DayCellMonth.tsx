@@ -34,7 +34,7 @@ export default function DayCellMonth({
    */
   const dragMouseEnter = (e: MouseEvent) => {
     e.preventDefault();
-    console.log("boxDay",boxDay)
+
     dragBoxMouseEnterToCell(new Date(boxDay));
   };
 

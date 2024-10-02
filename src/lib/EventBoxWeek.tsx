@@ -219,7 +219,7 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
               backgroundColor: eventObj.bg_color,
             }}
           >
-            {overLap && !overLap.top && (
+            {overLap && !overLap.top && eventObj.isResizable && (
               <div
                 style={isResizing ? { display: 'block' } : {}}
                 className="dragging-handler-week top"

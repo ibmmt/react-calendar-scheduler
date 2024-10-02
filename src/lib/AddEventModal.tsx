@@ -40,8 +40,7 @@ const AddEventModal: React.FC<Props> = ({
   const [endDate, setEndDate] = useState(
     endDateInit ? endDateInit : dateString,
   );
-  console.log('startDate', startDate);
-  console.log('endDate', endDate);
+ 
   const [startTime, setStartTime] = useState(startTimeInit);
   const [endTime, setEndTime] = useState(endTimeInit);
   const [bg_color, setBg_color] = useState(bg_colorInit);

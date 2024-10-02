@@ -1,12 +1,11 @@
 import '@testing-library/jest-dom';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
 import ReactCalendarScheduler from '../lib/ReactCalendarScheduler';
 import { samepleEvents } from './SampleData';
 
 //add to numbers
 afterEach(cleanup);
-console.log(React)
+
 describe('React clanader scheduler', () => {
   test('Event add to month ', () => {
     render(

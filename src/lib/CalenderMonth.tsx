@@ -44,7 +44,7 @@ function  CalenderMonth({
   showAddNewEventButton = true,
 
   calenderHeight,
-  minimumEventThickness,
+  minimumEventThickness=30,
   calendarHeaderComponent,
   calenderToAddOrUpdateEvent,
   monthCalenderMinCellHeight: boxHeight = 60,
@@ -221,7 +221,7 @@ function  CalenderMonth({
       let minPercentage = 100;
       const eventsInDay = events.filter((event) => {
        
-       // console.log( 'event.width',event.width)
+    
         if ( event.startTime&& event.endTime&& event.width&& isDateBetween(date, event.startTime, event.endTime)) {
           minPercentage = Math.min(minPercentage, event.width);
           return true;

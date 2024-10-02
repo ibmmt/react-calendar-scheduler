@@ -17,7 +17,7 @@ function App() {
       editable: true,
      
       draggable: true,
-      resizable: true,
+      resizable: false,
       custom_class: "custom-class",
     },
     {
@@ -30,10 +30,10 @@ function App() {
       bg_color: "#5c6bc0",
      
       draggable: true,
-      resizable: true,
+      resizable: false,
     
       element: <div>*</div>,
-    }
+    },
     // Rest of the events...
   ];
 
@@ -60,6 +60,7 @@ function App() {
         weekCalenderTimeFormate={12} //day column title formate
         weekCalenderNextBtnDayIncrement={3} //
         showAddNewEventButton={true} //show add new event button
+        calendarHeaderComponent={<div>Header</div>} //calendar header component
         
 
         disableEventModal={false} //disable event modal

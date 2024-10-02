@@ -125,7 +125,7 @@ const shrinkEvent = (
 };
 
 export const calculatePositions = (events: any[],caType:string) => {
-console.log(events)
+
   const totalWidth = 100;
 
   // Sort events by start time
@@ -170,7 +170,7 @@ console.log(events)
     }
 
 
-    console.log("sortedEvents--->",sortedEvents)
+
 
     if (leftOvercome.length) {
       leftOvercome.sort((a, b) => a.left - b.left);

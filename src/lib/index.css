@@ -73,7 +73,7 @@ body {
 .ib__sc__btn-group .ib__sc__btn:first-child {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
-  border-left: none;
+  /* border-left: none; */
 }
 
 .ib__sc__btn-group .ib__sc__btn:last-child {

@@ -10,7 +10,7 @@ afterEach(cleanup);
 React.useLayoutEffect = React.useEffect;
 
 describe('React clanader scheduler', () => {
-  //console.log(React)
+ 
   test('Event add to week ', () => {
     render(
       <ReactCalendarScheduler calenderType="week" events={samepleEvents} />,
