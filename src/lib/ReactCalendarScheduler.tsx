@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import AddEventModal from './AddEventModal';
+import CalendarTeam from './CalendarTeam';
 import CalendarWeek from './CalendarWeek';
 import CalendarMonth from './CalenderMonth';
 import {
@@ -10,12 +11,14 @@ import {
   setEventID
 } from './_utils';
 import './index.css';
+import { CalenderType } from './type/Calendar';
 import { EventObject, EventObjectInput } from './type/EventObject';
+import { Team } from './type/team';
 
 
 interface Props {
   selectedDate?: Date;
-  calenderType?: string;
+  calenderType?: CalenderType;
   monthCalenderTitleFormate?: string;
   monthCalenderTitle?: string;
   monthCalenderDayHeight?: number;
@@ -40,13 +43,16 @@ interface Props {
   handleColumnClick?: (event: EventObjectInput) => void;
   handleNextClick?: () => void;
   handlePrevClick?: () => void;
-  handleCalendarTypeChange?: (type: string) => void;
-  handleChangeCurrentDate?: (date: Date,calenderType: string) => void;
+  handleCalendarTypeChange?: (type: CalenderType) => void;
+  handleChangeCurrentDate?: (date: Date,calenderType: CalenderType) => void;
   handleIncreaseTimeSpan?: () => void;
+  teams?: Team[];
   events: EventObjectInput[];
+  calendarSwitchOptions?:CalenderType[] 
 }
 
 function ReactCalendarScheduler({
+  // next
   selectedDate = new Date(),
   calenderType: _calenderType = 'week', // week or day
 
@@ -76,6 +82,8 @@ function ReactCalendarScheduler({
   handleChangeCurrentDate: _handleChangeCurrentDate, //change current date
   handleIncreaseTimeSpan: _handleIncreaseTimeSpan, //increase time span
   events,
+  teams,
+  calendarSwitchOptions=['week','day','month','team']
 }: Props) {
   /**
    * set event id for events
@@ -196,7 +204,7 @@ function ReactCalendarScheduler({
    * handle calendar type change
    * @param {string} type
    */
-  const handleCalendarTypeChange = (type: string) => {
+  const handleCalendarTypeChange = (type:CalenderType) => {
     setCalenderType(type);
     _handleCalendarTypeChange && _handleCalendarTypeChange(type);
   };
@@ -231,6 +239,8 @@ function ReactCalendarScheduler({
             handleNextClick={_handleNextClick}
             calenderHeight={calenderHeight}
             handlePrevClick={_handlePrevClick}
+            
+            calendarSwitchOptions={calendarSwitchOptions}
             weekCalenderNextBtnDayIncrement={
               weekCalenderNextBtnDayIncrement > 7
                 ? 7
@@ -247,6 +257,31 @@ function ReactCalendarScheduler({
           />
         )}
 
+
+{calenderType === 'team' && teams?.length&& (
+          <CalendarTeam
+            eventsData={convertToComponentEventFormat(setEventID(eventsState), 'dd/MM/yyyy')}
+            teams={teams}
+            selectedDate={selectedDate}
+            calenderType={calenderType}
+            calendarSwitchOptions={calendarSwitchOptions}
+            calendarHeaderComponent={calendarHeaderComponent}
+            // ... other props
+            handleChangeCurrentDate={_handleChangeCurrentDate}
+            updateEvent={updateEventDrag}
+            handleCalendarTypeChange={handleCalendarTypeChange}
+             
+            calenderToAddOrUpdateEvent={(eventObj:EventObject) => {
+              calenderToAddOrUpdateEvent(eventObj);
+            }}
+            
+            handleNextClick={_handleNextClick}
+            handlePrevClick={_handlePrevClick}
+          />
+        )}
+
+
+
         {/* Month Calendar */}
         {calenderType === 'month' && (
           <CalendarMonth
@@ -262,6 +297,7 @@ function ReactCalendarScheduler({
             calendarHeaderComponent={calendarHeaderComponent}
             monthCalenderMinCellHeight={monthCalenderMinCellHeight}
             minimumEventThickness={minimumEventThickness}
+            calendarSwitchOptions={calendarSwitchOptions}
       
             handleChangeCurrentDate={_handleChangeCurrentDate}
             updateEvent={updateEventDrag}

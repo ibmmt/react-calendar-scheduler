@@ -10,13 +10,14 @@ import {
   isDateBetween,
   weekdaysArr
 } from './_utils';
+import { CalenderType } from './type/Calendar';
 import { EventObject } from './type/EventObject';
 
 interface CalenderMonthProps {
   currentDay: Date;
   eventsData: EventObject[];
   updateEvent: (event: EventObject) => void;
-  calenderType: string;
+  calenderType: CalenderType;
   startingWeekday: number;
   monthCalenderDayHeight: number;
   selectedDate: Date;
@@ -29,9 +30,10 @@ interface CalenderMonthProps {
   monthCalenderMinCellHeight: number;
   handleNextClick?: (date: Date, calenderType: string) => void;
   handlePrevClick?: (date: Date, calenderType: string) => void;
-  handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
+  handleChangeCurrentDate?: (date: Date, calenderType: CalenderType) => void;
+  calendarSwitchOptions?: CalenderType[];
  
-  handleCalendarTypeChange: (calenderType: string) => void;
+  handleCalendarTypeChange: (calenderType: CalenderType) => void;
 }
 
 function  CalenderMonth({
@@ -51,6 +53,7 @@ function  CalenderMonth({
   handleNextClick: _handleNextClick,
   handlePrevClick: _handlePrevClick,
   handleChangeCurrentDate: _handleChangeCurrentDate,
+  calendarSwitchOptions,
   //fromDate = new Date(),
   handleCalendarTypeChange,
 }: CalenderMonthProps) {
@@ -68,7 +71,7 @@ function  CalenderMonth({
 
   if (!boxHeight) {
     if (calenderHeight) {
-      boxHeight = calenderHeight / 5;
+      boxHeight = calenderHeight / 5; // 5 weeks in a month
     } else {
       boxHeight = 50;
     }
@@ -256,7 +259,7 @@ function  CalenderMonth({
               : undefined
           }
           boxHeight={boxHeight}
-         boxDay={new Date(date).getTime()}
+          boxDay={new Date(date).getTime()}
           day={i}
         />,
       );
@@ -388,6 +391,7 @@ function  CalenderMonth({
 
                 <CalenderSwitch
                   calenderType={calenderType}
+                  calendarSwitchOptions={calendarSwitchOptions}
                   handleCalendarTypeChange={handleCalendarTypeChange}
                 />
               </div>

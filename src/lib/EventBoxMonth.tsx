@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
 import { EventBoxView } from './EventView';
 import { EventObject } from './type/EventObject';
 
 interface EventBoxMonthProps {
   boxHeight: number;
-  boxTime: number;
+
   eventObj: EventObject;
   boxDay: number;
-  isCalender: boolean;
+
   isDraging: boolean;
   isResizing: boolean;
   isDragable: boolean;
@@ -18,18 +17,18 @@ interface EventBoxMonthProps {
 
 const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
   boxHeight,
-  boxTime,
+
   eventObj,
   boxDay,
-  isCalender,
+
   isDraging,
   isResizing,
   isDragable,
 }) => {
-  const [offset, setOffset] = useState(0);
-  const [eventHeight, setEventHeight] = useState(0);
+ // const [offset, setOffset] = useState(0);
+ // const [eventHeight, setEventHeight] = useState(0);
   const [overLap, setOverLap] = useState({ start: false, end: false });
-  const newEventTime = useRef({ start: 0, end: 0 });
+  //const newEventTime = useRef({ start: 0, end: 0 });
   const mouseDownRef = useRef(false);
   const {
     dragStart,
@@ -68,39 +67,30 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
    * @param {number} startTime
    * @param {number} endTime
    */
-  const setPostionAndHeight = (startTime?: number, endTime?: number) => {
-    if(!startTime || !endTime) {
+  const setPostionAndHeight = (_startTime?: number, _endTime?: number) => {
+    if(!_startTime || !_endTime) {
       return
     }
+    const startTime = new Date(_startTime).setHours(0, 0, 0, 0);
+    const endTime = new Date(_endTime).setHours(23, 59, 59, 999);
     const boxDayTimeStart = new Date(boxDay).setHours(0, 0, 0, 0);
     const boxDayTimeEnd = new Date(boxDay).setHours(23, 59, 59, 999);
-    newEventTime.current.start = startTime;
-    newEventTime.current.end = endTime;
-
-    /*
-     * check if the event is over lapping with the box
-     */
+   
     if (startTime < boxDayTimeStart) {
-      startTime = boxDayTimeStart;
+     
       overLap.start = true;
     } else {
       overLap.start = false;
     }
     if (endTime > boxDayTimeEnd) {
-      endTime = boxDayTimeEnd;
+      
       overLap.end = true;
     } else {
       overLap.end = false;
     }
 
     setOverLap({ ...overLap });
-    const total_event_time = (endTime - startTime) / HOUR_MILLISECONDS;
-    const height = (boxHeight / boxTime) * total_event_time;
-    setEventHeight(height);
-    const hours_difference_from_start =
-      (startTime - boxDayTimeStart) / HOUR_MILLISECONDS;
-    const event_top = hours_difference_from_start * (boxHeight / boxTime);
-    setOffset(event_top);
+  
   };
 
   /*
@@ -148,35 +138,25 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
     eventObj.startTime,
     eventObj.endTime,
     boxHeight,
-    boxTime,
+
     boxDay,
   ]);
 
   const eventStyle: React.CSSProperties = {
-    width: eventObj.width + '%',
-    left: eventObj.left + '%',
-    top: offset + 'px',
-    // resize: 'both',
     cursor: 'move',
     opacity: isDraging || isResizing ? 0.9 : 1,
     zIndex: isDraging || isResizing ? 10000 : 1,
-    height: eventHeight + 'px',
+  
   };
   const eventBoxStyle: React.CSSProperties = {
     backgroundColor: eventObj.bg_color,
   };
-  if (isCalender) {
+  
     eventStyle.width = '100%';
     eventStyle.left = '0%';
     eventStyle.top = eventObj.left + '%';
     eventStyle.height = eventObj.width + '%';
-  } else {
-    eventStyle.width = eventObj.width + '%';
-    eventStyle.left = eventObj.left + '%';
-    eventStyle.top = offset + 'px';
-    eventStyle.height = eventHeight + 'px';
-  }
-
+ 
   return (
     <>
       {eventObj && (
@@ -215,27 +195,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
             dragEnd();
             calenderToAddOrUpdateEvent(eventObj);
           }}
-          // onMouseDown={e => {
-          //   mouseDownRef.current = true;
-          //   setTimeout(() => {
-          //     if (mouseDownRef.current) {
-          //       handleDragStart(e);
-          //     }
-          //     mouseDownRef.current = false;
-          //   }, 100);
-          // }}
-          // onClick={e => {
-          //   e.stopPropagation();
-          //   e.preventDefault();
-
-          //   if (mouseDownRef.current) {
-          //     dragEnd();
-          //     calenderToAddOrUpdateEvent(eventObj);
-          //   }
-          //   mouseDownRef.current = false;
-          //   // mouseDownRef.current = 0;
-          // }}
-          // onMouseUp={handleMouseUpDrag}
+          
           style={eventStyle}
         >
           <div

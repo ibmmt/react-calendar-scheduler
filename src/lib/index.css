@@ -458,6 +458,8 @@ td.ib__sc__table-td.ib__sc__table-td-month.ib__sc__today {
   padding-left: 0;
   position: relative;
 }
+
+
 .ib__sc__table-td__day_cell {
   box-sizing: border-box;
   padding: 10px;
@@ -499,6 +501,29 @@ table.ib__sc__table-month td:first-child {
   border-left: 1px solid #dfdfdf;
 }
 table.ib__sc__table-month tr {
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.ib__sc__table-team{
+  border-spacing: 0;
+  z-index: 1003;
+  width: 100%;
+}
+
+.ib__sc__table-team-td-team {
+  text-align: left;
+  padding-left: 0;
+  position: relative;
+}
+
+table.ib__sc__table-team td {
+  border-right: 1px solid #dfdfdf;
+  vertical-align: top;
+}
+table.ib__sc__table-team td:first-child {
+  border-left: 1px solid #dfdfdf;
+}
+table.ib__sc__table-team tr {
   border-bottom: 1px solid #dfdfdf;
 }
 

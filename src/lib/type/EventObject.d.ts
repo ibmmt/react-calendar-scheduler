@@ -20,6 +20,7 @@ export interface EventObject {
   bg_color?: string;
   custom_class?: string;
   element?: ReactNode;
+  userId?: number;
   
   
   // Add other properties as needed
@@ -49,6 +50,7 @@ export interface EventObjectInput {
   editable?: boolean;
   deletable?: boolean;
   draggable?: boolean;
+  userId?: number;
 
   // Add other properties as needed
 }

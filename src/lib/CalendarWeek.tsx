@@ -13,6 +13,7 @@ import {
   isDateBetween,
   timeFormateFromHour
 } from './_utils';
+import { CalenderType } from './type/Calendar';
 import { EventObject } from './type/EventObject';
 
 const boxHeightInit = 25;
@@ -24,7 +25,7 @@ interface Props {
   eventsData: EventObject[];
   updateEvent: (event: EventObject) => void;
   selectedDate: Date | undefined;
-  calenderType: string;
+  calenderType: CalenderType;
   weekHourBoxHeight?: number;
   startingWeekday: number;
   weekCalenderDayStartFromHour: number;
@@ -39,12 +40,13 @@ interface Props {
   weekCalenderNextBtnDayIncrement: number;
   handleNextClick?: (date: Date, calenderType: string) => void;
   handlePrevClick?: (date: Date, calenderType: string) => void;
-  handleChangeCurrentDate?:(date: Date, calenderType: string) => void;
+  handleChangeCurrentDate?:(date: Date, calenderType: CalenderType) => void;
   calenderToAddOrUpdateEvent: (eventObj:EventObject) => void;
   handleIncreaseTimeSpan: (value: number) => void;
-  handleCalendarTypeChange: (calenderType: string) => void;
+  handleCalendarTypeChange: (calenderType: CalenderType) => void;
   minimumEventThickness: number;
   calendarHeaderComponent: React.ReactNode;
+  calendarSwitchOptions?: CalenderType[];
 }
 
 
@@ -70,6 +72,7 @@ const CalendarWeek: React.FC<Props> = ({
   calenderToAddOrUpdateEvent,
   handleIncreaseTimeSpan: _handleIncreaseTimeSpan,
   handleCalendarTypeChange,
+  calendarSwitchOptions
  
 }) => {
   const [events, setEvents] = useState<EventObject[]>(eventsData);
@@ -90,9 +93,12 @@ const CalendarWeek: React.FC<Props> = ({
   const initSelectedDate = () => {
     let initDay = new Date();
 
-    if (selectedDate && Object.keys(selectedDate).length) {
+
+    if (selectedDate && typeof selectedDate === 'object') {
       initDay = selectedDate;
     }
+
+  
 
     if (calenderType === 'week') {
       return getPreviousDay(startingWeekday, initDay);
@@ -311,6 +317,7 @@ const CalendarWeek: React.FC<Props> = ({
               </div>}
               <CalenderSwitch
                 calenderType={calenderType}
+                calendarSwitchOptions={calendarSwitchOptions}
                 handleCalendarTypeChange={(type)=>{ if(handleCalendarTypeChange) handleCalendarTypeChange(type)}}
               />
             </div>
