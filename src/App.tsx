@@ -6,16 +6,16 @@ import { EventObjectInput } from "./lib/type/EventObject";
 function App() {
   const events: EventObjectInput[] = [
     {
-      title: "Title 4",
-      startDate: "09/10/2024",
-      endDate: "10/10/2024",
-      startTime: "08:30:00",
-      endTime: "09:00:00",
+      title: "Title 1",
+      startDate: "20/10/2024",
+      endDate: "20/10/2024",
+      startTime: "09:00:00",
+      endTime: "10:00:00",
       id: 133,
       bg_color: "#FFAB91",
       element: <div>**</div>,
       editable: true,
-      userId: 1,
+      userId: 2,
      
       draggable: true,
       resizable: false,
@@ -29,15 +29,15 @@ function App() {
       endTime: "12:00:00",
       id: 2,
       bg_color: "#5c6bc0",
-      userId: 1,
+      userId: 2,
      
       draggable: true,
-      resizable: false,
+      resizable: true,
     
       element: <div>*</div>,
     },
     {
-      title: "Title 2",
+      title: "Title 3",
       startDate: "10/10/2024",
       endDate: "12/10/2024",
       startTime: "08:30:00",
@@ -52,7 +52,7 @@ function App() {
       element: <div>*</div>,
     },
     {
-      title: "Title 2",
+      title: "Title 4",
       startDate: "10/10/2024",
       endDate: "12/10/2024",
       startTime: "08:30:00",
@@ -67,7 +67,7 @@ function App() {
       element: <div>*</div>,
     },
     {
-      title: "Title 2",
+      title: "Title 5",
       startDate: "10/10/2024",
       endDate: "12/10/2024",
       startTime: "08:30:00",
@@ -82,7 +82,7 @@ function App() {
       element: <div>*</div>,
     },
     {
-      title: "Title 2",
+      title: "Title 6",
       startDate: "10/10/2024",
       endDate: "12/10/2024",
       startTime: "08:30:00",
@@ -96,21 +96,18 @@ function App() {
     
       element: <div>*</div>,
     },
-    
+
     // Rest of the events...
   ];
   const teams = [
     {
       name: 'Team Alpha',
-      userId: 1,
-      profilepic: 'https://example.com/alpha.png',
+      userId: 1
     },
     {
       name: 'Team Beta',
-      userId: 2,
-      profilepic: 'https://example.com/beta.png',
-    },
-    // ... other teams
+      userId: 2
+    }
   ];
 
   React.useEffect(() => { 

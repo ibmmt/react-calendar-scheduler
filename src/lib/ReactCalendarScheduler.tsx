@@ -82,7 +82,7 @@ function ReactCalendarScheduler({
   handleChangeCurrentDate: _handleChangeCurrentDate, //change current date
   handleIncreaseTimeSpan: _handleIncreaseTimeSpan, //increase time span
   events,
-  teams,
+  teams=[],
   calendarSwitchOptions=['week','day','month','team']
 }: Props) {
   /**
@@ -257,7 +257,9 @@ function ReactCalendarScheduler({
           />
         )}
 
+{calenderType === 'team' && (!teams||!teams.length)&& (<div className='ib__sc__no team'>No Team Found</div>
 
+)}
 {calenderType === 'team' && teams?.length&& (
           <CalendarTeam
             eventsData={convertToComponentEventFormat(setEventID(eventsState), 'dd/MM/yyyy')}

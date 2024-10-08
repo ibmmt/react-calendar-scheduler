@@ -160,9 +160,8 @@ export const calculatePositions = (events: any[],caType:string) => {
       if (sortedEvents[k][endKey] >= sortedEvents[i][startKey]) {
     
         const overlapDuration = sortedEvents[k][endKey] - sortedEvents[i][startKey];
-       
-
-        if (overlapDuration >= MIN_OVERLAP_DURATION) {
+        if (overlapDuration >= MIN_OVERLAP_DURATION && (caType!=='team' || sortedEvents[k].userId === sortedEvents[i].userId)) {
+      
           leftOvercome.push(sortedEvents[k]);
         }
       }

@@ -12,6 +12,10 @@ interface CalendarTeamListItemsProps {
   monthCalenderMinCellHeight: number;
   boxHeight: number;
   minimumEventThickness: number;
+  dragBoxMouseEnterToCell: (boxDay: Date,userId:string | number) => void;
+  dragingEventId: number | undefined;
+    resizingEventId: number | undefined;
+
   // ... other props
 }
 
@@ -21,7 +25,9 @@ function CalendarTeamListItems({
   selectedWeekStartDate,
   updateEvent,
   calenderToAddOrUpdateEvent,
- 
+  dragBoxMouseEnterToCell,
+    dragingEventId,
+    resizingEventId,
     boxHeight,
     minimumEventThickness
   // ... other props
@@ -63,10 +69,14 @@ function CalendarTeamListItems({
           key={i}
           team={team}
           date={date}
+          dragingEventId={dragingEventId}
+          resizingEventId={resizingEventId}
+          userId={team.userId}
           events={eventsForUserOnDate}
           updateEvent={updateEvent}
           calenderToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
             currentBoxHeight={currentBoxHeight}
+            dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
           // ... other props
         />
       );

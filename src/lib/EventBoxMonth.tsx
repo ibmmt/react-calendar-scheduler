@@ -138,15 +138,16 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
     eventObj.startTime,
     eventObj.endTime,
     boxHeight,
-
     boxDay,
   ]);
+
+
 
   const eventStyle: React.CSSProperties = {
     cursor: 'move',
     opacity: isDraging || isResizing ? 0.9 : 1,
     zIndex: isDraging || isResizing ? 10000 : 1,
-  
+   // height: eventHeight + 'px',
   };
   const eventBoxStyle: React.CSSProperties = {
     backgroundColor: eventObj.bg_color,
@@ -174,18 +175,14 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
           onMouseDown={e => {
             e.preventDefault();
             mouseDownRef.current = true;
+            handleDragStart();
           }}
           onMouseUp={e => {
             e.preventDefault();
             mouseDownRef.current = false;
           }}
-          onMouseMove={() => {
-            // e.stopPropagation();
-            //  e.preventDefault();
-            if (mouseDownRef.current) {
-              handleDragStart();
-            }
-          }}
+        
+          
           onClick={e => {
             if (isResizing) return;
 

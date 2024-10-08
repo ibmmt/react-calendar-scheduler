@@ -558,6 +558,7 @@ table.ib__sc__table-team tr {
   opacity: 0.8;
   display: none;
   justify-content: center;
+  background: #ededed;
 }
 
 .dragging-handler-month.left {
@@ -570,7 +571,7 @@ table.ib__sc__table-team tr {
 }
 
 .ib__sc__event-box:hover .dragging-handler-month {
-  display: flex;
+  display: flex !important;
 }
 .dragging .dragging-handler-month {
   display: flex;
