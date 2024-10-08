@@ -1,10 +1,11 @@
 import React from 'react';
+import { CalenderType } from './type/Calendar';
 import { EventObject } from './type/EventObject';
 interface Props {
     eventsData: EventObject[];
     updateEvent: (event: EventObject) => void;
     selectedDate: Date | undefined;
-    calenderType: string;
+    calenderType: CalenderType;
     weekHourBoxHeight?: number;
     startingWeekday: number;
     weekCalenderDayStartFromHour: number;
@@ -17,12 +18,13 @@ interface Props {
     weekCalenderNextBtnDayIncrement: number;
     handleNextClick?: (date: Date, calenderType: string) => void;
     handlePrevClick?: (date: Date, calenderType: string) => void;
-    handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
+    handleChangeCurrentDate?: (date: Date, calenderType: CalenderType) => void;
     calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
     handleIncreaseTimeSpan: (value: number) => void;
-    handleCalendarTypeChange: (calenderType: string) => void;
+    handleCalendarTypeChange: (calenderType: CalenderType) => void;
     minimumEventThickness: number;
     calendarHeaderComponent: React.ReactNode;
+    calendarSwitchOptions?: CalenderType[];
 }
 declare const CalendarWeek: React.FC<Props>;
 export default CalendarWeek;

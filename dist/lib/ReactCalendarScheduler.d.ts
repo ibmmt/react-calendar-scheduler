@@ -1,9 +1,11 @@
 import React from 'react';
 import './index.css';
+import { CalenderType } from './type/Calendar';
 import { EventObjectInput } from './type/EventObject';
+import { Team } from './type/team';
 interface Props {
     selectedDate?: Date;
-    calenderType?: string;
+    calenderType?: CalenderType;
     monthCalenderTitleFormate?: string;
     monthCalenderTitle?: string;
     monthCalenderDayHeight?: number;
@@ -28,10 +30,12 @@ interface Props {
     handleColumnClick?: (event: EventObjectInput) => void;
     handleNextClick?: () => void;
     handlePrevClick?: () => void;
-    handleCalendarTypeChange?: (type: string) => void;
-    handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
+    handleCalendarTypeChange?: (type: CalenderType) => void;
+    handleChangeCurrentDate?: (date: Date, calenderType: CalenderType) => void;
     handleIncreaseTimeSpan?: () => void;
+    teams?: Team[];
     events: EventObjectInput[];
+    calendarSwitchOptions?: CalenderType[];
 }
 declare function ReactCalendarScheduler({ selectedDate, calenderType: _calenderType, // week or day
 monthCalenderDayHeight, //day column height
@@ -58,5 +62,5 @@ handlePrevClick: _handlePrevClick, //prev button click
 handleCalendarTypeChange: _handleCalendarTypeChange, //calender type change
 handleChangeCurrentDate: _handleChangeCurrentDate, //change current date
 handleIncreaseTimeSpan: _handleIncreaseTimeSpan, //increase time span
-events, }: Props): JSX.Element;
+events, teams, calendarSwitchOptions }: Props): JSX.Element;
 export default ReactCalendarScheduler;
