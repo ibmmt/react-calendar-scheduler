@@ -1,8 +1,6 @@
-
-
 {
   "name": "react-calendar-scheduler",
-  "version": "2.1.01",
+  "version": "2.1.1",
   "description": "A calendar scheduler built with React,Timebox and Event Drag and Drop",
   "homepage": "https://github.com/ibmmt/react-calendar-scheduler",
   "private": false,
@@ -117,6 +115,5 @@
     "@rollup/plugin-image": "^3.0.2",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-terser": "^0.4.3"
-  
   }
 }
