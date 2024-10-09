@@ -22,6 +22,7 @@ interface CalendarTeamProps {
   calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
   handleNextClick?: (date: Date, calenderType: CalenderType) => void;
   handlePrevClick?: (date: Date, calenderType: CalenderType) => void;
+  showAddNewEventButton?: boolean;
 
     minimumEventThickness?: number;
     calendarHeaderComponent?: React.ReactNode;
@@ -45,6 +46,7 @@ function CalendarTeam({
   minimumEventThickness=30,
   calendarHeaderComponent,
   calendarSwitchOptions,
+  showAddNewEventButton = true,
 
  // monthCalenderMinCellHeight: boxHeight = 60,
 }: CalendarTeamProps) {
@@ -274,6 +276,23 @@ function CalendarTeam({
 
           <div className="ib__sc__header__right">
             {/* Add any additional header components here */}
+
+            {showAddNewEventButton && <div className="ib__sc__header__right__btn-group">
+                  <button
+                    className="ib__sc__btn"
+                    onClick={()=>{calenderToAddOrUpdateEvent({
+                      isDragable: false,
+                      isResizable: false,
+                      startTime: new Date().setHours(0, 0, 0, 0),
+                      endTime: new Date().setHours(1, 0, 0, 0),
+                    })}}
+                  >
+                    Add Event
+                  </button>
+               
+                </div>
+                }
+
             <CalenderSwitch
             calendarSwitchOptions={calendarSwitchOptions}
             
