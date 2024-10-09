@@ -106,7 +106,9 @@ function App() {
     },
     {
       name: 'Team Beta',
-      userId: 2
+      userId: 2,
+      profileComponent: <div>Profile</div>
+
     }
   ];
 
