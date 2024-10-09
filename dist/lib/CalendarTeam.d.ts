@@ -15,8 +15,9 @@ interface CalendarTeamProps {
     calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
     handleNextClick?: (date: Date, calenderType: CalenderType) => void;
     handlePrevClick?: (date: Date, calenderType: CalenderType) => void;
+    showAddNewEventButton?: boolean;
     minimumEventThickness?: number;
     calendarHeaderComponent?: React.ReactNode;
 }
-declare function CalendarTeam({ currentDay, eventsData, teams, selectedDate, calenderType, handleChangeCurrentDate, updateEvent, handleCalendarTypeChange, calenderToAddOrUpdateEvent, handleNextClick: _handleNextClick, handlePrevClick: _handlePrevClick, minimumEventThickness, calendarHeaderComponent, calendarSwitchOptions, }: CalendarTeamProps): JSX.Element;
+declare function CalendarTeam({ currentDay, eventsData, teams, selectedDate, calenderType, handleChangeCurrentDate, updateEvent, handleCalendarTypeChange, calenderToAddOrUpdateEvent, handleNextClick: _handleNextClick, handlePrevClick: _handlePrevClick, minimumEventThickness, calendarHeaderComponent, calendarSwitchOptions, showAddNewEventButton, }: CalendarTeamProps): JSX.Element;
 export default CalendarTeam;
