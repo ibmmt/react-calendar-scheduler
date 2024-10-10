@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { calculatePositions, getDaysDifference } from './_utils';
+import { calculatePositions, formatDate, getDaysDifference } from './_utils';
+import CalenderSwitch from './CalendarSwitch';
 import CalendarTeamListItems from './CalendarTeamListItems';
-import CalenderSwitch from './CalenderSwitch';
 import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
 import { LeftIcon, RightIcon } from './Images';
@@ -14,41 +14,42 @@ interface CalendarTeamProps {
   eventsData: EventObject[];
   teams: Team[];
   selectedDate: Date;
-  calenderType:CalenderType;
-  calendarSwitchOptions?: CalenderType[];
-  handleChangeCurrentDate?: (date: Date, calenderType: CalenderType) => void;
+  calendarType:CalenderType;
+  calendarViewOptions?: CalenderType[];
+  onDateChange?: (date: Date, calendarType: CalenderType) => void;
   updateEvent: (event: EventObject) => void;
-  handleCalendarTypeChange: (calenderType: CalenderType) => void;
-  calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
-  handleNextClick?: (date: Date, calenderType: CalenderType) => void;
-  handlePrevClick?: (date: Date, calenderType: CalenderType) => void;
+  onCalendarTypeChange: (calendarType: CalenderType) => void;
+  calendarToAddOrUpdateEvent: (eventObj: EventObject) => void;
+  onNextClick?: (date: Date, calendarType: CalenderType) => void;
+  onPrevClick?: (date: Date, calendarType: CalenderType) => void;
+  weekViewDayTitleFormat?: string | ((date: Date) => React.ReactNode);
   showAddNewEventButton?: boolean;
 
-    minimumEventThickness?: number;
-    calendarHeaderComponent?: React.ReactNode;
+    minimumEventHeight?: number;
+    calendarHeader?: React.ReactNode;
  
 }
 
-const weekdaysArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function CalendarTeam({
     currentDay=new Date(),
   eventsData,
   teams,
   selectedDate,
-  calenderType,
-  handleChangeCurrentDate,
+  calendarType,
+  onDateChange,
   updateEvent,
-  handleCalendarTypeChange,
-  calenderToAddOrUpdateEvent,
-  handleNextClick: _handleNextClick,
-  handlePrevClick: _handlePrevClick,
-  minimumEventThickness=30,
-  calendarHeaderComponent,
-  calendarSwitchOptions,
+  onCalendarTypeChange,
+  calendarToAddOrUpdateEvent,
+  onNextClick: _onNextClick,
+  onPrevClick: _onPrevClick,
+  minimumEventHeight=30,
+  calendarHeader,
+  calendarViewOptions,
   showAddNewEventButton = true,
+  weekViewDayTitleFormat = 'ddd',
 
- // monthCalenderMinCellHeight: boxHeight = 60,
+ // monthViewMinCellHeight: boxHeight = 60,
 }: CalendarTeamProps) {
   const [selectedWeekStartDate, setSelectedWeekStartDate] = useState<Date>(selectedDate);
   const [events, setEvents] = useState<EventObject[]>( calculatePositions(eventsData, 'team'));
@@ -69,7 +70,7 @@ function CalendarTeam({
 
     useEffect(() => {
         setEvents(calculatePositions(eventsData, 'team'));
-    }, [eventsData, calenderType]);
+    }, [eventsData, calendarType]);
 
 
 
@@ -188,9 +189,9 @@ function CalendarTeam({
     newDate.setDate(newDate.getDate() + value * 7);
     setSelectedWeekStartDate(newDate);
     if (value > 0) {
-      _handleNextClick && _handleNextClick(newDate, calenderType);
+      _onNextClick && _onNextClick(newDate, calendarType);
     } else {
-      _handlePrevClick && _handlePrevClick(newDate, calenderType);
+      _onPrevClick && _onPrevClick(newDate, calendarType);
     }
   };
 
@@ -200,7 +201,7 @@ function CalendarTeam({
       return;
     }
     setSelectedWeekStartDate(newDate);
-    handleChangeCurrentDate && handleChangeCurrentDate(newDate, calenderType);
+    onDateChange && onDateChange(newDate, calendarType);
   };
 
   const renderWeekDaysHeader = () => {
@@ -213,8 +214,11 @@ function CalendarTeam({
       day.setDate(startOfWeek.getDate() + i);
       days.push(
         <th key={i} className="ib__sc__table-th">
-          {weekdaysArr[day.getDay()]}<br />
-          {day.toLocaleDateString()}
+           {
+                        typeof weekViewDayTitleFormat === 'function' 
+                          ? weekViewDayTitleFormat(new Date(day)) 
+                          : formatDate(new Date(day), weekViewDayTitleFormat)
+                      }
         </th>
       );
     }
@@ -232,12 +236,12 @@ function CalendarTeam({
           dragStart,
           resizeStart: resizeStart,
           updateEvent: updateEvent,
-          calenderToAddOrUpdateEvent,
+          calendarToAddOrUpdateEvent,
           dragEnd: dropHandler,
           resizeEnd: dropHandler,
         }}
       >
-    <div className={'ib__sc__table ib__sc__table-team-wrap ib_sc_type_' + calenderType}>
+    <div className={'ib__sc__table ib__sc__table-team-wrap ib_sc_type_' + calendarType}>
 
      
       <div className="ib__sc__header_wrapper">
@@ -271,7 +275,7 @@ function CalendarTeam({
             </div>
           </div>
           <div className="ib__sc__header__center">
-            {calendarHeaderComponent}
+            {calendarHeader}
           </div>
 
           <div className="ib__sc__header__right">
@@ -280,7 +284,7 @@ function CalendarTeam({
             {showAddNewEventButton && <div className="ib__sc__header__right__btn-group">
                   <button
                     className="ib__sc__btn"
-                    onClick={()=>{calenderToAddOrUpdateEvent({
+                    onClick={()=>{calendarToAddOrUpdateEvent({
                       isDragable: false,
                       isResizable: false,
                       startTime: new Date().setHours(0, 0, 0, 0),
@@ -294,10 +298,10 @@ function CalendarTeam({
                 }
 
             <CalenderSwitch
-            calendarSwitchOptions={calendarSwitchOptions}
+            calendarViewOptions={calendarViewOptions}
             
-              calenderType={calenderType}
-              handleCalendarTypeChange={handleCalendarTypeChange}
+              calendarType={calendarType}
+              onCalendarTypeChange={onCalendarTypeChange}
             />
           </div>
         </div>
@@ -312,9 +316,9 @@ function CalendarTeam({
               eventsData={events}
               selectedWeekStartDate={selectedWeekStartDate}
               updateEvent={updateEvent}
-              calenderToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
-              monthCalenderMinCellHeight={30}
-                minimumEventThickness={minimumEventThickness}
+              calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
+              monthViewMinCellHeight={30}
+                minimumEventHeight={minimumEventHeight}
                 boxHeight={30}
                 dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
                 dragingEventId={

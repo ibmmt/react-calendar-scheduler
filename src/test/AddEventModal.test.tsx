@@ -7,7 +7,7 @@ React.useLayoutEffect = React.useEffect;
 afterEach(cleanup);
 describe('AddEventModal', () => {
 
-  const { container } = render(<ReactCalendarScheduler events={samepleEvents} calenderType="week" />);
+  const { container } = render(<ReactCalendarScheduler events={samepleEvents} calendarType="week" />);
 
   test('renders correctly', () => {
     expect(container).toHaveTextContent(`Week`);
@@ -15,7 +15,7 @@ describe('AddEventModal', () => {
 
   test('should render AddEventModal', () => {
     const { container } = render(
-      <ReactCalendarScheduler  events={samepleEvents}  calenderType="week" />,
+      <ReactCalendarScheduler  events={samepleEvents}  calendarType="week" />,
     );
     expect(container).toBeVisible();
     const component = document.querySelectorAll('.ib__sc__table-hr-box-week');

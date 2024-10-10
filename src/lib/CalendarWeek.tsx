@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import CalenderSwitch from './CalenderSwitch';
+import CalenderSwitch from './CalendarSwitch';
 import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
 import DayColumnWeek from './DayColumnWeek';
@@ -25,28 +25,28 @@ interface Props {
   eventsData: EventObject[];
   updateEvent: (event: EventObject) => void;
   selectedDate: Date | undefined;
-  calenderType: CalenderType;
-  weekHourBoxHeight?: number;
+  calendarType: CalenderType;
+  weekHourCellHeight?: number;
   startingWeekday: number;
-  weekCalenderDayStartFromHour: number;
-  weekCalenderVisibleHour: number;
-  weekCalenderTitleFormate?: string | ((date: Date) => React.ReactNode);
+  weekViewStartHour: number;
+  weekViewVisibleHours: number;
+  weekViewDayTitleFormat?: string | ((date: Date) => React.ReactNode);
 
 
   showAddNewEventButton?: boolean;
-  weekCalenderTimeFormate: number;
+  weekViewTimeFormat: number;
   noOfDayColumn: number;
-  calenderHeight:number,
-  weekCalenderNextBtnDayIncrement: number;
-  handleNextClick?: (date: Date, calenderType: string) => void;
-  handlePrevClick?: (date: Date, calenderType: string) => void;
-  handleChangeCurrentDate?:(date: Date, calenderType: CalenderType) => void;
-  calenderToAddOrUpdateEvent: (eventObj:EventObject) => void;
-  handleIncreaseTimeSpan: (value: number) => void;
-  handleCalendarTypeChange: (calenderType: CalenderType) => void;
-  minimumEventThickness: number;
-  calendarHeaderComponent: React.ReactNode;
-  calendarSwitchOptions?: CalenderType[];
+  calendarHeight:number,
+  weekViewNextButtonDayIncrement: number;
+  onNextClick?: (date: Date, calendarType: string) => void;
+  onPrevClick?: (date: Date, calendarType: string) => void;
+  onDateChange?:(date: Date, calendarType: CalenderType) => void;
+  calendarToAddOrUpdateEvent: (eventObj:EventObject) => void;
+  onIncreaseTimeSpan: (value: number) => void;
+  onCalendarTypeChange: (calendarType: CalenderType) => void;
+  minimumEventHeight: number;
+  calendarHeader: React.ReactNode;
+  calendarViewOptions?: CalenderType[];
 }
 
 
@@ -54,33 +54,33 @@ const CalendarWeek: React.FC<Props> = ({
   eventsData,
   updateEvent,
   selectedDate,
-  calendarHeaderComponent,
-  calenderType,
-  weekHourBoxHeight = boxHeightInit,
+  calendarHeader,
+  calendarType,
+  weekHourCellHeight = boxHeightInit,
   startingWeekday,
-  weekCalenderDayStartFromHour,
-  weekCalenderVisibleHour = 12,
-  weekCalenderTitleFormate= 'ddd',
-  weekCalenderTimeFormate = 24,
+  weekViewStartHour,
+  weekViewVisibleHours = 12,
+  weekViewDayTitleFormat= 'ddd',
+  weekViewTimeFormat = 24,
   noOfDayColumn,
-  calenderHeight,
+  calendarHeight,
   showAddNewEventButton,
-  weekCalenderNextBtnDayIncrement,
-  handleNextClick: _handleNextClick,
-  handlePrevClick: _handlePrevClick,
-  handleChangeCurrentDate: _handleChangeCurrentDate,
-  calenderToAddOrUpdateEvent,
-  handleIncreaseTimeSpan: _handleIncreaseTimeSpan,
-  handleCalendarTypeChange,
-  calendarSwitchOptions
+  weekViewNextButtonDayIncrement,
+  onNextClick: _onNextClick,
+  onPrevClick: _onPrevClick,
+  onDateChange: _onDateChange,
+  calendarToAddOrUpdateEvent,
+  onIncreaseTimeSpan: _onIncreaseTimeSpan,
+  onCalendarTypeChange,
+  calendarViewOptions
  
 }) => {
   const [events, setEvents] = useState<EventObject[]>(eventsData);
-  const calenderTableRef = useRef<HTMLDivElement>(null);
+  const calendarTableRef = useRef<HTMLDivElement>(null);
   const lastCleintYRef = useRef<number>(0);
   const dragEventRef = useRef<EventObject | null>(null);
   const currentDragDate = useRef<Date | null>(null);
-  const boxHeight = weekHourBoxHeight;
+  const boxHeight = weekHourCellHeight;
   const heightOfWeekColumn = boxHeight * boxTime * 24;
   const headColumnTime = useRef(null);
   const headColumn = useRef <HTMLDivElement | null>(null);
@@ -100,7 +100,7 @@ const CalendarWeek: React.FC<Props> = ({
 
   
 
-    if (calenderType === 'week') {
+    if (calendarType === 'week') {
       return getPreviousDay(startingWeekday, initDay);
     } else {
       return initDay;
@@ -130,23 +130,23 @@ const CalendarWeek: React.FC<Props> = ({
 
   useEffect(() => {
     setDateStartFrom(initSelectedDate());
-  }, [calenderType]);
+  }, [calendarType]);
 
   const [dateStartFrom, setDateStartFrom] = useState<Date>(initSelectedDate);
 
   useEffect(() => {
     if (!dateStartFrom || Object.keys(dateStartFrom).length === 0) return;
     setDateStartFrom(dateStartFrom);
-    if(_handleChangeCurrentDate)
-    _handleChangeCurrentDate(dateStartFrom, calenderType);
+    if(_onDateChange)
+    _onDateChange(dateStartFrom, calendarType);
   }, [dateStartFrom]);
 
   useEffect(() => {
-    if (calenderTableRef.current) {
-      calenderTableRef.current.scrollTop =
-        (weekCalenderDayStartFromHour * boxHeight) / boxTime;
+    if (calendarTableRef.current) {
+      calendarTableRef.current.scrollTop =
+        (weekViewStartHour * boxHeight) / boxTime;
     }
-  }, [weekHourBoxHeight]);
+  }, [weekHourCellHeight]);
 
   const dragStart = (event: EventObject, selectedDate: Date) => {
  
@@ -229,33 +229,33 @@ const CalendarWeek: React.FC<Props> = ({
 
   const onWeekChange = (diff: number) => {
     const dayDiff =
-      noOfDayColumn > weekCalenderNextBtnDayIncrement
+      noOfDayColumn > weekViewNextButtonDayIncrement
        
 
- ? weekCalenderNextBtnDayIncrement
+ ? weekViewNextButtonDayIncrement
         : noOfDayColumn;
 
     const newDateString = addDays(dateStartFrom, dayDiff * diff);
     setDateStartFrom(newDateString);
     if (diff > 0) {
-      typeof _handleNextClick === 'function' &&
-        _handleNextClick(newDateString, calenderType);
+      typeof _onNextClick === 'function' &&
+        _onNextClick(newDateString, calendarType);
     } else {
-      typeof _handlePrevClick === 'function' &&
-        _handlePrevClick(newDateString, calenderType);
+      typeof _onPrevClick === 'function' &&
+        _onPrevClick(newDateString, calendarType);
     }
   };
   const heightOfWeekColumnToShow =
-  (boxHeight / boxTime) * weekCalenderVisibleHour;
+  (boxHeight / boxTime) * weekViewVisibleHours;
 
-  if (!calenderHeight) {
-    calenderHeight = heightOfWeekColumnToShow;
+  if (!calendarHeight) {
+    calendarHeight = heightOfWeekColumnToShow;
   }
   return (
     <div>
       <div
         className={
-          'ib__sc__table ib__sc__table-week ib_sc_type_' + calenderType
+          'ib__sc__table ib__sc__table-week ib_sc_type_' + calendarType
         }
       >
         <div className="ib__sc__header_wrapper">
@@ -297,7 +297,7 @@ const CalendarWeek: React.FC<Props> = ({
               </div>
             </div>
             <div className="ib__sc__header__center">
-              {calendarHeaderComponent}
+              {calendarHeader}
             </div>
 
             <div className="ib__sc__header__right">
@@ -305,7 +305,7 @@ const CalendarWeek: React.FC<Props> = ({
              {showAddNewEventButton&& <div className="ib__sc__header__right__btn-group">
                 <button
                   className="ib__sc__btn"
-                  onClick={()=>{if(calenderToAddOrUpdateEvent)calenderToAddOrUpdateEvent({
+                  onClick={()=>{if(calendarToAddOrUpdateEvent)calendarToAddOrUpdateEvent({
                     isDragable: false,
                     isResizable: false,
                     startTime: new Date().setHours(0, 0, 0, 0),
@@ -316,9 +316,9 @@ const CalendarWeek: React.FC<Props> = ({
                 </button>
               </div>}
               <CalenderSwitch
-                calenderType={calenderType}
-                calendarSwitchOptions={calendarSwitchOptions}
-                handleCalendarTypeChange={(type)=>{ if(handleCalendarTypeChange) handleCalendarTypeChange(type)}}
+                calendarType={calendarType}
+                calendarViewOptions={calendarViewOptions}
+                onCalendarTypeChange={(type)=>{ if(onCalendarTypeChange) onCalendarTypeChange(type)}}
               />
             </div>
           </div>
@@ -329,17 +329,17 @@ const CalendarWeek: React.FC<Props> = ({
               dragStart,
               updateEvent: updateEvent,
               dragEnd: dropHandler,
-              calenderToAddOrUpdateEvent: calenderToAddOrUpdateEvent,
+              calendarToAddOrUpdateEvent: calendarToAddOrUpdateEvent,
             }}
           >
             <div
               className="ib__sc__table-out ib__sc__table-out-week"
               style={{
-                maxHeight: calenderHeight,
+                maxHeight: calendarHeight,
                 overflowY:
-                  heightOfWeekColumn > calenderHeight ? 'scroll' : 'initial',
+                  heightOfWeekColumn > calendarHeight ? 'scroll' : 'initial',
               }}
-              ref={calenderTableRef}
+              ref={calendarTableRef}
             >
               <div className="ib__sc__tb-wrapper ib__sc__tb-wrapper-week">
                 <div className="ib__sc__tb_week_time"
@@ -353,14 +353,14 @@ const CalendarWeek: React.FC<Props> = ({
                     <div className="ib__sc__btn-group ib__sc__increment-timespan ib__sc__flex_center">
                       <button
                         className="ib__sc__btn"
-                        onClick={() => _handleIncreaseTimeSpan(-1)}
+                        onClick={() => _onIncreaseTimeSpan(-1)}
                       >
                         -
                       </button>
                       <button
                         className="ib__sc__btn"
                         onClick={() => {
-                          _handleIncreaseTimeSpan(1);
+                          _onIncreaseTimeSpan(1);
                         }}
                       >
                         +
@@ -377,7 +377,7 @@ const CalendarWeek: React.FC<Props> = ({
                       >
                         {index !== 0 && (
                           <span className="ib__sc__time_title">
-                            {timeFormateFromHour(hour, weekCalenderTimeFormate)}
+                            {timeFormateFromHour(hour, weekViewTimeFormat)}
                           </span>
                         )}
                       </div>
@@ -403,14 +403,14 @@ const CalendarWeek: React.FC<Props> = ({
                         ref={headColumn}
                       >
                        {
-                        typeof weekCalenderTitleFormate === 'function' 
-                          ? weekCalenderTitleFormate(new Date(boxDay)) 
-                          : formatDate(new Date(boxDay), weekCalenderTitleFormate)
+                        typeof weekViewDayTitleFormat === 'function' 
+                          ? weekViewDayTitleFormat(new Date(boxDay)) 
+                          : formatDate(new Date(boxDay), weekViewDayTitleFormat)
                       }
                        
                       </div>
                       <DayColumnWeek
-                        calenderTableRef={calenderTableRef}
+                        calendarTableRef={calendarTableRef}
                         boxHeight={boxHeight}
                         updateEvent={updateEvent}
                         // dragingEventId={
@@ -426,7 +426,7 @@ const CalendarWeek: React.FC<Props> = ({
                        
                         boxDay={new Date(boxDay)}
                         dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
-                        calenderToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
+                        calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
                         events={
                           events
                             ? events.filter((event) =>{

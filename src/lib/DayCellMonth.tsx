@@ -12,7 +12,7 @@ interface DayCellMonthProps {
   day: number;
   dragingEventId: number | undefined;
   resizingEventId: number | undefined;
-  calenderToAddOrUpdateEvent: (event: EventObject) => void;
+  calendarToAddOrUpdateEvent: (event: EventObject) => void;
   dragBoxMouseEnterToCell: (boxDay: Date) => void;
   isCurrentDay: boolean;
 }
@@ -25,7 +25,7 @@ export default function DayCellMonth({
   day,
   dragingEventId,
   resizingEventId,
-  calenderToAddOrUpdateEvent,
+  calendarToAddOrUpdateEvent,
   dragBoxMouseEnterToCell,
   isCurrentDay
 }: DayCellMonthProps) {
@@ -44,7 +44,7 @@ export default function DayCellMonth({
   const handleClickBox: React.MouseEventHandler<HTMLTableCellElement> = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    calenderToAddOrUpdateEvent({
+    calendarToAddOrUpdateEvent({
       isDragable: true,
       isResizable: true,
       startTime: new Date(boxDay).setHours(0, 0, 0, 0),

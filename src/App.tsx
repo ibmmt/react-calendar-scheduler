@@ -123,54 +123,54 @@ function App() {
       <ReactCalendarScheduler
         events={events}
         selectedDate={ new Date(new Date().setDate(new Date().getDate() +1 )) }
-        calenderType="team" // week or day
-        monthCalenderTitleFormate="dddd" //month title formate
-        monthCalenderTitle="ddd" //day column title formate
-        monthCalenderMinCellHeight={80} //day column title formate
-        weekHourBoxHeight={160} //Height of the hour box
+        calendarType="team" // week or day
+        monthViewDayTitleFormat="short" //month title formate
+      
+        monthViewMinCellHeight={80} //day column title formate
+        weekHourCellHeight={160} //Height of the hour box
         startingWeekday={0} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
-        weekCalenderDayStartFromHour={7} // Day start from hour
-        weekCalenderVisibleHour={12} //day visible hour
-        weekCalenderTitleFormate={(date: Date) => <div>{date.toLocaleDateString('en-US', { weekday: 'short' })} <div>{date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div></div> } // correctly formatted function for week day titles
-        weekCalenderTimeFormate={12} //day column title formate
-        weekCalenderNextBtnDayIncrement={3} //
+        weekViewStartHour={7} // Day start from hour
+        weekViewVisibleHours={12} //day visible hour
+        weekViewDayTitleFormat={(date: Date) => <div>{date.toLocaleDateString('en-US', { weekday: 'short' })} <div>{date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div></div> } // correctly formatted function for week day titles
+        weekViewTimeFormat={12} //day column title formate
+        weekViewNextButtonDayIncrement={3} //
         showAddNewEventButton={true} //show add new event button
-        calendarHeaderComponent={<div>Header</div>} //calendar header component
+        calendarHeader={<div>Header</div>} //calendar header component
         teams={teams}
       
 
         disableEventModal={false} //disable event modal
-        handleUpdateEvent={(event) => {
+        onUpdateEvent={(event) => {
           console.log(event);
-          console.log("handleUpdateEvent");
+          console.log("onUpdateEvent");
         }}
-        handleAddNewEvent={(event) => {
+        onAddEvent={(event) => {
           console.log(event);
-          console.log("handleAddNewEvent");
+          console.log("onAddEvent");
         }}
-        handleDeleteEvent={(event) => {
+        onDeleteEvent={(event) => {
           console.log(event);
-          console.log("handleDeleteEvent");
+          console.log("onDeleteEvent");
         }}
-        handleEventClick={(event) => {
+        onEventClick={(event) => {
           console.log(event);
-          console.log("handleEventClick");
+          console.log("onEventClick");
         }}
-        handleColumnClick={(event) => {
+        onColumnClick={(event) => {
           console.log(event);
-          console.log("handleColumnClick");
+          console.log("onColumnClick");
         }}
-        handleNextClick={() => {
-          console.log("handleNextClick");
+        onNextClick={() => {
+          console.log("onNextClick");
       
         }}
-        handlePrevClick={() => {
+        onPrevClick={() => {
       
-          console.log("handlePrevClick");
+          console.log("onPrevClick");
         }}
-        handleCalendarTypeChange={(type) => {
+        onCalendarTypeChange={(type) => {
           console.log(type);
-          console.log("handleCalendarTypeChange");
+          console.log("onCalendarTypeChange");
         }}
       />
     </div>

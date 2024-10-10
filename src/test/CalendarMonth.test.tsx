@@ -9,7 +9,7 @@ afterEach(cleanup);
 describe('React clanader scheduler', () => {
   test('Event add to month ', () => {
     render(
-      <ReactCalendarScheduler calenderType="month" events={samepleEvents} />,
+      <ReactCalendarScheduler calendarType="month" events={samepleEvents} />,
     );
     //ib__sc__month-date__bt-next
     expect(screen.getByText(samepleEvents[0].title)).toBeInTheDocument();
@@ -18,7 +18,7 @@ describe('React clanader scheduler', () => {
   test('Event next prev button ', () => {
     const temp = [...samepleEvents];
     temp[0].title = 'title'+new Date().getTime();
-    render(<ReactCalendarScheduler calenderType="month" events={temp} />);
+    render(<ReactCalendarScheduler calendarType="month" events={temp} />);
     //ib__sc__month-date__bt-next
     const nextBtn = document.querySelector('.ib__sc__month-date__bt-next');
     const prevBtn = document.querySelector('.ib__sc__month-date__bt-prev');

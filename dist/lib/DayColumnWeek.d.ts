@@ -5,9 +5,9 @@ interface DayColumnWeekProps {
     boxHeight: number;
     boxDay: Date;
     updateEvent: (event: EventObject) => void;
-    calenderTableRef: React.RefObject<any>;
+    calendarTableRef: React.RefObject<any>;
     dragBoxMouseEnterToCell: (day: Date) => void;
-    calenderToAddOrUpdateEvent: (event: EventObject) => void;
+    calendarToAddOrUpdateEvent: (event: EventObject) => void;
     dragingEventId?: string | number;
 }
 declare const DayColumnWeek: React.FC<DayColumnWeekProps>;

@@ -8,9 +8,9 @@ interface DayColumnWeekProps {
   boxHeight: number;
   boxDay: Date;
   updateEvent: (event: EventObject) => void;
-  calenderTableRef: React.RefObject<any>;
+  calendarTableRef: React.RefObject<any>;
   dragBoxMouseEnterToCell: (day: Date) => void;
-  calenderToAddOrUpdateEvent: (event: EventObject) => void;
+  calendarToAddOrUpdateEvent: (event: EventObject) => void;
   dragingEventId?: string| number;
 }
 
@@ -20,7 +20,7 @@ const DayColumnWeek: React.FC<DayColumnWeekProps> = ({
   boxDay,
 
   dragBoxMouseEnterToCell,
-  calenderToAddOrUpdateEvent,
+  calendarToAddOrUpdateEvent,
   dragingEventId,
 }) => {
   const BoxRef = useRef<HTMLDivElement>(null);
@@ -43,7 +43,7 @@ const dragMouseEnter = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    calenderToAddOrUpdateEvent({
+    calendarToAddOrUpdateEvent({
       isResizable: false,
       isDragable: false,
       startTime: new Date(boxDay).setHours(hour, 0, 0, 0),
@@ -74,11 +74,11 @@ const dragMouseEnter = (e: MouseEvent) => {
                 key={eventObj.sc_app__id}
                 eventObj={eventObj}
                 boxDay={boxDay}
-               // calenderTableRef={calenderTableRef}
+               // calendarTableRef={calendarTableRef}
                 boxHeight={boxHeight}
                 dragingEventId={dragingEventId}
               //  updateEvent={updateEvent}
-               // calenderToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
+               // calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
               />
             ))}
           {isSameDay(boxDay, new Date()) && (

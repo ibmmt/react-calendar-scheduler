@@ -13,7 +13,7 @@ describe('React clanader scheduler', () => {
  
   test('Event add to week ', () => {
     render(
-      <ReactCalendarScheduler calenderType="week" events={samepleEvents} />,
+      <ReactCalendarScheduler calendarType="week" events={samepleEvents} />,
     );
 
     expect(screen.getByText(samepleEvents[0].title)).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe('React clanader scheduler', () => {
   test('Event next prev button ', () => {
     const temp = [...samepleEvents];
     temp[0].title ='title'+ new Date().getTime();
-    render(<ReactCalendarScheduler calenderType="week" events={temp} />);
+    render(<ReactCalendarScheduler calendarType="week" events={temp} />);
 
     const nextBtn = document.querySelector('.ib__sc__week-date__bt-next');
     const prevBtn = document.querySelector('.ib__sc__week-date__bt-prev');

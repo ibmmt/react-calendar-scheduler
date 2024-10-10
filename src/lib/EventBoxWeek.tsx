@@ -24,7 +24,7 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
   const [eventHeight, setEventHeight] = useState(0);
   const [overLap, setOverLap] = useState({ top: false, bottom: false });
   const newEventTime = useRef({ start: 0, end: 0 });
-  const { updateEvent, dragStart, dragEnd, calenderToAddOrUpdateEvent } =
+  const { updateEvent, dragStart, dragEnd, calendarToAddOrUpdateEvent } =
     useContext(EventHandlerContex);
   const eventRef = useRef<HTMLDivElement>(null);
   const lastCleintYRef = useRef(0);
@@ -208,7 +208,7 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
             e.preventDefault();
 
             dragEnd();
-            calenderToAddOrUpdateEvent(eventObj);
+            calendarToAddOrUpdateEvent(eventObj);
           }}
           style={eventStyle}
         >

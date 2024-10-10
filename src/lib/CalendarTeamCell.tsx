@@ -9,7 +9,7 @@ interface CalendarTeamCellProps {
   date: Date;
   events: EventObject[];
   updateEvent?: (event: EventObject) => void;
-  calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
+  calendarToAddOrUpdateEvent: (eventObj: EventObject) => void;
   currentBoxHeight: number;
   dragBoxMouseEnterToCell: (boxDay: Date,userId:string | number ) => void;
   dragingEventId: number | undefined;
@@ -21,7 +21,7 @@ function CalendarTeamCell({
   team,
   date,
   events,
-  calenderToAddOrUpdateEvent,
+  calendarToAddOrUpdateEvent,
   currentBoxHeight,
   dragBoxMouseEnterToCell,
   dragingEventId,
@@ -59,7 +59,7 @@ function CalendarTeamCell({
   const handleClickBox: React.MouseEventHandler<HTMLTableCellElement> = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    calenderToAddOrUpdateEvent({
+    calendarToAddOrUpdateEvent({
       isDragable: false,
       isResizable: false,
       startTime: date.setHours(0, 0, 0, 0),

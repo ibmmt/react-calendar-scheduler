@@ -6,12 +6,12 @@ interface CalendarTeamCellProps {
     date: Date;
     events: EventObject[];
     updateEvent?: (event: EventObject) => void;
-    calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
+    calendarToAddOrUpdateEvent: (eventObj: EventObject) => void;
     currentBoxHeight: number;
     dragBoxMouseEnterToCell: (boxDay: Date, userId: string | number) => void;
     dragingEventId: number | undefined;
     resizingEventId: number | undefined;
     userId: string | number;
 }
-declare function CalendarTeamCell({ team, date, events, calenderToAddOrUpdateEvent, currentBoxHeight, dragBoxMouseEnterToCell, dragingEventId, resizingEventId, userId }: CalendarTeamCellProps): JSX.Element;
+declare function CalendarTeamCell({ team, date, events, calendarToAddOrUpdateEvent, currentBoxHeight, dragBoxMouseEnterToCell, dragingEventId, resizingEventId, userId }: CalendarTeamCellProps): JSX.Element;
 export default CalendarTeamCell;

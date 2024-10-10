@@ -7,17 +7,17 @@ interface CalendarTeamProps {
     eventsData: EventObject[];
     teams: Team[];
     selectedDate: Date;
-    calenderType: CalenderType;
-    calendarSwitchOptions?: CalenderType[];
-    handleChangeCurrentDate?: (date: Date, calenderType: CalenderType) => void;
+    calendarType: CalenderType;
+    calendarViewOptions?: CalenderType[];
+    onDateChange?: (date: Date, calendarType: CalenderType) => void;
     updateEvent: (event: EventObject) => void;
-    handleCalendarTypeChange: (calenderType: CalenderType) => void;
-    calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
-    handleNextClick?: (date: Date, calenderType: CalenderType) => void;
-    handlePrevClick?: (date: Date, calenderType: CalenderType) => void;
+    onCalendarTypeChange: (calendarType: CalenderType) => void;
+    calendarToAddOrUpdateEvent: (eventObj: EventObject) => void;
+    onNextClick?: (date: Date, calendarType: CalenderType) => void;
+    onPrevClick?: (date: Date, calendarType: CalenderType) => void;
     showAddNewEventButton?: boolean;
-    minimumEventThickness?: number;
-    calendarHeaderComponent?: React.ReactNode;
+    minimumEventHeight?: number;
+    calendarHeader?: React.ReactNode;
 }
-declare function CalendarTeam({ currentDay, eventsData, teams, selectedDate, calenderType, handleChangeCurrentDate, updateEvent, handleCalendarTypeChange, calenderToAddOrUpdateEvent, handleNextClick: _handleNextClick, handlePrevClick: _handlePrevClick, minimumEventThickness, calendarHeaderComponent, calendarSwitchOptions, showAddNewEventButton, }: CalendarTeamProps): JSX.Element;
+declare function CalendarTeam({ currentDay, eventsData, teams, selectedDate, calendarType, onDateChange, updateEvent, onCalendarTypeChange, calendarToAddOrUpdateEvent, onNextClick: _onNextClick, onPrevClick: _onPrevClick, minimumEventHeight, calendarHeader, calendarViewOptions, showAddNewEventButton, }: CalendarTeamProps): JSX.Element;
 export default CalendarTeam;

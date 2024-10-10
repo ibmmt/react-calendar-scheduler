@@ -9,7 +9,7 @@ interface Props {
   show: boolean;
   handleClose: () => void;
   handleAddEvent: (event: EventObjectInput) => void;
-  handleDeleteEvent: (sc_app__id: number) => void;
+  onDeleteEvent: (sc_app__id: number) => void;
   eventObj: EventObjectInput;
 }
 
@@ -17,7 +17,7 @@ const AddEventModal: React.FC<Props> = ({
   show,
   handleClose,
   handleAddEvent,
-  handleDeleteEvent: _handleDeleteEvent,
+  onDeleteEvent: _onDeleteEvent,
   eventObj: {
     title: titleInit = '',
     startDate: startDateInit = '',
@@ -80,9 +80,9 @@ const AddEventModal: React.FC<Props> = ({
    * handle delete event
    * @param {*} e
    */
-  const handleDeleteEvent = (e: React.MouseEvent) => {
+  const onDeleteEvent = (e: React.MouseEvent) => {
     e.preventDefault();
-    _handleDeleteEvent && _handleDeleteEvent(sc_app__id as number);
+    _onDeleteEvent && _onDeleteEvent(sc_app__id as number);
     handleClose();
   };
 
@@ -233,7 +233,7 @@ const AddEventModal: React.FC<Props> = ({
                   onClick={e => {
                     e.preventDefault();
                   }}
-                  onDoubleClick={handleDeleteEvent}
+                  onDoubleClick={onDeleteEvent}
                 >
                   Delete
                 </button>

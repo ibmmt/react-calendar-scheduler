@@ -11,13 +11,13 @@ afterEach(cleanup);
 describe('React clanader scheduler', () => {
   test('Event add to week ', () => {
     render(
-      <ReactCalendarScheduler calenderType="week" events={samepleEvents} />,
+      <ReactCalendarScheduler calendarType="week" events={samepleEvents} />,
     );
     expect(screen.getByText(samepleEvents[0].title)).toBeInTheDocument();
   });
   test('Switch Calender ', () => {
     render(
-      <ReactCalendarScheduler calenderType="week" events={samepleEvents} />,
+      <ReactCalendarScheduler calendarType="week" events={samepleEvents} />,
     );
 
     const weekBtn = document.querySelector('.ib_sc_btn_week');

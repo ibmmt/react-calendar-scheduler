@@ -6,13 +6,13 @@ interface CalendarTeamListItemsProps {
     eventsData: EventObject[];
     selectedWeekStartDate: Date;
     updateEvent: (event: EventObject) => void;
-    calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
-    monthCalenderMinCellHeight: number;
+    calendarToAddOrUpdateEvent: (eventObj: EventObject) => void;
+    monthViewMinCellHeight: number;
     boxHeight: number;
-    minimumEventThickness: number;
+    minimumEventHeight: number;
     dragBoxMouseEnterToCell: (boxDay: Date, userId: string | number) => void;
     dragingEventId: number | undefined;
     resizingEventId: number | undefined;
 }
-declare function CalendarTeamListItems({ teams, eventsData, selectedWeekStartDate, updateEvent, calenderToAddOrUpdateEvent, dragBoxMouseEnterToCell, dragingEventId, resizingEventId, boxHeight, minimumEventThickness }: CalendarTeamListItemsProps): JSX.Element;
+declare function CalendarTeamListItems({ teams, eventsData, selectedWeekStartDate, updateEvent, calendarToAddOrUpdateEvent, dragBoxMouseEnterToCell, dragingEventId, resizingEventId, boxHeight, minimumEventHeight }: CalendarTeamListItemsProps): JSX.Element;
 export default CalendarTeamListItems;

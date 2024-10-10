@@ -8,10 +8,10 @@ interface CalendarTeamListItemsProps {
   eventsData: EventObject[];
   selectedWeekStartDate: Date;
   updateEvent: (event: EventObject) => void;
-  calenderToAddOrUpdateEvent: (eventObj: EventObject) => void;
-  monthCalenderMinCellHeight: number;
+  calendarToAddOrUpdateEvent: (eventObj: EventObject) => void;
+  monthViewMinCellHeight: number;
   boxHeight: number;
-  minimumEventThickness: number;
+  minimumEventHeight: number;
   dragBoxMouseEnterToCell: (boxDay: Date,userId:string | number) => void;
   dragingEventId: number | undefined;
     resizingEventId: number | undefined;
@@ -24,12 +24,12 @@ function CalendarTeamListItems({
   eventsData,
   selectedWeekStartDate,
   updateEvent,
-  calenderToAddOrUpdateEvent,
+  calendarToAddOrUpdateEvent,
   dragBoxMouseEnterToCell,
     dragingEventId,
     resizingEventId,
     boxHeight,
-    minimumEventThickness
+    minimumEventHeight
   // ... other props
 }: CalendarTeamListItemsProps) {
   const rows = teams.map((team) => {
@@ -58,8 +58,8 @@ function CalendarTeamListItems({
         });
 
       let currentBoxHeight = boxHeight;
-      if ((minPercentage * boxHeight) / 100 < minimumEventThickness) {
-        currentBoxHeight = (minimumEventThickness * 100) / minPercentage;
+      if ((minPercentage * boxHeight) / 100 < minimumEventHeight) {
+        currentBoxHeight = (minimumEventHeight * 100) / minPercentage;
       }
 
       
@@ -74,7 +74,7 @@ function CalendarTeamListItems({
           userId={team.userId}
           events={eventsForUserOnDate}
           updateEvent={updateEvent}
-          calenderToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
+          calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
             currentBoxHeight={currentBoxHeight}
             dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
           // ... other props

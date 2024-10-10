@@ -35,7 +35,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
     dragEnd,
     resizeStart,
     resizeEnd,
-    calenderToAddOrUpdateEvent,
+    calendarToAddOrUpdateEvent,
   } = useContext(EventHandlerContex);
   const eventRef = useRef<HTMLDivElement>(null);
 
@@ -190,7 +190,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
             e.preventDefault();
 
             dragEnd();
-            calenderToAddOrUpdateEvent(eventObj);
+            calendarToAddOrUpdateEvent(eventObj);
           }}
           
           style={eventStyle}
