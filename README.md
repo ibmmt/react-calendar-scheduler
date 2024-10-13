@@ -164,26 +164,62 @@ Here are the key props supported by the `ReactCalendarScheduler` component:
 
                                                              | `true`        |
 
-## Team-Based Scheduling
+## EventObjectInput Structure
 
-To enable **team-based scheduling**, make sure you set the `calendarType` prop to `"team"` and pass the `teams` array, where each team has a unique `userId` and optionally a `profileComponent` to display user information. The `events` array should have events linked to `userId` values.
+The `EventObjectInput` object represents an event and its related properties, including essential details, timing, appearance, behavior, and metadata. Below is the structure of the `EventObjectInput` object used in the calendar scheduler:
 
-### Example Team Data:
+```typescript
+export interface EventObjectInput {
+  // Essential event details
+  id?: string | number; // (Optional) Unique identifier for the event.
+  title?: string; // (Optional) Title of the event.
+  description?: string; // (Optional) Description or details about the event.
 
-```js
-const teams = [
-  {
-    name: 'Team Alpha',
-    userId: 1,
-    profileComponent: <div>Profile for Team Alpha</div>,
-  },
-  {
-    name: 'Team Beta',
-    userId: 2,
-    profileComponent: <div>Profile for Team Beta</div>,
-  },
-];
+  // Event timing
+  startDate: string; // The starting date of the event (format: YYYY-MM-DD).
+  endDate: string; // The ending date of the event (format: YYYY-MM-DD).
+  startTime: string; // The starting time of the event (format: HH:MM).
+  endTime: string; // The ending time of the event (format: HH:MM).
+
+  // Appearance-related properties
+  color?: string; // (Optional) The background color of the event.
+  textColor?: string; // (Optional) The text color used for the event.
+  bg_color?: string; // (Optional) Alternative background color for the event.
+  custom_class?: string; // (Optional) Custom CSS class for additional styling.
+  element?: ReactNode; // (Optional) A custom React element for rendering the event.
+
+  // Behavior-related properties
+  draggable?: boolean; // (Optional) Specifies if the event can be dragged (default: false).
+  resizable?: boolean; // (Optional) Specifies if the event can be resized (default: false).
+  deletable?: boolean; // (Optional) Specifies if the event can be deleted (default: false).
+  editable?: boolean; // (Optional) Specifies if the event can be edited (default: false).
+
+  // Metadata
+  userId?: number; // (Optional) ID of the user associated with the event.
+  extraData?: object; // (Optional) Any extra data or custom properties related to the event.
+}
 ```
+
+### Description of Properties:
+
+- **id**: A unique identifier for the event (optional).
+- **title**: The title or name of the event (optional).
+- **description**: Additional details about the event (optional).
+- **startDate**: The date when the event starts, formatted as `YYYY-MM-DD`.
+- **endDate**: The date when the event ends, formatted as `YYYY-MM-DD`.
+- **startTime**: The time when the event starts, formatted as `HH:MM`.
+- **endTime**: The time when the event ends, formatted as `HH:MM`.
+- **color**: Background color for the event (optional).
+- **textColor**: Color of the text displayed on the event (optional).
+- **bg_color**: Alternative background color for the event (optional).
+- **custom_class**: A custom CSS class for applying additional styles to the event (optional).
+- **element**: A custom React element to render the event (optional).
+- **draggable**: Specifies if the event can be dragged to another time slot (optional, default is `false`).
+- **resizable**: Specifies if the event can be resized (optional, default is `false`).
+- **deletable**: Specifies if the event can be deleted (optional, default is `false`).
+- **editable**: Specifies if the event can be edited (optional, default is `false`).
+- **userId**: ID of the user who owns or created the event (optional).
+- **extraData**: An object containing any additional custom data related to the event (optional).
 
 ### Example Event Data:
 
@@ -210,6 +246,27 @@ const events = [
     bg_color: '#5c6bc0',
     draggable: true,
     resizable: true,
+  },
+];
+```
+
+## Team-Based Scheduling
+
+To enable **team-based scheduling**, make sure you set the `calendarType` prop to `"team"` and pass the `teams` array, where each team has a unique `userId` and optionally a `profileComponent` to display user information. The `events` array should have events linked to `userId` values.
+
+### Example Team Data:
+
+```js
+const teams = [
+  {
+    name: 'Team Alpha',
+    userId: 1,
+    profileComponent: <div>Profile for Team Alpha</div>,
+  },
+  {
+    name: 'Team Beta',
+    userId: 2,
+    profileComponent: <div>Profile for Team Beta</div>,
   },
 ];
 ```

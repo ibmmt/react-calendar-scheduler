@@ -160,6 +160,7 @@ function CalendarTeam({
       };
     
       const dragBoxMouseEnterToCell = (date: Date,userId: string| number) => {
+        
         if (!editingEventRef.current) return;
         if(!currentDragDate.current) return;
      
@@ -167,7 +168,7 @@ function CalendarTeam({
      
         const daysDiff = getDaysDifference(date, new Date(currentDragDate.current));
     
-        if (daysDiff === 0) return;
+        if (daysDiff === 0 && newEvent.userId ===userId ) return;
     
         if (sideUseRef.current === 'left') {
           newEvent.startTime += daysDiff * 24 * HOUR_MILLISECONDS;
@@ -180,6 +181,7 @@ function CalendarTeam({
         newEvent.userId = userId;
          editingEventRef.current = newEvent;
         currentDragDate.current = date.getTime();
+
         findAndSetEvent(newEvent, events);
       };
     
@@ -289,6 +291,7 @@ function CalendarTeam({
                       isResizable: false,
                       startTime: new Date().setHours(0, 0, 0, 0),
                       endTime: new Date().setHours(1, 0, 0, 0),
+                  
                     })}}
                   >
                     Add Event

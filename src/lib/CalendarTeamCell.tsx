@@ -77,6 +77,7 @@ function CalendarTeamCell({
     <div className='ib__sc__team-cell__team' style={
         {minHeight:currentBoxHeight + 20}
     }>
+      
     
         <div className="ib__sc__table-td__team_cell">
           {events.map((event, key) => (

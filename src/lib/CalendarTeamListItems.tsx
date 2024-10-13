@@ -66,7 +66,7 @@ function CalendarTeamListItems({
 
       cells.push(
         <CalendarTeamCell
-          key={i}
+          key={i+team.userId}
           team={team}
           date={date}
           dragingEventId={dragingEventId}
@@ -84,10 +84,16 @@ function CalendarTeamListItems({
 
     return (
       <tr key={team.userId}>
-        <td className="ib__sc__table-td team-cell">
-          {team.profilepic && <img src={team.profilepic} alt={team.name} className="team-profile-pic" />}
+        <td className="ib__sc__table-td ib__sc__team-cell">
+          <div className='ib__sc__team-team-wrap'>
+          {team.image && 
+          <div className='ib__sc__team-profile-pic-wrap'><img src={team.image} alt={team.name} className="ib__sc__team-profile-pic" /> </div>}
+          <div className='ib__sc__team-profile-content-wrap'>
+
          {team.name && <span>{team.name}</span>}
          {team.profileComponent && team.profileComponent}
+         </div>
+         </div>
         </td>
         {cells}
       </tr>

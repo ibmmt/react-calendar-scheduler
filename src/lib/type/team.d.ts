@@ -2,6 +2,7 @@
 export interface Team{
     userId: number;
     name?: string;
-    profilepic?: string;
+    image?: string;
     profileComponent?: React.ReactNode;
+   
 }

@@ -10,7 +10,7 @@ export interface EventObject {
   description?: string;
   color?: string;
   textColor?: string;
-  isAllDay?: boolean;
+
   isDragable: boolean;
   isResizable: boolean;
   isDisabled?: boolean;
@@ -20,7 +20,8 @@ export interface EventObject {
   bg_color?: string;
   custom_class?: string;
   element?: ReactNode;
-  userId?: number;
+  userId?: number | string;
+  
   
   
   // Add other properties as needed
@@ -31,26 +32,19 @@ export interface EventObjectInput {
   startDate: string;
   endDate: string;
   id?: string | number;
-  width?: number;
   title?: string;
   description?: string;
   color?: string;
   textColor?: string;
-  isAllDay?: boolean;
   draggable?: boolean;
   resizable?: boolean;
-  isResizable?: boolean;
-  isDisabled?: boolean;
-  isDeleted?: boolean;
   startTime: string;
   endTime: string;
   bg_color?: string;
   custom_class?: string;
   element?: ReactNode;
-  editable?: boolean;
   deletable?: boolean;
-  draggable?: boolean;
-  userId?: number;
-
-  // Add other properties as needed
+  editable?: boolean;
+  userId?: number | string;
+  extraData?: object;
 }

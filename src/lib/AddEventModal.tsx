@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import TimeInput from './Extra/TimeInput';
 import { addTimeStringTodate, formatDate } from './_utils';
 import { EventObjectInput } from './type/EventObject';
+import { Team } from './type/team';
 
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
   handleAddEvent: (event: EventObjectInput) => void;
   onDeleteEvent: (sc_app__id: number) => void;
   eventObj: EventObjectInput;
+  teams?:Team[];
 }
 
 const AddEventModal: React.FC<Props> = ({
@@ -27,10 +29,12 @@ const AddEventModal: React.FC<Props> = ({
     bg_color: bg_colorInit = '#5c6bc0',
     description: descriptionInit = '',
     sc_app__id = '',
+    userId: userIdInit = '',
     ...otherEventData
   },
+  teams
 }) => {
-  
+
   const now = new Date();
   const dateString = formatDate(now, 'yyyy-MM-dd');
   const [title, setTitle] = useState(titleInit);
@@ -45,6 +49,7 @@ const AddEventModal: React.FC<Props> = ({
   const [endTime, setEndTime] = useState(endTimeInit);
   const [bg_color, setBg_color] = useState(bg_colorInit);
   const [description, setDescription] = useState(descriptionInit);
+  const [userId, setUserId] = useState(userIdInit);
 
   /**
    * handle submit event
@@ -64,12 +69,12 @@ const AddEventModal: React.FC<Props> = ({
       title,
       sc_app__id,
       description,
-
       startDate: formatDate(new Date(startDateObj), 'dd/MM/yyyy'),
       endDate: formatDate(new Date(endDateObj), 'dd/MM/yyyy'),
       startTime: formatDate(new Date(startDateObj), 'H:mm:ss'),
       endTime: formatDate(new Date(endDateObj), 'H:mm:ss'),
       bg_color: bg_color,
+      userId: userId,
     };
 
     handleAddEvent(eventObj);
@@ -201,7 +206,7 @@ const AddEventModal: React.FC<Props> = ({
             </div>
             <div className="ib__sc__form-group">
               <label className="ib__sc-label" htmlFor="bg_color">
-                Description
+                Color
               </label>
               <input
                 type="color"
@@ -211,6 +216,23 @@ const AddEventModal: React.FC<Props> = ({
                 required
               />
             </div>
+            {teams && teams.length > 0 && (
+            <div className="ib__sc__form-group">
+              <label className="ib__sc-label" htmlFor="bg_color">
+                Select Team
+              </label>
+              <select
+                value={userId}
+                className="ib__sc-form-control"
+                onChange={e => setUserId(e.target.value)}>
+                {teams.map((team, index) => (
+                  <option key={index} value={team.userId}>{team.name}</option>
+                ))}
+              
+              </select>
+              </div>  
+              
+              )}
             <div className="ib__sc__form-group">
               <label className="ib__sc-label" htmlFor="bg_color">
                 Decription

@@ -4,16 +4,29 @@ import { EventObjectInput } from "./lib/type/EventObject";
 
 
 function App() {
+const getFormattedDate = (date: Date | number) => {
+  const newDate = new Date(date);
+  //dd/mm/yyyy
+  const day = newDate.getDate();
+  const month = newDate.getMonth() + 1;
+  const year = newDate.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+//new Date(new Date().setDate(new Date().getDate() +1 ))
+
   const events: EventObjectInput[] = [
     {
-      title: "Title 1",
+      title: "Title Lorem Ipsum ",
       startDate: "20/10/2024",
       endDate: "20/10/2024",
       startTime: "09:00:00",
       endTime: "10:00:00",
       id: 133,
       bg_color: "#FFAB91",
-      element: <div>**</div>,
+      element: <div>
+        Description of the event
+      </div>,
       editable: true,
       userId: 2,
      
@@ -23,23 +36,23 @@ function App() {
     },
     {
       title: "Title 2",
-      startDate: "10/10/2024",
-      endDate: "12/10/2024",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()-5 ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()-3 ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
-      bg_color: "#5c6bc0",
+      bg_color: "#5cc077",
       userId: 2,
      
       draggable: true,
       resizable: true,
     
-      element: <div>*</div>,
+      element: <div> Description of the event</div>,
     },
     {
       title: "Title 3",
-      startDate: "10/10/2024",
-      endDate: "12/10/2024",
+      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate()-1 ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
@@ -47,29 +60,29 @@ function App() {
       userId: 1,
      
       draggable: true,
-      resizable: false,
+      resizable: true,
     
-      element: <div>*</div>,
+      element: <div> Description of the event</div>,
     },
     {
       title: "Title 4",
-      startDate: "10/10/2024",
-      endDate: "12/10/2024",
+      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate() +1 ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() +2 ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
-      bg_color: "#5c6bc0",
+      bg_color: "#c05caf",
       userId: 1,
      
       draggable: true,
       resizable: false,
     
-      element: <div>*</div>,
+      element: <div> Description of the event</div>,
     },
     {
       title: "Title 5",
-      startDate: "10/10/2024",
-      endDate: "12/10/2024",
+      startDate:  getFormattedDate(new Date(new Date().setDate(new Date().getDate() +2 ))), 
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() +3 ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
@@ -83,18 +96,18 @@ function App() {
     },
     {
       title: "Title 6",
-      startDate: "10/10/2024",
-      endDate: "12/10/2024",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() +1 ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() +1 ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
-      bg_color: "#5c6bc0",
+      bg_color: "#ffa946",
       userId: 1,
      
       draggable: true,
       resizable: false,
     
-      element: <div>*</div>,
+      element: <div> Description of the event</div>,
     },
 
     // Rest of the events...
@@ -102,14 +115,26 @@ function App() {
   const teams = [
     {
       name: 'Team Alpha',
-      userId: 1
+      userId: 1,
+      image:"https://picsum.photos/32",
+      profileComponent: <div>Profile</div>
+
     },
     {
       name: 'Team Beta',
       userId: 2,
+      image:"https://picsum.photos/32/34",
+      profileComponent: <div>Profile</div>
+
+    },
+    {
+      name: 'Team Beta',
+      userId: 3,
+      image:"https://picsum.photos/32/33",
       profileComponent: <div>Profile</div>
 
     }
+
   ];
 
   React.useEffect(() => { 

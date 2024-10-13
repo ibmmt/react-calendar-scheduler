@@ -96,6 +96,7 @@ function ReactCalendarScheduler({
     endDate: '',
     startTime: '',
     endTime: '',
+    userId: '',
   });
   const [calendarType, setCalenderType] = useState(_calendarType);
   const [eventsState, setEventsState] = useState<EventObjectInput[]>(setEventID(events));
@@ -157,6 +158,7 @@ function ReactCalendarScheduler({
         endTime: eventObjEdit.endTime
           ? formatDate(new Date(eventObjEdit.endTime), 'H:mm:ss')
           : '',
+          userId: eventObjEdit.userId,
       });
 
       setIsShowAddEvent(true);
@@ -322,6 +324,8 @@ function ReactCalendarScheduler({
             handleClose={() => {
               setIsShowAddEvent(false);
             }}
+          
+            teams={teams}
             onDeleteEvent={onDeleteEvent}
             handleAddEvent={handleUpdateOrUpdateEvent}
             eventObj={eventEdit}
