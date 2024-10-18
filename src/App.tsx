@@ -51,7 +51,7 @@ const getFormattedDate = (date: Date | number) => {
     },
     {
       title: "Title 3",
-      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate()-1 ))),
+      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
       endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
@@ -66,8 +66,8 @@ const getFormattedDate = (date: Date | number) => {
     },
     {
       title: "Title 4",
-      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate() +1 ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() +2 ))),
+      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
@@ -81,8 +81,8 @@ const getFormattedDate = (date: Date | number) => {
     },
     {
       title: "Title 5",
-      startDate:  getFormattedDate(new Date(new Date().setDate(new Date().getDate() +2 ))), 
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() +3 ))),
+      startDate:  getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))), 
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
@@ -96,8 +96,8 @@ const getFormattedDate = (date: Date | number) => {
     },
     {
       title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() +1 ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() +1 ))),
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
@@ -109,6 +109,127 @@ const getFormattedDate = (date: Date | number) => {
     
       element: <div> Description of the event</div>,
     },
+    {
+      title: "Title 6",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      startTime: "08:30:00",
+      endTime: "12:00:00",
+      id: 3,
+      bg_color: "#ffa946",
+      userId: 1,
+     
+      draggable: true,
+      resizable: false,
+    
+      element: <div> Description of the event</div>,
+    },
+    {
+      title: "Title 6",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      startTime: "08:30:00",
+      endTime: "12:00:00",
+      id: 3,
+      bg_color: "#ffa946",
+      userId: 1,
+     
+      draggable: true,
+      resizable: false,
+    
+      element: <div> Description of the event</div>,
+    },
+    {
+      title: "Title 6",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      startTime: "08:30:00",
+      endTime: "12:00:00",
+      id: 3,
+      bg_color: "#ffa946",
+      userId: 1,
+     
+      draggable: true,
+      resizable: false,
+    
+      element: <div> Description of the event</div>,
+    },
+    {
+      title: "Title 6",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      startTime: "08:30:00",
+      endTime: "12:00:00",
+      id: 3,
+      bg_color: "#ffa946",
+      userId: 1,
+     
+      draggable: true,
+      resizable: false,
+    
+      element: <div> Description of the event</div>,
+    },
+    {
+      title: "Title 6",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      startTime: "08:30:00",
+      endTime: "12:00:00",
+      id: 3,
+      bg_color: "#ffa946",
+      userId: 1,
+     
+      draggable: true,
+      resizable: false,
+    
+      element: <div> Description of the event</div>,
+    },
+    {
+      title: "Title 6",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      startTime: "08:30:00",
+      endTime: "12:00:00",
+      id: 3,
+      bg_color: "#ffa946",
+      userId: 1,
+     
+      draggable: true,
+      resizable: false,
+    
+      element: <div> Description of the event</div>,
+    },
+    {
+      title: "Title 6",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      startTime: "08:30:00",
+      endTime: "12:00:00",
+      id: 3,
+      bg_color: "#ffa946",
+      userId: 1,
+     
+      draggable: true,
+      resizable: false,
+    
+      element: <div> Description of the event</div>,
+    },
+    {
+      title: "Title 6",
+      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+      startTime: "08:30:00",
+      endTime: "12:00:00",
+      id: 3,
+      bg_color: "#ffa946",
+      userId: 1,
+     
+      draggable: true,
+      resizable: false,
+    
+      element: <div> Description of the event</div>,
+    },
+
 
     // Rest of the events...
   ];
@@ -150,7 +271,6 @@ const getFormattedDate = (date: Date | number) => {
         selectedDate={ new Date(new Date().setDate(new Date().getDate() +1 )) }
         calendarType="team" // week or day
         monthViewDayTitleFormat="short" //month title formate
-      
         monthViewMinCellHeight={80} //day column title formate
         weekHourCellHeight={160} //Height of the hour box
         startingWeekday={0} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
@@ -159,11 +279,10 @@ const getFormattedDate = (date: Date | number) => {
         weekViewDayTitleFormat={(date: Date) => <div>{date.toLocaleDateString('en-US', { weekday: 'short' })} <div>{date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div></div> } // correctly formatted function for week day titles
         weekViewTimeFormat={12} //day column title formate
         weekViewNextButtonDayIncrement={3} //
+        minimumEventHeight={60} //minimum event thickness
         showAddNewEventButton={true} //show add new event button
         calendarHeader={<div>Header</div>} //calendar header component
         teams={teams}
-      
-
         disableEventModal={false} //disable event modal
         onUpdateEvent={(event) => {
           console.log(event);

@@ -273,6 +273,7 @@ function ReactCalendarScheduler({
             calendarHeader={calendarHeader}
             showAddNewEventButton={showAddNewEventButton}
             weekViewDayTitleFormat={weekViewDayTitleFormat}
+            minimumEventHeight={minimumEventHeight}
             
             // ... other props
             onDateChange={_onDateChange}

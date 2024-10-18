@@ -6,8 +6,7 @@ import { Team } from './type/team';
 interface Props {
     selectedDate?: Date;
     calendarType?: CalenderType;
-    monthViewDayTitleFormat?: string;
-    monthCalenderTitle?: string;
+    monthViewDayTitleFormat?: "long" | "short" | ((day: string) => React.ReactNode);
     monthViewDayHeight?: number;
     minimumEventHeight?: number;
     weekHourCellHeight?: number;
@@ -62,5 +61,5 @@ onPrevClick: _onPrevClick, //prev button click
 onCalendarTypeChange: _onCalendarTypeChange, //calendar type change
 onDateChange: _onDateChange, //change current date
 onIncreaseTimeSpan: _onIncreaseTimeSpan, //increase time span
-events, teams, calendarViewOptions }: Props): JSX.Element;
+events, teams, calendarViewOptions, monthViewDayTitleFormat }: Props): JSX.Element;
 export default ReactCalendarScheduler;

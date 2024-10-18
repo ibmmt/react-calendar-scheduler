@@ -13,5 +13,4 @@ interface DayCellMonthProps {
     isCurrentDay: boolean;
 }
 export default function DayCellMonth({ currentBoxHeight, eventsInDay, boxHeight, boxDay, day, dragingEventId, resizingEventId, calendarToAddOrUpdateEvent, dragBoxMouseEnterToCell, isCurrentDay }: DayCellMonthProps): JSX.Element;
-export { };
-
+export {};
