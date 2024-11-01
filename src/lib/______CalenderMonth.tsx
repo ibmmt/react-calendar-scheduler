@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import CalenderSwitch from './CalendarSwitch';
+import CalenderSwitch from './CalenderSwitch';
 import { HOUR_MILLISECONDS } from './Constant';
 import { EventHandlerContex } from './Contex';
 import DayCellMonth from './DayCellMonth';
@@ -10,56 +10,53 @@ import {
   isDateBetween,
   weekdaysArr
 } from './_utils';
-import { CalenderType } from './type/Calendar';
 import { EventObject } from './type/EventObject';
 
 interface CalenderMonthProps {
   currentDay: Date;
   eventsData: EventObject[];
   updateEvent: (event: EventObject) => void;
-  calendarType: CalenderType;
+  calenderType: string;
   startingWeekday: number;
-  monthViewDayHeight: number;
+  monthCalenderDayHeight: number;
   selectedDate: Date;
   dayStartFrom: number;
-  minimumEventHeight: number;
-  calendarHeight: number;
+  monthCalenderTitleFormate: string;
+  monthCalenderTitle: string;
+  minimumEventThickness: number;
+  calenderHeight: number;
   showAddNewEventButton?: boolean;
-  calendarHeader?: React.ReactNode;
-  calendarToAddOrUpdateEvent: (eventObj:EventObject) => void;
-  monthViewMinCellHeight: number;
-  onNextClick?: (date: Date, calendarType: string) => void;
-  onPrevClick?: (date: Date, calendarType: string) => void;
-  onDateChange?: (date: Date, calendarType: CalenderType) => void;
-  calendarViewOptions?: CalenderType[];
-  monthViewDayTitleFormat?: string | ((day:string) => React.ReactNode);
+  calendarHeaderComponent?: React.ReactNode;
+  calenderToAddOrUpdateEvent: (eventObj:EventObject) => void;
+  monthCalenderMinCellHeight: number;
+  handleNextClick?: (date: Date, calenderType: string) => void;
+  handlePrevClick?: (date: Date, calenderType: string) => void;
+  handleChangeCurrentDate?: (date: Date, calenderType: string) => void;
  
-  onCalendarTypeChange: (calendarType: CalenderType) => void;
+  handleCalendarTypeChange: (calenderType: string) => void;
 }
 
 function  CalenderMonth({
   currentDay=new Date(),
   eventsData,
   updateEvent,
-  calendarType,
+  calenderType,
   startingWeekday,
-
+  monthCalenderDayHeight,
   showAddNewEventButton = true,
-  //week format
-  monthViewDayTitleFormat="long",
-
-
-  calendarHeight,
-  minimumEventHeight=30,
-  calendarHeader,
-  calendarToAddOrUpdateEvent,
-  monthViewMinCellHeight: boxHeight = 60,
-  onNextClick: _onNextClick,
-  onPrevClick: _onPrevClick,
-  onDateChange: _onDateChange,
-  calendarViewOptions,
+  dayStartFrom,
+  monthCalenderTitleFormate,
+  monthCalenderTitle,
+  calenderHeight,
+  minimumEventThickness,
+  calendarHeaderComponent,
+  calenderToAddOrUpdateEvent,
+  monthCalenderMinCellHeight: boxHeight = 60,
+  handleNextClick: _handleNextClick,
+  handlePrevClick: _handlePrevClick,
+  handleChangeCurrentDate: _handleChangeCurrentDate,
   //fromDate = new Date(),
-  onCalendarTypeChange,
+  handleCalendarTypeChange,
 }: CalenderMonthProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(currentDay);
   const month = selectedDate.getMonth();
@@ -67,15 +64,15 @@ function  CalenderMonth({
   const yearMonth = `${year}-${(month + 1).toString().padStart(2, '0')}`;
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const [events, setEvents] = useState<EventObject[]>( calculatePositions(eventsData, 'month'));
+  const [events, setEvents] = useState<EventObject[]>( calculatePositions(eventsData,'month'));
   const currentDragDate = useRef<number>();
   const editingEventRef = useRef<any>();
   const [isDraging, setIsDraging] = useState(false);
   const sideUseRef = useRef('');
 
   if (!boxHeight) {
-    if (calendarHeight) {
-      boxHeight = calendarHeight / 5; // 5 weeks in a month
+    if (calenderHeight) {
+      boxHeight = calenderHeight / 5;
     } else {
       boxHeight = 50;
     }
@@ -191,18 +188,11 @@ function  CalenderMonth({
   const renderDaysOfWeek = () => {
     return (
       <tr>
-        {weekdaysArr.map((dayStr, index) => {
-          return (
-            <th className="ib__sc__table-th" key={dayStr}>
-              {/* {weekdaysArr[(index + startingWeekday) % 7]} */}
-            
-                {typeof monthViewDayTitleFormat === 'function'
-                  ? monthViewDayTitleFormat(weekdaysArr[(index + startingWeekday) % 7])
-                  : (monthViewDayTitleFormat === 'long' ? weekdaysArr[(index + startingWeekday) % 7] : weekdaysArr[(index + startingWeekday) % 7].slice(0, 3))}
-        
-            </th>
-          );
-        })}
+        {weekdaysArr.map((day, index) => (
+          <th className="ib__sc__table-th" key={day}>
+            {weekdaysArr[(index + startingWeekday) % 7]}
+          </th>
+        ))}
       </tr>
     );
   };
@@ -212,7 +202,6 @@ function  CalenderMonth({
    */
 
   const renderCalendarDays = () => {
-    const today = new Date().setHours(0, 0, 0, 0);
     const rows = [];
     let cells = [];
 
@@ -230,13 +219,18 @@ function  CalenderMonth({
         </td>,
       );
     }
-
+    const toDay = new Date();
+  
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(year, month, i);
       let minPercentage = 100;
+      const  isCurrentDay =
+        date.getDate() === toDay.getDate() &&
+        date.getMonth() === toDay.getMonth() &&
+        date.getFullYear() === toDay.getFullYear();
       const eventsInDay = events.filter((event) => {
        
-    
+       // console.log( 'event.width',event.width)
         if ( event.startTime&& event.endTime&& event.width&& isDateBetween(date, event.startTime, event.endTime)) {
           minPercentage = Math.min(minPercentage, event.width);
           return true;
@@ -246,8 +240,8 @@ function  CalenderMonth({
       });
 
       let currentBoxHeight = boxHeight;
-      if ((minPercentage * boxHeight) / 100 < minimumEventHeight) {
-        currentBoxHeight = (minimumEventHeight * 100) / minPercentage;
+      if ((minPercentage * boxHeight) / 100 < minimumEventThickness) {
+        currentBoxHeight = (minimumEventThickness * 100) / minPercentage;
       }
 
       cells.push(
@@ -257,8 +251,7 @@ function  CalenderMonth({
           currentBoxHeight={currentBoxHeight}
           eventsInDay={eventsInDay}
           dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
-          calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
-          isCurrentDay={today === date.getTime()}
+          calendarToAddOrUpdateEvent={calenderToAddOrUpdateEvent}
           dragingEventId={
             editingEventRef.current
               ? editingEventRef.current?.sc_app__id
@@ -269,8 +262,9 @@ function  CalenderMonth({
               ? editingEventRef.current.sc_app__id
               : undefined
           }
+          isCurrentDay={isCurrentDay}
           boxHeight={boxHeight}
-          boxDay={new Date(date).getTime()}
+         boxDay={new Date(date).getTime()}
           day={i}
         />,
       );
@@ -305,15 +299,12 @@ function  CalenderMonth({
     newDate.setMonth(newDate.getMonth() + value);
     setSelectedDate(newDate);
     if (value > 0) {
-      typeof _onNextClick === 'function' &&
-        _onNextClick(newDate, calendarType);
+      typeof _handleNextClick === 'function' &&
+        _handleNextClick(newDate, calenderType);
     } else {
-      typeof _onPrevClick === 'function' &&
-        _onPrevClick(newDate, calendarType);
+      typeof _handlePrevClick === 'function' &&
+        _handlePrevClick(newDate, calenderType);
     }
-    typeof _onDateChange === 'function' &&
-      _onDateChange(newDate, calendarType);
-  
   };
 
   /**
@@ -323,12 +314,9 @@ function  CalenderMonth({
 
   const selectMonth = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = new Date(e.target.value);
-     if (!newDate || isNaN(newDate.getTime())) {
-      return;
-    }
     setSelectedDate(newDate);
-    typeof _onDateChange === 'function' &&
-      _onDateChange(newDate, calendarType);
+    typeof _handleChangeCurrentDate === 'function' &&
+      _handleChangeCurrentDate(newDate, calenderType);
   };
 
 
@@ -340,14 +328,14 @@ function  CalenderMonth({
           dragStart,
           resizeStart: resizeStart,
           updateEvent: updateEvent,
-          calendarToAddOrUpdateEvent,
+          calenderToAddOrUpdateEvent,
           dragEnd: dropHandler,
           resizeEnd: dropHandler,
         }}
       >
         <div
           className={
-            'ib__sc__table ib__sc__table-month-wrap ib_sc_type_' + calendarType
+            'ib__sc__table ib__sc__table-month-wrap ib_sc_type_' + calenderType
           }
         >
           <div className="ib__sc__header_wrapper">
@@ -382,7 +370,7 @@ function  CalenderMonth({
                 </div>
               </div>
               <div className="ib__sc__header__center">
-                {calendarHeader}
+                {calendarHeaderComponent}
               </div>
 
               <div className="ib__sc__header__right">
@@ -390,11 +378,12 @@ function  CalenderMonth({
                {showAddNewEventButton && <div className="ib__sc__header__right__btn-group">
                   <button
                     className="ib__sc__btn"
-                    onClick={()=>{calendarToAddOrUpdateEvent({
+                    onClick={()=>{calenderToAddOrUpdateEvent({
                       isDragable: false,
-                      isResizable: false,
                       startTime: new Date().setHours(0, 0, 0, 0),
                       endTime: new Date().setHours(1, 0, 0, 0),
+                      isResizable: true,  
+
                     })}}
                   >
                     Add Event
@@ -404,9 +393,8 @@ function  CalenderMonth({
                 }
 
                 <CalenderSwitch
-                  calendarType={calendarType}
-                  calendarViewOptions={calendarViewOptions}
-                  onCalendarTypeChange={onCalendarTypeChange}
+                  calenderType={calenderType}
+                  handleCalendarTypeChange={handleCalendarTypeChange}
                 />
               </div>
             </div>

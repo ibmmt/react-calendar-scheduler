@@ -1,10 +1,7 @@
 /// <reference types="react" />
-import { CalenderType } from './type/Calendar';
 interface CalendarSwitchProps {
-    calendarType: CalenderType;
-    calendarViewOptions?: CalenderType[];
-    onCalendarTypeChange: (type: CalenderType) => void;
+    calenderType: string;
+    handleCalendarTypeChange: (type: string) => void;
 }
-export default function CalendarSwitch({ calendarType, calendarViewOptions, onCalendarTypeChange, }: CalendarSwitchProps): JSX.Element;
-export { };
-
+export default function CalendarSwitch({ calenderType, handleCalendarTypeChange, }: CalendarSwitchProps): JSX.Element;
+export {};

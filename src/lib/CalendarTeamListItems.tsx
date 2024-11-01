@@ -62,6 +62,10 @@ function CalendarTeamListItems({
         currentBoxHeight = (minimumEventHeight * 100) / minPercentage;
       }
 
+      console.log("currentBoxHeight",currentBoxHeight);
+      console.log("minPercentage",minPercentage);
+      console.log("minimumEventHeight",minimumEventHeight);
+      console.log("boxHeight",boxHeight);
       
 
       cells.push(

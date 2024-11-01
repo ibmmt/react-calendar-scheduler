@@ -271,7 +271,7 @@ const getFormattedDate = (date: Date | number) => {
         selectedDate={ new Date(new Date().setDate(new Date().getDate() +1 )) }
         calendarType="team" // week or day
         monthViewDayTitleFormat="short" //month title formate
-        monthViewMinCellHeight={80} //day column title formate
+        monthViewMinCellHeight={100} //day column title formate
         weekHourCellHeight={160} //Height of the hour box
         startingWeekday={0} // 0 for sunday, 1 for monday, 2 for tuesday, 3 for wednesday, 4 for thursday, 5 for friday, 6 for saturday
         weekViewStartHour={7} // Day start from hour
@@ -279,9 +279,14 @@ const getFormattedDate = (date: Date | number) => {
         weekViewDayTitleFormat={(date: Date) => <div>{date.toLocaleDateString('en-US', { weekday: 'short' })} <div>{date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div></div> } // correctly formatted function for week day titles
         weekViewTimeFormat={12} //day column title formate
         weekViewNextButtonDayIncrement={3} //
-        minimumEventHeight={60} //minimum event thickness
+        minimumEventHeight={40} //minimum event thickness
+        minimumEventWidth={100} //minimum event width
         showAddNewEventButton={true} //show add new event button
         calendarHeader={<div>Header</div>} //calendar header component
+        onDateChange={(date) => {
+          console.log(date);
+          console.log("onDateChange");
+        }}
         teams={teams}
         disableEventModal={false} //disable event modal
         onUpdateEvent={(event) => {

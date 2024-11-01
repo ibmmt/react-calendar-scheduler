@@ -29,6 +29,7 @@ interface Props {
   weekViewStartHour?: number;
   weekViewVisibleHours?: number;
   weekViewDayTitleFormat?: string | ((date: Date) => React.ReactNode);
+  minimumEventWidth?: number;
   calendarHeight?: number;
   weekViewTimeFormat?: number;
   monthViewMinCellHeight?: number;
@@ -81,6 +82,7 @@ function ReactCalendarScheduler({
   onCalendarTypeChange: _onCalendarTypeChange, //calendar type change
   onDateChange: _onDateChange, //change current date
   onIncreaseTimeSpan: _onIncreaseTimeSpan, //increase time span
+  minimumEventWidth=100,
   events,
   teams=[],
   calendarViewOptions=['week','day','month','team'],
@@ -239,6 +241,7 @@ function ReactCalendarScheduler({
             weekViewDayTitleFormat={weekViewDayTitleFormat} //day column title format
             weekViewTimeFormat={weekViewTimeFormat} //day column title format
             minimumEventHeight={minimumEventHeight}
+            minimumEventWidth={minimumEventWidth||100}
             onNextClick={_onNextClick}
             calendarHeight={calendarHeight}
             onPrevClick={_onPrevClick}
@@ -307,7 +310,9 @@ function ReactCalendarScheduler({
             monthViewMinCellHeight={monthViewMinCellHeight}
             minimumEventHeight={minimumEventHeight}
             calendarViewOptions={calendarViewOptions}
-           monthViewDayTitleFormat={monthViewDayTitleFormat}
+            monthViewDayTitleFormat={monthViewDayTitleFormat}
+            onNextClick={_onNextClick}
+            onPrevClick={_onPrevClick}
       
             onDateChange={_onDateChange}
             updateEvent={updateEventDrag}

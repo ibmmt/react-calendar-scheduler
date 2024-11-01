@@ -25,6 +25,7 @@ interface Props {
     minimumEventHeight: number;
     calendarHeader: React.ReactNode;
     calendarViewOptions?: CalenderType[];
+    minimumEventWidth: number;
 }
 declare const CalendarWeek: React.FC<Props>;
 export default CalendarWeek;

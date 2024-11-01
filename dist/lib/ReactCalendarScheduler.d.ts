@@ -15,6 +15,7 @@ interface Props {
     weekViewStartHour?: number;
     weekViewVisibleHours?: number;
     weekViewDayTitleFormat?: string | ((date: Date) => React.ReactNode);
+    minimumEventWidth?: number;
     calendarHeight?: number;
     weekViewTimeFormat?: number;
     monthViewMinCellHeight?: number;
@@ -61,5 +62,5 @@ onPrevClick: _onPrevClick, //prev button click
 onCalendarTypeChange: _onCalendarTypeChange, //calendar type change
 onDateChange: _onDateChange, //change current date
 onIncreaseTimeSpan: _onIncreaseTimeSpan, //increase time span
-events, teams, calendarViewOptions, monthViewDayTitleFormat }: Props): JSX.Element;
+minimumEventWidth, events, teams, calendarViewOptions, monthViewDayTitleFormat }: Props): JSX.Element;
 export default ReactCalendarScheduler;

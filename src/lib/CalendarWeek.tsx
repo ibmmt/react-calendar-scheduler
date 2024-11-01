@@ -47,6 +47,7 @@ interface Props {
   minimumEventHeight: number;
   calendarHeader: React.ReactNode;
   calendarViewOptions?: CalenderType[];
+  minimumEventWidth: number;
 }
 
 
@@ -70,6 +71,7 @@ const CalendarWeek: React.FC<Props> = ({
   onPrevClick: _onPrevClick,
   onDateChange: _onDateChange,
   calendarToAddOrUpdateEvent,
+  minimumEventWidth = 100,
   onIncreaseTimeSpan: _onIncreaseTimeSpan,
   onCalendarTypeChange,
   calendarViewOptions
@@ -85,6 +87,7 @@ const CalendarWeek: React.FC<Props> = ({
   const headColumnTime = useRef(null);
   const headColumn = useRef <HTMLDivElement | null>(null);
   const [headHeight, setHeadHeight] = useState(0);
+  const [headColumnWidth, setHeadColumnWidth] = useState(0);
   
  
 
@@ -222,8 +225,11 @@ const CalendarWeek: React.FC<Props> = ({
     today = new Date().setHours(0, 0, 0, 0);
     // Get the height of the first div and set it to the state
     if (headColumn.current) {
+     // console.log("headColumn.current.offsetWidth---------------------->>",headColumn.current.offsetWidth);
+      setHeadColumnWidth(headColumn.current.offsetWidth);
       //setClass1Height(class1Ref.current.offsetHeight);
       setHeadHeight(headColumn?.current?.offsetHeight);
+
     }
   }, []);
 
@@ -389,13 +395,41 @@ const CalendarWeek: React.FC<Props> = ({
                   const boxDay = new Date(
                     now.setDate(now.getDate() + dayIndex)
                   ).setHours(0, 0, 0, 0);
+                   
+                  let minWdithPercentage = 100
+
+                  const eventsOnDay =  events
+                  ? events.filter((event) =>{
+                  
+                      if( event.startTime && event.endTime){
+                        const isSameDay= isDateBetween(
+                        new Date(boxDay),
+                      event.startTime,
+                        event.endTime
+                      )
+                      
+                      if(isSameDay){
+                        minWdithPercentage =Math.min(event.width || 100 ,100)
+                      }
+
+                      return isSameDay
+                  }}
+                    )
+                  : []
+
+                let widthOfCloumn = 0;
+                if(headColumnWidth &&minimumEventWidth && (widthOfCloumn *minWdithPercentage/100) < minimumEventWidth){
+                  widthOfCloumn =  minimumEventWidth * 100 / minWdithPercentage
+
+                }
+                  
                 
                   return (
                     <div
                       key={dayIndex}
                       // add class 'ib__sc__current-day' if it is today
                       className={"ib__sc__table-td ib__sc__table-td-week "+(today==boxDay? 'ib__sc__today':'') }
-                      style={{ minHeight: heightOfWeekColumn + 'px' , }}
+                      style={{ minHeight: heightOfWeekColumn + 'px' , minWidth: widthOfCloumn + 'px'}}
                     >
                       <div
                         key={dayIndex}
@@ -427,19 +461,7 @@ const CalendarWeek: React.FC<Props> = ({
                         boxDay={new Date(boxDay)}
                         dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
                         calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
-                        events={
-                          events
-                            ? events.filter((event) =>{
-                                if( event.startTime && event.endTime){
-                                  return isDateBetween(
-                                  new Date(boxDay),
-                                event.startTime,
-                                  event.endTime
-                                )
-                            }}
-                              )
-                            : []
-                        }
+                        events={eventsOnDay }
                       />
                     </div>
                   );

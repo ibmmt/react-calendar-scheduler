@@ -115,6 +115,7 @@ Here are the key props supported by the `ReactCalendarScheduler` component:
 | `monthViewDayTitleFormat`        | Format for day titles in the month view. Can be `'long'`, `'short'`, or a custom function.                                            | `'short'`                          |
 | `monthViewDayHeight`             | The height of each day column in the month calendar (in pixels).                                                                      | `120`                              |
 | `minimumEventHeight`             | Minimum height of events (in pixels).                                                                                                 | `30`                               |
+| `minimumEventWidth`              | Minimum height of events (in pixels).                                                                                                 | `100`                              |
 | `calendarHeight`                 | Total height of the calendar (in pixels).                                                                                             | `600`                              |
 | `weekHourCellHeight`             | Height of each hour cell in the week view (in pixels).                                                                                | `50`                               |
 | `weekViewNextButtonDayIncrement` | Number of days to increment on the next button click in week view.                                                                    | `7`                                |
