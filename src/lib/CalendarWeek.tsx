@@ -417,7 +417,7 @@ const CalendarWeek: React.FC<Props> = ({
                     )
                   : []
 
-                let widthOfCloumn = 0;
+                let widthOfCloumn = 20;
                 if(headColumnWidth &&minimumEventWidth && (widthOfCloumn *minWdithPercentage/100) < minimumEventWidth){
                   widthOfCloumn =  minimumEventWidth * 100 / minWdithPercentage
 
