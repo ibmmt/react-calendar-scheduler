@@ -428,7 +428,7 @@ const CalendarWeek: React.FC<Props> = ({
                     <div
                       key={dayIndex}
                       // add class 'ib__sc__current-day' if it is today
-                      className={"ib__sc__table-td ib__sc__table-td-week "+(today==boxDay? 'ib__sc__today':'') }
+                      className={"ib__sc__table-td ib__sc__table-td-week "+(today==boxDay? 'ib__sc__today today':'') }
                       style={{ minHeight: heightOfWeekColumn + 'px' , minWidth: widthOfCloumn + 'px'}}
                     >
                       <div

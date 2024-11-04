@@ -66,8 +66,8 @@ const getFormattedDate = (date: Date | number) => {
     },
     {
       title: "Title 4",
-      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
+      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate()+1  ))),
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()+1 ))),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
@@ -81,8 +81,8 @@ const getFormattedDate = (date: Date | number) => {
     },
     {
       title: "Title 5",
-      startDate:  getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))), 
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
+      startDate:  getFormattedDate(new Date(new Date().setDate(new Date().getDate()+2 ))), 
+      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() )+2)),
       startTime: "08:30:00",
       endTime: "12:00:00",
       id: 2,
