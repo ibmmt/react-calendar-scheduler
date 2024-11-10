@@ -6,6 +6,7 @@ import { EventObject } from './type/EventObject';
 
 interface EventBoxMonthProps {
   boxHeight: number;
+  eventHeight: number;
 
   eventObj: EventObject;
   boxDay: number;
@@ -17,6 +18,7 @@ interface EventBoxMonthProps {
 
 const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
   boxHeight,
+  eventHeight,
 
   eventObj,
   boxDay,
@@ -155,8 +157,9 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
   
     eventStyle.width = '100%';
     eventStyle.left = '0%';
-    eventStyle.top = eventObj.left + '%';
-    eventStyle.height = eventObj.width + '%';
+    eventStyle.top = (eventObj.noOfOverLeftLap || 0)*eventHeight +'px';
+    eventStyle.height = eventHeight + 'px';
+   
  
   return (
     <>
@@ -181,6 +184,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
             e.preventDefault();
             mouseDownRef.current = false;
           }}
+          
         
           
           onClick={e => {
@@ -195,6 +199,8 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
           
           style={eventStyle}
         >
+          
+        
           <div
             className="ib__sc__event-box ib__sc__event-box-month"
             style={eventBoxStyle}
@@ -210,6 +216,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
                 ||
               </div>
             )}
+ 
 
             <EventBoxView
               eventObj={eventObj}
@@ -219,6 +226,7 @@ const EventBoxMonth: React.FC<EventBoxMonthProps> = ({
               isShowTitle={!overLap.start}
               isStart={!overLap.start}
             />
+
             {overLap && !overLap.end && eventObj.isResizable&& (
               <div
                 style={isResizing ? { display: 'flex' } : {}}

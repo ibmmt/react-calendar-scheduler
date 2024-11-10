@@ -12,12 +12,16 @@ interface DayColumnWeekProps {
   dragBoxMouseEnterToCell: (day: Date) => void;
   calendarToAddOrUpdateEvent: (event: EventObject) => void;
   dragingEventId?: string| number;
+  eventWidth: number;
+  minWidthOfCloumn: number;
 }
 
 const DayColumnWeek: React.FC<DayColumnWeekProps> = ({
   events,
   boxHeight,
   boxDay,
+  eventWidth,
+  minWidthOfCloumn,
 
   dragBoxMouseEnterToCell,
   calendarToAddOrUpdateEvent,
@@ -73,10 +77,13 @@ const dragMouseEnter = (e: MouseEvent) => {
               <EventBoxWeek
                 key={eventObj.sc_app__id}
                 eventObj={eventObj}
+                minWidthOfCloumn={minWidthOfCloumn}
                 boxDay={boxDay}
+                eventWidth={eventWidth}
                // calendarTableRef={calendarTableRef}
                 boxHeight={boxHeight}
                 dragingEventId={dragingEventId}
+                
               //  updateEvent={updateEvent}
                // calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
               />

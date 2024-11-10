@@ -22,7 +22,7 @@ interface CalenderMonthProps {
   monthViewDayHeight: number;
   selectedDate: Date;
   dayStartFrom: number;
-  minimumEventHeight: number;
+  eventHeight: number;
   calendarHeight: number;
   showAddNewEventButton?: boolean;
   calendarHeader?: React.ReactNode;
@@ -43,14 +43,11 @@ function  CalenderMonth({
   updateEvent,
   calendarType,
   startingWeekday,
-
   showAddNewEventButton = true,
   //week format
   monthViewDayTitleFormat="long",
-
-
   calendarHeight,
-  minimumEventHeight=30,
+  eventHeight=30,
   calendarHeader,
   calendarToAddOrUpdateEvent,
   monthViewMinCellHeight: boxHeight = 60,
@@ -233,22 +230,24 @@ function  CalenderMonth({
 
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(year, month, i);
-      let minPercentage = 100;
+
+      let maxiOverlap = 0;
       const eventsInDay = events.filter((event) => {
        
     
         if ( event.startTime&& event.endTime&& event.width&& isDateBetween(date, event.startTime, event.endTime)) {
-          minPercentage = Math.min(minPercentage, event.width);
+      
+          maxiOverlap = Math.max(maxiOverlap, event.noOfOverLeftLap || 0);
+           
           return true;
         } else {
           return false;
         }
       });
 
-      let currentBoxHeight = boxHeight;
-      if ((minPercentage * boxHeight) / 100 < minimumEventHeight) {
-        currentBoxHeight = (minimumEventHeight * 100) / minPercentage;
-      }
+      const  currentBoxHeight = Math.max(boxHeight, eventHeight * (maxiOverlap + 1));
+
+ 
 
       cells.push(
         <DayCellMonth
@@ -256,6 +255,7 @@ function  CalenderMonth({
          // isDraging={isDraging}
           currentBoxHeight={currentBoxHeight}
           eventsInDay={eventsInDay}
+          eventHeight={eventHeight}
           dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
           calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
           isCurrentDay={today === date.getTime()}

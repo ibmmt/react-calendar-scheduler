@@ -44,10 +44,10 @@ interface Props {
   calendarToAddOrUpdateEvent: (eventObj:EventObject) => void;
   onIncreaseTimeSpan: (value: number) => void;
   onCalendarTypeChange: (calendarType: CalenderType) => void;
-  minimumEventHeight: number;
+  eventHeight: number;
   calendarHeader: React.ReactNode;
   calendarViewOptions?: CalenderType[];
-  minimumEventWidth: number;
+  eventWidth: number;
 }
 
 
@@ -71,7 +71,7 @@ const CalendarWeek: React.FC<Props> = ({
   onPrevClick: _onPrevClick,
   onDateChange: _onDateChange,
   calendarToAddOrUpdateEvent,
-  minimumEventWidth = 100,
+  eventWidth = 100,
   onIncreaseTimeSpan: _onIncreaseTimeSpan,
   onCalendarTypeChange,
   calendarViewOptions
@@ -87,7 +87,7 @@ const CalendarWeek: React.FC<Props> = ({
   const headColumnTime = useRef(null);
   const headColumn = useRef <HTMLDivElement | null>(null);
   const [headHeight, setHeadHeight] = useState(0);
-  const [headColumnWidth, setHeadColumnWidth] = useState(0);
+  // const [headColumnWidth, setHeadColumnWidth] = useState(0);
   
  
 
@@ -155,7 +155,7 @@ const CalendarWeek: React.FC<Props> = ({
  
 
     currentDragDate.current = selectedDate;
-    dragEventRef.current = { ...event, left: '0', width: 100 };
+    dragEventRef.current = { ...event, left: 0, width: 100 };
     setIsDraging(true);
   };
   
@@ -226,7 +226,7 @@ const CalendarWeek: React.FC<Props> = ({
     // Get the height of the first div and set it to the state
     if (headColumn.current) {
      // console.log("headColumn.current.offsetWidth---------------------->>",headColumn.current.offsetWidth);
-      setHeadColumnWidth(headColumn.current.offsetWidth);
+      //setHeadColumnWidth(headColumn.current.offsetWidth);
       //setClass1Height(class1Ref.current.offsetHeight);
       setHeadHeight(headColumn?.current?.offsetHeight);
 
@@ -396,7 +396,7 @@ const CalendarWeek: React.FC<Props> = ({
                     now.setDate(now.getDate() + dayIndex)
                   ).setHours(0, 0, 0, 0);
                    
-                  let minWdithPercentage = 100
+                  let maxiOverlap = 0
 
                   const eventsOnDay =  events
                   ? events.filter((event) =>{
@@ -409,7 +409,9 @@ const CalendarWeek: React.FC<Props> = ({
                       )
                       
                       if(isSameDay){
-                        minWdithPercentage =Math.min(event.width || 100 ,100)
+                       // minWdithPercentage =Math.min(event.width || 100 ,100)
+
+                      maxiOverlap = Math.max(maxiOverlap, event.noOfOverLeftLap || 0);
                       }
 
                       return isSameDay
@@ -417,11 +419,8 @@ const CalendarWeek: React.FC<Props> = ({
                     )
                   : []
 
-                let widthOfCloumn = 20;
-                if(headColumnWidth &&minimumEventWidth && (widthOfCloumn *minWdithPercentage/100) < minimumEventWidth){
-                  widthOfCloumn =  minimumEventWidth * 100 / minWdithPercentage
-
-                }
+                  const  minWidthOfCloumn = Math.max(0, eventWidth * (maxiOverlap + 1));
+                  
                   
                 
                   return (
@@ -429,7 +428,7 @@ const CalendarWeek: React.FC<Props> = ({
                       key={dayIndex}
                       // add class 'ib__sc__current-day' if it is today
                       className={"ib__sc__table-td ib__sc__table-td-week "+(today==boxDay? 'ib__sc__today today':'') }
-                      style={{ minHeight: heightOfWeekColumn + 'px' , minWidth: widthOfCloumn + 'px'}}
+                      style={{ minHeight: heightOfWeekColumn + 'px' , minWidth: minWidthOfCloumn + 'px'}}
                     >
                       <div
                         key={dayIndex}
@@ -447,6 +446,8 @@ const CalendarWeek: React.FC<Props> = ({
                         calendarTableRef={calendarTableRef}
                         boxHeight={boxHeight}
                         updateEvent={updateEvent}
+                        eventWidth={eventWidth}
+                        minWidthOfCloumn={minWidthOfCloumn}
                         // dragingEventId={
                         //   dragEventRef.current
                         //     ? dragEventRef.current.sc_app__id

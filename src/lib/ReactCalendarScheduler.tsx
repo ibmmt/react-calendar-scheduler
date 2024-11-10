@@ -20,16 +20,17 @@ interface Props {
   selectedDate?: Date;
   calendarType?: CalenderType;
   monthViewDayTitleFormat?:  "long" | "short" | ((day:string) => React.ReactNode);
+  minimumEventHeight?: number;
 
   monthViewDayHeight?: number;
-  minimumEventHeight?: number;
+  eventHeight?: number;
   weekHourCellHeight?: number;
   weekViewNextButtonDayIncrement?: number;
   startingWeekday?: number;
   weekViewStartHour?: number;
   weekViewVisibleHours?: number;
   weekViewDayTitleFormat?: string | ((date: Date) => React.ReactNode);
-  minimumEventWidth?: number;
+  eventWidth?: number;
   calendarHeight?: number;
   weekViewTimeFormat?: number;
   monthViewMinCellHeight?: number;
@@ -58,7 +59,7 @@ function ReactCalendarScheduler({
   calendarType: _calendarType = 'week', // week or day
 
   monthViewDayHeight = 120, //day column height
-  minimumEventHeight = 30, //minimum event thickness
+  eventHeight = 30, //minimum event thickness
   calendarHeight = 600, //calendar height
   weekHourCellHeight: _weekHourCellHeight = 50,
   weekViewNextButtonDayIncrement = 7, //day increment on next button click
@@ -82,7 +83,10 @@ function ReactCalendarScheduler({
   onCalendarTypeChange: _onCalendarTypeChange, //calendar type change
   onDateChange: _onDateChange, //change current date
   onIncreaseTimeSpan: _onIncreaseTimeSpan, //increase time span
-  minimumEventWidth=100,
+  eventWidth=100,
+
+  //@deprecated
+  minimumEventHeight=30,
   events,
   teams=[],
   calendarViewOptions=['week','day','month','team'],
@@ -240,8 +244,8 @@ function ReactCalendarScheduler({
             weekViewVisibleHours={weekViewVisibleHours} //day visible hour
             weekViewDayTitleFormat={weekViewDayTitleFormat} //day column title format
             weekViewTimeFormat={weekViewTimeFormat} //day column title format
-            minimumEventHeight={minimumEventHeight}
-            minimumEventWidth={minimumEventWidth||100}
+            eventHeight={eventHeight}
+            eventWidth={eventWidth||100}
             onNextClick={_onNextClick}
             calendarHeight={calendarHeight}
             onPrevClick={_onPrevClick}
@@ -276,7 +280,7 @@ function ReactCalendarScheduler({
             calendarHeader={calendarHeader}
             showAddNewEventButton={showAddNewEventButton}
             weekViewDayTitleFormat={weekViewDayTitleFormat}
-            minimumEventHeight={minimumEventHeight}
+            eventHeight={eventHeight}
             
             // ... other props
             onDateChange={_onDateChange}
@@ -308,7 +312,7 @@ function ReactCalendarScheduler({
             calendarHeight={calendarHeight}
             calendarHeader={calendarHeader}
             monthViewMinCellHeight={monthViewMinCellHeight}
-            minimumEventHeight={minimumEventHeight}
+            eventHeight={eventHeight}
             calendarViewOptions={calendarViewOptions}
             monthViewDayTitleFormat={monthViewDayTitleFormat}
             onNextClick={_onNextClick}

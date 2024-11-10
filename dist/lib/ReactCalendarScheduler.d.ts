@@ -8,14 +8,14 @@ interface Props {
     calendarType?: CalenderType;
     monthViewDayTitleFormat?: "long" | "short" | ((day: string) => React.ReactNode);
     monthViewDayHeight?: number;
-    minimumEventHeight?: number;
+    eventHeight?: number;
     weekHourCellHeight?: number;
     weekViewNextButtonDayIncrement?: number;
     startingWeekday?: number;
     weekViewStartHour?: number;
     weekViewVisibleHours?: number;
     weekViewDayTitleFormat?: string | ((date: Date) => React.ReactNode);
-    minimumEventWidth?: number;
+    eventWidth?: number;
     calendarHeight?: number;
     weekViewTimeFormat?: number;
     monthViewMinCellHeight?: number;
@@ -39,7 +39,7 @@ interface Props {
 }
 declare function ReactCalendarScheduler({ selectedDate, calendarType: _calendarType, // week or day
 monthViewDayHeight, //day column height
-minimumEventHeight, //minimum event thickness
+eventHeight, //minimum event thickness
 calendarHeight, //calendar height
 weekHourCellHeight: _weekHourCellHeight, weekViewNextButtonDayIncrement, //day increment on next button click
 startingWeekday, // 0 for Sunday, 1 for Monday, 2 for Tuesday, 3 for Wednesday, 4 for Thursday, 5 for Friday, 6 for Saturday
@@ -62,5 +62,5 @@ onPrevClick: _onPrevClick, //prev button click
 onCalendarTypeChange: _onCalendarTypeChange, //calendar type change
 onDateChange: _onDateChange, //change current date
 onIncreaseTimeSpan: _onIncreaseTimeSpan, //increase time span
-minimumEventWidth, events, teams, calendarViewOptions, monthViewDayTitleFormat }: Props): JSX.Element;
+eventWidth, events, teams, calendarViewOptions, monthViewDayTitleFormat }: Props): JSX.Element;
 export default ReactCalendarScheduler;

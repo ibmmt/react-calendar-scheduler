@@ -279,8 +279,8 @@ const getFormattedDate = (date: Date | number) => {
         weekViewDayTitleFormat={(date: Date) => <div>{date.toLocaleDateString('en-US', { weekday: 'short' })} <div>{date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div></div> } // correctly formatted function for week day titles
         weekViewTimeFormat={12} //day column title formate
         weekViewNextButtonDayIncrement={3} //
-        minimumEventHeight={40} //minimum event thickness
-        minimumEventWidth={100} //minimum event width
+        eventHeight={40} //minimum event thickness
+        eventWidth={100} //minimum event width
         showAddNewEventButton={true} //show add new event button
         calendarHeader={<div>Header</div>} //calendar header component
         onDateChange={(date) => {

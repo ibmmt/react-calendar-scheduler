@@ -15,6 +15,7 @@ interface DayCellMonthProps {
   calendarToAddOrUpdateEvent: (event: EventObject) => void;
   dragBoxMouseEnterToCell: (boxDay: Date) => void;
   isCurrentDay: boolean;
+  eventHeight: number;
 }
 
 export default function DayCellMonth({
@@ -25,6 +26,7 @@ export default function DayCellMonth({
   day,
   dragingEventId,
   resizingEventId,
+  eventHeight,
   calendarToAddOrUpdateEvent,
   dragBoxMouseEnterToCell,
   isCurrentDay
@@ -91,6 +93,7 @@ export default function DayCellMonth({
               key={key}
               eventObj={event}
               boxHeight={boxHeight}
+              eventHeight={eventHeight}
               
               boxDay={boxDay}
               isDragable={event.isDragable}

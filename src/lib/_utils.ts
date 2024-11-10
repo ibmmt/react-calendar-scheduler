@@ -225,6 +225,7 @@ export const calculatePositions = (events: any[],caType:string) => {
 
     sortedEvents[i].width = width;
     sortedEvents[i].left = left;
+    sortedEvents[i].noOfOverLeftLap = leftOvercome.length;
   }
 
   return sortedEvents;
@@ -396,12 +397,20 @@ export const isDateBetween = (
   startTime: string | number | Date,
   endTime: string | number | Date,
 ): boolean => {
-  const date = dateObj.getTime();
-  const startTime_daystart = new Date(startTime).setHours(0, 0, 0, 0);
-  const endtime_dayend = new Date(endTime).setHours(23, 59, 59, 999);
+  // Create new Date instances to avoid mutating the original dates
+  const date = new Date(dateObj);
+  const startDate = new Date(startTime);
+  const endDate = new Date(endTime);
 
-  return date >= startTime_daystart && date <= endtime_dayend;
+  // Set time to midnight to compare only the date part
+  date.setHours(0, 0, 0, 0);
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(0, 0, 0, 0);
+
+  // Check if the date falls within the range (inclusive)
+  return date >= startDate && date <= endDate;
 };
+
 
 export const setEventID = <T extends EventObject | EventObjectInput>(
   events: T[],

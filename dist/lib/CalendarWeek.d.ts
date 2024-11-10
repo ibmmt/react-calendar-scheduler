@@ -22,10 +22,10 @@ interface Props {
     calendarToAddOrUpdateEvent: (eventObj: EventObject) => void;
     onIncreaseTimeSpan: (value: number) => void;
     onCalendarTypeChange: (calendarType: CalenderType) => void;
-    minimumEventHeight: number;
+    eventHeight: number;
     calendarHeader: React.ReactNode;
     calendarViewOptions?: CalenderType[];
-    minimumEventWidth: number;
+    eventWidth: number;
 }
 declare const CalendarWeek: React.FC<Props>;
 export default CalendarWeek;

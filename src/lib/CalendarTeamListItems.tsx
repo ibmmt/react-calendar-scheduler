@@ -11,7 +11,7 @@ interface CalendarTeamListItemsProps {
   calendarToAddOrUpdateEvent: (eventObj: EventObject) => void;
   monthViewMinCellHeight: number;
   boxHeight: number;
-  minimumEventHeight: number;
+  eventHeight: number;
   dragBoxMouseEnterToCell: (boxDay: Date,userId:string | number) => void;
   dragingEventId: number | undefined;
     resizingEventId: number | undefined;
@@ -29,7 +29,7 @@ function CalendarTeamListItems({
     dragingEventId,
     resizingEventId,
     boxHeight,
-    minimumEventHeight
+    eventHeight
   // ... other props
 }: CalendarTeamListItemsProps) {
   const rows = teams.map((team) => {
@@ -38,7 +38,7 @@ function CalendarTeamListItems({
     const dayOfWeek = startOfWeek.getDay();
     
     startOfWeek.setDate(startOfWeek.getDate() - dayOfWeek);
-    let minPercentage = 100;
+    let maxOverlap = 0;
     for (let i = 0; i < 7; i++) {
         
       const date = new Date(startOfWeek);
@@ -52,25 +52,19 @@ function CalendarTeamListItems({
           (new Date(event.startTime).toDateString() === date.toDateString() ||
           event.endTime && (isDateBetween(date,event.startTime,event.endTime)))
             ){ 
-             minPercentage = Math.min(minPercentage, event.width || 100);
+           maxOverlap= Math.max(maxOverlap,event.noOfOverLeftLap || 0);
              return true; }
             return false; 
         });
 
-      let currentBoxHeight = boxHeight;
-      if ((minPercentage * boxHeight) / 100 < minimumEventHeight) {
-        currentBoxHeight = (minimumEventHeight * 100) / minPercentage;
-      }
+      const currentBoxHeight = Math.max((maxOverlap+1) * eventHeight,boxHeight);
 
-      console.log("currentBoxHeight",currentBoxHeight);
-      console.log("minPercentage",minPercentage);
-      console.log("minimumEventHeight",minimumEventHeight);
-      console.log("boxHeight",boxHeight);
-      
+  
 
       cells.push(
         <CalendarTeamCell
-          key={i+team.userId}
+          eventHeight={eventHeight}
+          key={i+ (""+team.userId)}
           team={team}
           date={date}
           dragingEventId={dragingEventId}

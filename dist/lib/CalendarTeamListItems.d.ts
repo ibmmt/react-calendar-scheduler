@@ -9,10 +9,10 @@ interface CalendarTeamListItemsProps {
     calendarToAddOrUpdateEvent: (eventObj: EventObject) => void;
     monthViewMinCellHeight: number;
     boxHeight: number;
-    minimumEventHeight: number;
+    eventHeight: number;
     dragBoxMouseEnterToCell: (boxDay: Date, userId: string | number) => void;
     dragingEventId: number | undefined;
     resizingEventId: number | undefined;
 }
-declare function CalendarTeamListItems({ teams, eventsData, selectedWeekStartDate, updateEvent, calendarToAddOrUpdateEvent, dragBoxMouseEnterToCell, dragingEventId, resizingEventId, boxHeight, minimumEventHeight }: CalendarTeamListItemsProps): JSX.Element;
+declare function CalendarTeamListItems({ teams, eventsData, selectedWeekStartDate, updateEvent, calendarToAddOrUpdateEvent, dragBoxMouseEnterToCell, dragingEventId, resizingEventId, boxHeight, eventHeight }: CalendarTeamListItemsProps): JSX.Element;
 export default CalendarTeamListItems;

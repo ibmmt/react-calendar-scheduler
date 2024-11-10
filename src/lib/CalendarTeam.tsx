@@ -25,7 +25,7 @@ interface CalendarTeamProps {
   weekViewDayTitleFormat?: string | ((date: Date) => React.ReactNode);
   showAddNewEventButton?: boolean;
 
-    minimumEventHeight?: number;
+    eventHeight?: number;
     calendarHeader?: React.ReactNode;
  
 }
@@ -43,7 +43,7 @@ function CalendarTeam({
   calendarToAddOrUpdateEvent,
   onNextClick: _onNextClick,
   onPrevClick: _onPrevClick,
-  minimumEventHeight=30,
+  eventHeight=30,
   calendarHeader,
   calendarViewOptions,
   showAddNewEventButton = true,
@@ -321,7 +321,7 @@ function CalendarTeam({
               updateEvent={updateEvent}
               calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
               monthViewMinCellHeight={30}
-                minimumEventHeight={minimumEventHeight}
+                eventHeight={eventHeight}
                 boxHeight={30}
                 dragBoxMouseEnterToCell={dragBoxMouseEnterToCell}
                 dragingEventId={

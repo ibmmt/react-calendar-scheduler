@@ -9,6 +9,8 @@ interface EventBoxWeekProps {
   eventObj:any,
   boxDay: any;
   dragingEventId: any;
+  eventWidth:number;
+  minWidthOfCloumn:number;
 }
 
 const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
@@ -17,6 +19,8 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
   eventObj,
   boxDay,
   dragingEventId,
+  eventWidth,
+  minWidthOfCloumn,
 }) => {
   const [isDraging, setIsDraging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
@@ -166,9 +170,28 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
     setPostionAndHeight(eventObj.startTime, eventObj.endTime);
   }, [eventObj, boxHeight, boxTime, boxDay]);
 
+ 
+//   const _eventWidth=  minWidthOfCloumn * eventObj.width / 100;
+//   let _eventWidthString=eventObj.width + '%';
+//   let _eventLeft = eventObj.left+'%';
+//   if(_eventWidth < eventWidth){
+//     _eventWidthString = eventWidth + 'px';
+//    // _eventLeft = (eventObj.noOfOverLeftLap*eventWidth || 0)+'px';
+
+//   }
+// if(minWidthOfCloumn*  eventObj.left / 100 < eventObj.noOfOverLeftLap*eventWidth || 0){
+//   _eventLeft = (eventObj.noOfOverLeftLap*eventWidth || 0)+'px';
+// }
+let _eventWidthString = eventWidth + 'px';
+if(eventObj.width == 100){
+  _eventWidthString = '100%';
+}else{
+  _eventWidthString = eventWidth + 'px';
+}
+
   const eventStyle: React.CSSProperties = {
-    width: (isDraging ? 100 : eventObj.width) + '%',
-    left: (isDraging ? 0 : eventObj.left) + '%',
+    width: (isDraging ? '100%' :  _eventWidthString),
+    left: (isDraging ? '0px' : eventObj.noOfOverLeftLap*eventWidth + 'px'),
     top: Offset + 'px',
     cursor: 'move',
     opacity: isDraging ? 0.8 : 1,
@@ -236,6 +259,7 @@ const EventBoxWeek: React.FC<EventBoxWeekProps> = ({
           
               isShowTitle={true}
             />
+           
             {overLap && !overLap.bottom && eventObj.isResizable && (
               <div
                 style={isResizing ? { display: 'block' } : {}}

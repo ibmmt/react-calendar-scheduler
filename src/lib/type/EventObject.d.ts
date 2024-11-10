@@ -3,13 +3,14 @@ export interface EventObject {
   startDate?: string | number;
   endDate?: string | number;
 
-  left?: string;
-  top?: string;
+  left?: number;
+  top?: number;
   width?: number;
   title?: string;
   description?: string;
   color?: string;
   textColor?: string;
+  noOfOverLeftLap?: number;
 
   isDragable: boolean;
   isResizable: boolean;

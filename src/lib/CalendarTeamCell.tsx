@@ -15,6 +15,7 @@ interface CalendarTeamCellProps {
   dragingEventId: number | undefined;
   resizingEventId: number | undefined;
   userId: string | number;
+  eventHeight: number;
 }
 
 function CalendarTeamCell({
@@ -26,6 +27,7 @@ function CalendarTeamCell({
   dragBoxMouseEnterToCell,
   dragingEventId,
   resizingEventId,
+  eventHeight,
   userId
 }: CalendarTeamCellProps) {
   const BoxRef = useRef<HTMLTableCellElement>(null);
@@ -85,6 +87,7 @@ function CalendarTeamCell({
               key={key}
               eventObj={event}
               boxHeight={50}
+              eventHeight={eventHeight}
         
               boxDay={date.getTime()}
               isDragable={event.isDragable}

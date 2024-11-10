@@ -10,7 +10,7 @@ interface CalenderMonthProps {
     monthViewDayHeight: number;
     selectedDate: Date;
     dayStartFrom: number;
-    minimumEventHeight: number;
+    eventHeight: number;
     calendarHeight: number;
     showAddNewEventButton?: boolean;
     calendarHeader?: React.ReactNode;
@@ -22,5 +22,5 @@ interface CalenderMonthProps {
     calendarViewOptions?: CalenderType[];
     onCalendarTypeChange: (calendarType: CalenderType) => void;
 }
-declare function CalenderMonth({ currentDay, eventsData, updateEvent, calendarType, startingWeekday, showAddNewEventButton, calendarHeight, minimumEventHeight, calendarHeader, calendarToAddOrUpdateEvent, monthViewMinCellHeight: boxHeight, onNextClick: _onNextClick, onPrevClick: _onPrevClick, onDateChange: _onDateChange, calendarViewOptions, onCalendarTypeChange, }: CalenderMonthProps): JSX.Element;
+declare function CalenderMonth({ currentDay, eventsData, updateEvent, calendarType, startingWeekday, showAddNewEventButton, calendarHeight, eventHeight, calendarHeader, calendarToAddOrUpdateEvent, monthViewMinCellHeight: boxHeight, onNextClick: _onNextClick, onPrevClick: _onPrevClick, onDateChange: _onDateChange, calendarViewOptions, onCalendarTypeChange, }: CalenderMonthProps): JSX.Element;
 export default CalenderMonth;
