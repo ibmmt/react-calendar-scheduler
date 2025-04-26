@@ -82,7 +82,7 @@ function CalendarTeamListItems({
 
     return (
       <tr key={team.userId}>
-        <td className="ib__sc__table-td ib__sc__team-cell">
+        <td className="ib__sc__table-td ib__sc__team-cell sticky-col">
           <div className='ib__sc__team-team-wrap'>
           {team.image && 
           <div className='ib__sc__team-profile-pic-wrap'><img src={team.image} alt={team.name} className="ib__sc__team-profile-pic" /> </div>}

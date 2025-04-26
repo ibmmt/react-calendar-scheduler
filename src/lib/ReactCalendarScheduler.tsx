@@ -267,9 +267,9 @@ function ReactCalendarScheduler({
           />
         )}
 
-{calendarType === 'team' && (!teams||!teams.length)&& (<div className='ib__sc__no team'>No Team Found</div>
+{/* {calendarType === 'team' && (!teams||!teams.length)&& (<div className='ib__sc__no team'>No Team Found</div>
 
-)}
+)} */}
 {calendarType === 'team' && !!teams?.length&& (
           <CalendarTeam
             eventsData={convertToComponentEventFormat(setEventID(eventsState), 'dd/MM/yyyy')}

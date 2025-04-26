@@ -18,6 +18,38 @@ body {
     border-radius: 1em;
 }
 
+
+
+.ib__sc__scroll-container {
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #cfcfcf transparent; /* Firefox */
+  
+}
+
+
+.ib__sc__scroll-container::-webkit-scrollbar {
+  width: 4px;
+  border-radius:10px;
+}
+
+.ib__sc__scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ib__sc__scroll-container::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 10px;
+  background-clip: padding-box;
+
+}
+
+
+.ib__sc__scroll-container {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
 .ib__sc__form-group {
   margin-bottom: 1em;
 }
@@ -118,6 +150,10 @@ body {
   align-items: center;
   padding: 6px;
   box-sizing: border-box;
+  overflow-y: scroll;
+/* thin scroll ball */
+  -webkit-overflow-scrolling: touch;
+
 }
 .ib__sc__header .ib__sc-form-control {
 
@@ -146,16 +182,26 @@ body {
   width: 24px;
   background-color: #d1e2ff;
 }
-.ib__sc__calendar_switch {
+.ib__sc__select {
   font-size: 0.8em;
+  border: 1px solid #b3b3b3b0;
+  padding: 0.45rem 0.75rem;
+  font-size: .8em;
+  padding: 5px 10px;
+  line-height: 1.2em;
+  border-radius: 3px;
+ 
+  padding: 0.45rem 0.75rem;
 }
 
 .ib__sc__table-out-week {
   display: flex;
   width: 100%;
   overflow-y: scroll;
+  border-left: 1px solid #dfdfdf;
+  border-right: 1px solid #dfdfdf;
 }
-.ib__sc__table-out-week::-webkit-scrollbar {
+/* .ib__sc__table-out-week::-webkit-scrollbar {
   width: 0.4em;
   border-radius: 1em;
 }
@@ -168,7 +214,7 @@ body {
 .ib__sc__table-out-week::-webkit-scrollbar-thumb {
   background-color: rgb(211, 211, 211);
   outline: 1px solid rgb(173, 181, 190);
-}
+} */
 .ib__sc__week-date {
   display: flex;
   justify-content: center;
@@ -208,8 +254,9 @@ body {
 
 .ib__sc__table-hr-box-week {
   background: #ffffff;
-  border-top: 1px dashed #dbdbdb;
+  border-top: 1px solid #dbdbdb;
   margin-top: -1px;
+  margin-left: -1px;
   cursor: pointer;
 }
 .ib__sc__table-hr-box-week:hover {
@@ -252,6 +299,8 @@ td.ib__sc__table-td.ib__sc__table-td-month.ib__sc__today {
   position: sticky;
   z-index: 1001;
   padding: 8px;
+  margin-left: -1px;
+ 
   background: #fff;
   border: 1px solid #dfdfdf;
   /* border-left: none; */
@@ -277,8 +326,10 @@ td.ib__sc__table-td.team-cell {
   border-radius: 50%;
   margin-right: 6px;
 }
-td.ib__sc__table-td.ib__sc__team-cell {
-  /* display: flex; */
+.ib__sc__team-cell__team{
+min-width: 100px;
+  min-height: 100px;
+ 
 }
 
 .ib__sc__team-team-wrap{
@@ -297,8 +348,19 @@ td.ib__sc__table-td.ib__sc__team-cell {
 }
 
 .ib__sc__tb-wrapper-week {
-  display: flex;
+border-collapse: collapse;
+min-width: max-content;
   width: 100%;
+}
+
+.ib__sc__table .sticky-col {
+  position: sticky;
+  left: 0;
+  max-width: 80px;
+  width: 80px;
+  background: white; /* or match your table background */
+  z-index: 1003; /* keep it above other columns */
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05); /* optional visual separator */
 }
 
 .ib__sc__increment-timespan .ib__sc__btn {
@@ -307,7 +369,20 @@ td.ib__sc__table-td.ib__sc__team-cell {
   padding: 1px 8px;
 }
 .ib__sc__cell {
-  border: 1px dashed #dfdfdf;
+  min-width: 80px;
+  min-width: 80px;
+  border: 1px solid #dfdfdf;
+}
+.sticky-col .ib__sc__cell {
+  border-left: none;
+
+}
+
+.ib__sc__table-td:last-child .ib__sc__cell {
+  border-right: none;
+}
+.ib__sc__cell:first-child {
+  border-left: none;
 }
 .ib__sc__cell-wrapper {
   position: relative;
@@ -395,7 +470,7 @@ td.ib__sc__table-td.ib__sc__team-cell {
   cursor: grab;
   position: absolute;
   pointer-events: none;
-  border: 1px dashed black;
+  border: 1px solid black;
   background: red;
 }
 
@@ -415,7 +490,7 @@ td.ib__sc__table-td.ib__sc__team-cell {
   width: 72px;
   margin-top: -1px;
   padding-right: 3px;
-  border-top: 1px dashed transparent;
+  border-top: 1px solid transparent;
 }
 
 /* Add Event modal */
@@ -518,6 +593,8 @@ td.ib__sc__table-td.ib__sc__team-cell {
   cursor: pointer;
   height: 100%;
   position: relative;
+min-width: 100px;
+min-height: 100px;
 }
 .ib__sc_month_cell {
   /* position: relative; */
@@ -554,10 +631,18 @@ table.ib__sc__table-month td:first-child {
 table.ib__sc__table-month tr {
   border-bottom: 1px solid #dfdfdf;
 }
+.ib__sc__table_team_wrapper{
+  overflow-x: auto;
+  width: 100%;
+  position: relative;
+}
 
 .ib__sc__table-team{
   border-spacing: 0;
   z-index: 1003;
+
+
+  min-width: max-content;
   width: 100%;
 }
 
@@ -571,6 +656,13 @@ table.ib__sc__table-team td {
   border-right: 1px solid #dfdfdf;
   border-bottom: 1px solid #dfdfdf;
   vertical-align: top;
+  white-space: nowrap;
+}
+
+table.ib__sc__table-team th{
+
+  white-space: nowrap;
+
 }
 table.ib__sc__table-team  {
   border-left: 1px solid #dfdfdf;

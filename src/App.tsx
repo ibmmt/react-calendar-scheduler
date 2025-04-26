@@ -1,4 +1,3 @@
-import React from "react";
 import { ReactCalendarScheduler } from "./lib";
 import { EventObjectInput } from "./lib/type/EventObject";
 
@@ -15,252 +14,358 @@ const getFormattedDate = (date: Date | number) => {
 
 //new Date(new Date().setDate(new Date().getDate() +1 ))
 
-  const events: EventObjectInput[] = [
-    {
-      title: "Title Lorem Ipsum ",
-      startDate: "20/10/2024",
-      endDate: "20/10/2024",
-      startTime: "09:00:00",
-      endTime: "10:00:00",
-      id: 133,
-      bg_color: "#FFAB91",
-      element: <div>
-        Description of the event
-      </div>,
-      editable: true,
-      userId: 2,
+const events: EventObjectInput[] = [
+  {
+    title: "Title 1",
+    startDate: "20/04/2025",
+    endDate: "20/04/2025",
+    startTime: "09:00:00",
+    endTime: "10:00:00",
+    id: 133,
+    bg_color: "#FFAB91",
+    element: <div>**</div>,
+    editable: true,
+    userId: 2,
+   
+    draggable: true,
+    resizable: false,
+    custom_class: "custom-class",
+  },
+  {
+    title: "Title 2",
+    startDate: "10/04/2025",
+    endDate: "12/04/2025",
+    startTime: "08:30:00",
+    endTime: "12:00:00",
+    id: 2,
+    bg_color: "#5c6bc0",
+    userId: 2,
+   
+    draggable: true,
+    resizable: true,
+  
+    element: <div>*</div>,
+  },
+  {
+    title: "Title 3",
+    startDate: "10/04/2025",
+    endDate: "12/04/2025",
+    startTime: "08:30:00",
+    endTime: "12:00:00",
+    id: 2,
+    bg_color: "#5c6bc0",
+    userId: 1,
+   
+    draggable: true,
+    resizable: false,
+  
+    element: <div>*</div>,
+  },
+  {
+    title: "Title 4",
+    startDate: "10/04/2025",
+    endDate: "12/04/2025",
+    startTime: "08:30:00",
+    endTime: "12:00:00",
+    id: 2,
+    bg_color: "#5c6bc0",
+    userId: 1,
+   
+    draggable: true,
+    resizable: false,
+  
+    element: <div>*</div>,
+  },
+  {
+    title: "Title 5",
+    startDate: "10/04/2025",
+    endDate: "12/04/2025",
+    startTime: "08:30:00",
+    endTime: "12:00:00",
+    id: 2,
+    bg_color: "#5c6bc0",
+    userId: 1,
+   
+    draggable: true,
+    resizable: false,
+  
+    element: <div>*</div>,
+  },
+  {
+    title: "Title 6",
+    startDate: "10/04/2025",
+    endDate: "12/04/2025",
+    startTime: "08:30:00",
+    endTime: "12:00:00",
+    id: 2,
+    bg_color: "#5c6bc0",
+    userId: 1,
+   
+    draggable: true,
+    resizable: false,
+  
+    element: <div>*</div>,
+  },
+
+  // Rest of the events...
+];
+const teams = [
+  {
+    name: 'Team Alpha',
+    userId: 1
+  },
+  {
+    name: 'Team Beta',
+    userId: 2,
+    profileComponent: <div>Profile</div>
+
+  }
+];
+
+  // const events: EventObjectInput[] = [
+  //   {
+  //     title: "Title Lorem Ipsum ",
+  //     startDate: "20/04/2025",
+  //     endDate: "20/04/2025",
+  //     startTime: "09:00:00",
+  //     endTime: "10:00:00",
+  //     id: 133,
+  //     bg_color: "#FFAB91",
+  //     element: <div>
+  //       Description of the event
+  //     </div>,
+  //     editable: true,
+  //     userId: 2,
      
-      draggable: true,
-      resizable: false,
-      custom_class: "custom-class",
-    },
-    {
-      title: "Title 2",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()-5 ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()-3 ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 2,
-      bg_color: "#5cc077",
-      userId: 2,
+  //     draggable: true,
+  //     resizable: false,
+  //     custom_class: "custom-class",
+  //   },
+  //   {
+  //     title: "Title 2",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()-5 ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()-3 ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 2,
+  //     bg_color: "#5cc077",
+  //     userId: 2,
      
-      draggable: true,
-      resizable: true,
+  //     draggable: true,
+  //     resizable: true,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 3",
-      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 2,
-      bg_color: "#5c6bc0",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 3",
+  //     startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 2,
+  //     bg_color: "#5c6bc0",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: true,
+  //     draggable: true,
+  //     resizable: true,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 4",
-      startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate()+1  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()+1 ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 2,
-      bg_color: "#c05caf",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 4",
+  //     startDate:getFormattedDate(new Date(new Date().setDate(new Date().getDate()+1  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()+1 ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 2,
+  //     bg_color: "#c05caf",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 5",
-      startDate:  getFormattedDate(new Date(new Date().setDate(new Date().getDate()+2 ))), 
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() )+2)),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 2,
-      bg_color: "#5c6bc0",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 5",
+  //     startDate:  getFormattedDate(new Date(new Date().setDate(new Date().getDate()+2 ))), 
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate() )+2)),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 2,
+  //     bg_color: "#5c6bc0",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div>*</div>,
-    },
-    {
-      title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 2,
-      bg_color: "#ffa946",
-      userId: 1,
+  //     element: <div>*</div>,
+  //   },
+  //   {
+  //     title: "Title 6",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 2,
+  //     bg_color: "#ffa946",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 3,
-      bg_color: "#ffa946",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 6",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 3,
+  //     bg_color: "#ffa946",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 3,
-      bg_color: "#ffa946",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 6",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 3,
+  //     bg_color: "#ffa946",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 3,
-      bg_color: "#ffa946",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 6",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 3,
+  //     bg_color: "#ffa946",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 3,
-      bg_color: "#ffa946",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 6",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 3,
+  //     bg_color: "#ffa946",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 3,
-      bg_color: "#ffa946",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 6",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 3,
+  //     bg_color: "#ffa946",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 3,
-      bg_color: "#ffa946",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 6",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 3,
+  //     bg_color: "#ffa946",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 3,
-      bg_color: "#ffa946",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 6",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 3,
+  //     bg_color: "#ffa946",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
-    {
-      title: "Title 6",
-      startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
-      startTime: "08:30:00",
-      endTime: "12:00:00",
-      id: 3,
-      bg_color: "#ffa946",
-      userId: 1,
+  //     element: <div> Description of the event</div>,
+  //   },
+  //   {
+  //     title: "Title 6",
+  //     startDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     endDate: getFormattedDate(new Date(new Date().setDate(new Date().getDate()  ))),
+  //     startTime: "08:30:00",
+  //     endTime: "12:00:00",
+  //     id: 3,
+  //     bg_color: "#ffa946",
+  //     userId: 1,
      
-      draggable: true,
-      resizable: false,
+  //     draggable: true,
+  //     resizable: false,
     
-      element: <div> Description of the event</div>,
-    },
+  //     element: <div> Description of the event</div>,
+  //   },
 
 
-    // Rest of the events...
-  ];
-  const teams = [
-    {
-      name: 'Team Alpha',
-      userId: 1,
-      image:"https://picsum.photos/32",
-      profileComponent: <div>Profile</div>
+  //   // Rest of the events...
+  // ];
+  // const teams = [
+  //   {
+  //     name: 'Team Alpha',
+  //     userId: 1,
+  //     image:"https://picsum.photos/32",
+  //     profileComponent: <div>Profile</div>
 
-    },
-    {
-      name: 'Team Beta',
-      userId: 2,
-      image:"https://picsum.photos/32/34",
-      profileComponent: <div>Profile</div>
+  //   },
+  //   {
+  //     name: 'Team Beta',
+  //     userId: 2,
+  //     image:"https://picsum.photos/32/34",
+  //     profileComponent: <div>Profile</div>
 
-    },
-    {
-      name: 'Team Beta',
-      userId: 3,
-      image:"https://picsum.photos/32/33",
-      profileComponent: <div>Profile</div>
+  //   },
+  //   {
+  //     name: 'Team Beta',
+  //     userId: 3,
+  //     image:"https://picsum.photos/32/33",
+  //     profileComponent: <div>Profile</div>
 
-    }
+  //   }
 
-  ];
+  // ];
 
-  React.useEffect(() => { 
-    console.log("events", events);
-  }, [events]);
+
   
 
   return (

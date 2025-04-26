@@ -347,8 +347,10 @@ const CalendarWeek: React.FC<Props> = ({
               }}
               ref={calendarTableRef}
             >
-              <div className="ib__sc__tb-wrapper ib__sc__tb-wrapper-week">
-                <div className="ib__sc__tb_week_time"
+              <table className="ib__sc__tb-wrapper ib__sc__tb-wrapper-week">
+                <tr>
+
+                <td className="ib__sc__tb_week_time sticky-col "
                  style={{ minHeight: heightOfWeekColumn + 'px' }}
                 
                 >
@@ -389,7 +391,7 @@ const CalendarWeek: React.FC<Props> = ({
                       </div>
                     ))}
                   </div>
-                </div>
+                </td>
                 {[...Array(noOfDayColumn).keys()].map((dayIndex) => {
                   const now = new Date(dateStartFrom);
                   const boxDay = new Date(
@@ -424,7 +426,7 @@ const CalendarWeek: React.FC<Props> = ({
                   
                 
                   return (
-                    <div
+                    <td
                       key={dayIndex}
                       // add class 'ib__sc__current-day' if it is today
                       className={"ib__sc__table-td ib__sc__table-td-week "+(today==boxDay? 'ib__sc__today today':'') }
@@ -464,10 +466,11 @@ const CalendarWeek: React.FC<Props> = ({
                         calendarToAddOrUpdateEvent={calendarToAddOrUpdateEvent}
                         events={eventsOnDay }
                       />
-                    </div>
+                    </td>
                   );
                 })}
-              </div>
+                </tr>
+              </table>
             </div>
           </EventHandlerContex.Provider>
         </div>

@@ -226,7 +226,7 @@ function CalendarTeam({
     }
     return (
       <tr>
-        <th className="ib__sc__table-th">Team</th>
+        <th className="ib__sc__table-th sticky-col">Team</th>
         {days}
       </tr>
     );
@@ -310,7 +310,7 @@ function CalendarTeam({
         </div>
       </div>
 
-      <div className="calendar">
+      <div className="calendar ib__sc__table_team_wrapper">
         <table className="ib__sc__table-team" border={0} cellSpacing="0" cellPadding="0">
           <thead>{renderWeekDaysHeader()}</thead>
           <tbody>
