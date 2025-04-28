@@ -20,5 +20,5 @@ interface CalendarTeamProps {
     eventHeight?: number;
     calendarHeader?: React.ReactNode;
 }
-declare function CalendarTeam({ currentDay, eventsData, teams, selectedDate, calendarType, onDateChange, updateEvent, onCalendarTypeChange, calendarToAddOrUpdateEvent, onNextClick: _onNextClick, onPrevClick: _onPrevClick, eventHeight, calendarHeader, calendarViewOptions, showAddNewEventButton, weekViewDayTitleFormat, }: CalendarTeamProps): JSX.Element;
+declare function CalendarTeam({ currentDay, eventsData, teams, selectedDate, calendarType, onDateChange, updateEvent, onCalendarTypeChange, calendarToAddOrUpdateEvent, onNextClick: _onNextClick, onPrevClick: _onPrevClick, eventHeight, calendarHeader, calendarViewOptions, showAddNewEventButton, weekViewDayTitleFormat, }: CalendarTeamProps): import("react/jsx-runtime").JSX.Element;
 export default CalendarTeam;

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { EventObject } from './type/EventObject';
 import { Team } from './type/team';
 interface CalendarTeamCellProps {
@@ -12,6 +11,7 @@ interface CalendarTeamCellProps {
     dragingEventId: number | undefined;
     resizingEventId: number | undefined;
     userId: string | number;
+    eventHeight: number;
 }
-declare function CalendarTeamCell({ team, date, events, calendarToAddOrUpdateEvent, currentBoxHeight, dragBoxMouseEnterToCell, dragingEventId, resizingEventId, userId }: CalendarTeamCellProps): JSX.Element;
+declare function CalendarTeamCell({ team, date, events, calendarToAddOrUpdateEvent, currentBoxHeight, dragBoxMouseEnterToCell, dragingEventId, resizingEventId, eventHeight, userId }: CalendarTeamCellProps): import("react/jsx-runtime").JSX.Element;
 export default CalendarTeamCell;

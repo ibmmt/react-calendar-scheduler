@@ -1,3 +1,3 @@
-export function LeftIcon(): JSX.Element;
-export function RightIcon(): JSX.Element;
-export function CrossIcon(): JSX.Element;
+export function LeftIcon(): import("react/jsx-runtime").JSX.Element;
+export function RightIcon(): import("react/jsx-runtime").JSX.Element;
+export function CrossIcon(): import("react/jsx-runtime").JSX.Element;

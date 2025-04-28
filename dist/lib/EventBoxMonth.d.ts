@@ -2,6 +2,7 @@ import React from 'react';
 import { EventObject } from './type/EventObject';
 interface EventBoxMonthProps {
     boxHeight: number;
+    eventHeight: number;
     eventObj: EventObject;
     boxDay: number;
     isDraging: boolean;

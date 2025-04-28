@@ -23,5 +23,5 @@ interface CalenderMonthProps {
     monthViewDayTitleFormat?: string | ((day: string) => React.ReactNode);
     onCalendarTypeChange: (calendarType: CalenderType) => void;
 }
-declare function CalenderMonth({ currentDay, eventsData, updateEvent, calendarType, startingWeekday, showAddNewEventButton, monthViewDayTitleFormat, calendarHeight, eventHeight, calendarHeader, calendarToAddOrUpdateEvent, monthViewMinCellHeight: boxHeight, onNextClick: _onNextClick, onPrevClick: _onPrevClick, onDateChange: _onDateChange, calendarViewOptions, onCalendarTypeChange, }: CalenderMonthProps): JSX.Element;
+declare function CalenderMonth({ currentDay, eventsData, updateEvent, calendarType, startingWeekday, showAddNewEventButton, monthViewDayTitleFormat, calendarHeight, eventHeight, calendarHeader, calendarToAddOrUpdateEvent, monthViewMinCellHeight: boxHeight, onNextClick: _onNextClick, onPrevClick: _onPrevClick, onDateChange: _onDateChange, calendarViewOptions, onCalendarTypeChange, }: CalenderMonthProps): import("react/jsx-runtime").JSX.Element;
 export default CalenderMonth;

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { EventObject } from './type/EventObject';
 interface DayCellMonthProps {
     currentBoxHeight: number;
@@ -11,6 +10,7 @@ interface DayCellMonthProps {
     calendarToAddOrUpdateEvent: (event: EventObject) => void;
     dragBoxMouseEnterToCell: (boxDay: Date) => void;
     isCurrentDay: boolean;
+    eventHeight: number;
 }
-export default function DayCellMonth({ currentBoxHeight, eventsInDay, boxHeight, boxDay, day, dragingEventId, resizingEventId, calendarToAddOrUpdateEvent, dragBoxMouseEnterToCell, isCurrentDay }: DayCellMonthProps): JSX.Element;
+export default function DayCellMonth({ currentBoxHeight, eventsInDay, boxHeight, boxDay, day, dragingEventId, resizingEventId, eventHeight, calendarToAddOrUpdateEvent, dragBoxMouseEnterToCell, isCurrentDay }: DayCellMonthProps): import("react/jsx-runtime").JSX.Element;
 export {};

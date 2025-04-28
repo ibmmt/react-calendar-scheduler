@@ -1,4 +1,3 @@
-/// <reference types="react" />
-export declare const RightIcon: () => JSX.Element;
-export declare const LeftIcon: () => JSX.Element;
-export declare const CrossIcon: () => JSX.Element;
+export declare const RightIcon: () => import("react/jsx-runtime").JSX.Element;
+export declare const LeftIcon: () => import("react/jsx-runtime").JSX.Element;
+export declare const CrossIcon: () => import("react/jsx-runtime").JSX.Element;

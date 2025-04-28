@@ -9,6 +9,8 @@ interface DayColumnWeekProps {
     dragBoxMouseEnterToCell: (day: Date) => void;
     calendarToAddOrUpdateEvent: (event: EventObject) => void;
     dragingEventId?: string | number;
+    eventWidth: number;
+    minWidthOfCloumn: number;
 }
 declare const DayColumnWeek: React.FC<DayColumnWeekProps>;
 export default DayColumnWeek;

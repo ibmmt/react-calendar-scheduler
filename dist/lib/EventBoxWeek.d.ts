@@ -5,6 +5,8 @@ interface EventBoxWeekProps {
     eventObj: any;
     boxDay: any;
     dragingEventId: any;
+    eventWidth: number;
+    minWidthOfCloumn: number;
 }
 declare const EventBoxWeek: React.FC<EventBoxWeekProps>;
 export default EventBoxWeek;
